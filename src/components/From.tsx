@@ -1,0 +1,21 @@
+import React, {useEffect, useState} from 'react';
+import TextField from '@material-ui/core/TextField';
+
+export type FromProps = {
+    value: string,
+    onChange: (from: string) => void
+}
+
+export const From = ({value, onChange}: FromProps) => {
+    const [from, setFrom] = useState('');
+
+    useEffect(() => setFrom(value), [value]);
+
+    return <TextField
+        fullWidth
+        label='Sender Identifier'
+        name='from'
+        onChange={e => onChange(e.target.value)}
+        value={from}
+    />;
+};
