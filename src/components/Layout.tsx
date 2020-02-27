@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {Options} from './Options';
 import {Send} from './Send';
-import {Support} from './Support';
+import {Documentation} from './Documentation';
 import {Snackbars} from './Snackbars';
 import {BottomNav} from './BottomNav';
 import {TopNav} from './TopNav';
@@ -22,7 +22,7 @@ export const Layout = () => {
             <Snackbars/>
 
             <main>
-                {0 === nav ? <Send/> : 1 === nav ? <Options/> : <Support/>}
+                {0 === nav ? <Send/> : 1 === nav ? <Options/> : <Documentation/>}
             </main>
         </Container>
 

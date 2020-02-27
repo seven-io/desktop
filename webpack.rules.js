@@ -6,7 +6,7 @@ module.exports = [
     {
         test: /\.(m?js|node)$/,
         parser: {
-            amd: false
+            amd: false,
         },
         use: {
             loader: '@marshallofsound/webpack-asset-relocator-loader',
@@ -21,8 +21,8 @@ module.exports = [
         use: {
             loader: 'ts-loader',
             options: {
-                transpileOnly: true
-            }
+                transpileOnly: true,
+            },
         }
     },
 ];

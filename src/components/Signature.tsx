@@ -1,19 +1,21 @@
-import React from 'react';
+import React, {SyntheticEvent} from 'react';
 import TextField from '@material-ui/core/TextField';
+import {useTranslation} from 'react-i18next';
 
 export type SignatureProps = {
-    signature: any
-    onChange: any
+    onChange: (ev: SyntheticEvent) => void
+    signature: string
 }
 
 export const Signature = ({onChange, signature}: SignatureProps) => {
+    const {t} = useTranslation();
+
     return <TextField
         fullWidth
-        label='Signature added to all outgoing messages'
+        label={t('signatureExplanation')}
         multiline
         name='signature'
         onChange={onChange}
-        rows={3}
         value={signature}
     />;
 };

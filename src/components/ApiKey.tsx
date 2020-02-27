@@ -1,19 +1,21 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, SyntheticEvent} from 'react';
 import TextField from '@material-ui/core/TextField';
+import {useTranslation} from 'react-i18next';
 
 export type ApiKeyProps = {
-    value: any,
-    onChange: any
+    value: string,
+    onChange: (e: SyntheticEvent) => void
 }
 
 export const ApiKey = ({value, onChange}: ApiKeyProps) => {
     const [apiKey, setApiKey] = useState('');
+    const {t} = useTranslation();
 
     useEffect(() => setApiKey(value), [value]);
 
     return <TextField
         fullWidth
-        label='API key from sms77.io required for sending'
+        label={t('apiKeyRequired')}
         name='apiKey'
         onChange={onChange}
         required

@@ -1,19 +1,21 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
+import {useTranslation} from 'react-i18next';
 
 import {LocalStore} from '../util/LocalStore';
 import {ApiKey} from './ApiKey';
 import {From} from './From';
 import {To} from './To';
-import {SignaturePosition} from './SignaturePosition';
 import {Signature} from './Signature';
 import {Configuration, defaultOptions} from '../util/defaultOptions';
 
 export const Options = () => {
+    const {t} = useTranslation();
+
     const classes = makeStyles(theme => ({
         root: {
             '& .MuiTextField-root, .MuiFormControl-root': {
-                marginBottom: theme.spacing(0),
+                marginBottom: theme.spacing(3),
             },
         },
     }))();
@@ -33,10 +35,15 @@ export const Options = () => {
     return <section>
         <h1>Options</h1>
 
-        <p>
-            All options are saved automatically after changing.<br/>
-            Fields marked with a * are required.
-        </p>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <p>
+                {t('optionsSavedAutomatically')}
+            </p>
+
+            <p>
+                {t('markedFieldsRequired')}
+            </p>
+        </div>
 
         <form className={classes.root}>
             <ApiKey onChange={handleChange} value={state.apiKey}/>
@@ -46,8 +53,6 @@ export const Options = () => {
             <To onChange={to => handleChange({target: {name: 'to', value: to}})} value={state.to}/>
 
             <Signature onChange={handleChange} signature={state.signature}/>
-
-            {/*<SignaturePosition onChange={handleChange} signaturePosition={state.signaturePosition}/>*/}
         </form>
     </section>;
 };

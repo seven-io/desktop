@@ -18,92 +18,51 @@
     },
     "license": "MIT",
     "config": {
-        "forge": {
-            "electronPackagerConfig": {
-                "packageManager": "yarn",
-                "executableName": "sms77-desktop"
-            },
-            "packagerConfig": {},
-            "makers": [
-                {
-                    "name": "@electron-forge/maker-squirrel",
-                    "config": {
-                        "name": "sms77-desktop"
-                    }
-                },
-                {
-                    "name": "@electron-forge/maker-zip",
-                    "platforms": [
-                        "darwin"
-                    ]
-                },
-                {
-                    "name": "@electron-forge/maker-deb",
-                    "config": {}
-                },
-                {
-                    "name": "@electron-forge/maker-dmg",
-                    "config": {}
-                }
-            ],
-            "plugins": [
-                [
-                    "@electron-forge/plugin-webpack",
-                    {
-                        "mainConfig": "./webpack.main.config.js",
-                        "renderer": {
-                            "config": "./webpack.renderer.config.js",
-                            "entryPoints": [
-                                {
-                                    "html": "./src/index.html",
-                                    "js": "./src/renderer.ts",
-                                    "name": "main_window"
-                                }
-                            ]
-                        }
-                    }
-                ]
-            ]
-        }
+        "forge": "./forge.config.js"
     },
     "devDependencies": {
-        "@electron-forge/cli": "^6.0.0-beta.49",
-        "@electron-forge/maker-deb": "^6.0.0-beta.49",
-        "@electron-forge/maker-squirrel": "^6.0.0-beta.49",
-        "@electron-forge/maker-dmg": "^6.0.0-beta.49",
-        "@electron-forge/maker-zip": "^6.0.0-beta.49",
-        "@electron-forge/plugin-webpack": "^6.0.0-beta.49",
-        "@hot-loader/react-dom": "^16.11.0",
+        "@electron-forge/cli": "^6.0.0-beta.50",
+        "@electron-forge/maker-deb": "^6.0.0-beta.50",
+        "@electron-forge/maker-dmg": "^6.0.0-beta.50",
+        "@electron-forge/maker-squirrel": "^6.0.0-beta.50",
+        "@electron-forge/plugin-webpack": "^6.0.0-beta.50",
+        "@electron-forge/publisher-github": "^6.0.0-beta.50",
+        "@hot-loader/react-dom": "^16.12.0",
         "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
         "@types/electron-devtools-installer": "^2.2.0",
-        "@types/react": "^16.9.22",
+        "@types/react": "^16.9.23",
         "@types/react-dom": "^16.9.5",
         "@types/react-redux": "^7.1.7",
-        "@types/redux-devtools": "^3.0.47",
         "css-loader": "^3.4.2",
-        "electron": "^8.0.1",
+        "electron": "^8.0.2",
         "electron-devtools-installer": "^2.2.4",
         "file-loader": "^5.1.0",
-        "fork-ts-checker-webpack-plugin": "^4.0.4",
+        "fork-ts-checker-webpack-plugin": "^4.0.5",
         "node-loader": "^0.6.0",
         "node-sass": "^4.13.1",
         "react-hot-loader": "^4.12.19",
-        "redux-devtools": "^3.5.0",
         "sass-loader": "^8.0.2",
         "style-loader": "^1.1.3",
         "ts-loader": "^6.2.1",
         "typeface-roboto": "^0.0.75",
-        "typescript": "^3.8.2"
+        "typescript": "^3.8.2",
+        "webpack": "^4.41.6"
     },
     "dependencies": {
         "@material-ui/core": "^4.9.4",
         "@material-ui/icons": "^4.9.1",
         "electron-squirrel-startup": "^1.0.0",
         "electron-store": "^5.1.1",
-        "react": "^16.12.0",
-        "react-dom": "^16.12.0",
+        "i18next": "^19.3.2",
+        "material-ui-popup-state": "^1.5.3",
+        "react": "^16.13.0",
+        "react-dom": "^16.13.0",
+        "react-i18next": "^11.3.3",
         "react-redux": "^7.2.0",
         "redux": "^4.0.5",
         "sms77-client": "^1.4.0"
+    },
+    "optionalDependencies": {
+        "macos-alias": "^0.2.11"
     }
 }

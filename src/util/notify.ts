@@ -1,4 +1,4 @@
-export const notify = (message: string): boolean => {
+export const notify = async (message: string): Promise<boolean> => {
     const isGranted = () => 'granted' === Notification.permission;
 
     const create = () => new Notification(message);
@@ -6,11 +6,11 @@ export const notify = (message: string): boolean => {
     if (isGranted()) {
         create();
     } else {
-        Notification.requestPermission(() => {
-            if (isGranted()) {
-                create();
-            }
-        });
+        const permission = await Notification.requestPermission();
+
+        if ('granted' === permission) {
+            create();
+        }
     }
 
     const event = new CustomEvent('sms77desktop', {

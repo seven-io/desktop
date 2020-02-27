@@ -1,6 +1,6 @@
-import {app, BrowserWindow, screen} from 'electron';
+import {app, BrowserWindow} from 'electron';
 import installExtension, {REACT_DEVELOPER_TOOLS} from 'electron-devtools-installer';
-//import {createDevTools}  from 'redux-devtools'; TODO: install?!
+import * as path from 'path';
 
 app.allowRendererProcessReuse = true;
 
@@ -14,16 +14,14 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 }
 
 const createWindow = async () => {
-    const {width, height} = screen.getPrimaryDisplay().workAreaSize;
-
     const mainWindow = new BrowserWindow({
-        height,
-        width,
-
+        height: isDev ? 1080 : 600,
+        width: isDev ? 1920 : 800,
+        icon: path.join(__dirname, 'assets/img/logos/128x128.png'),
         webPreferences: {
             nodeIntegration: true,
             webviewTag: true,
-        }
+        },
     });
 
     if (isDev) {
