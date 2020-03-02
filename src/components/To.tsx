@@ -14,7 +14,7 @@ export const To = ({onChange, value}: ToProps) => {
 
     useEffect(() => setTo(value), [value]);
 
-    const Input = <TextField
+    return <TextField
         fullWidth
         helperText={t('onePlusNumberContact')}
         label={t('onePlusRecipient')}
@@ -22,6 +22,4 @@ export const To = ({onChange, value}: ToProps) => {
         onChange={e => onChange(e.target.value)}
         value={to}
     />;
-
-    return Input;
 };

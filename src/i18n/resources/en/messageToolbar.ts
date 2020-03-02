@@ -3,5 +3,5 @@ export const messageToolbar = {
     'date': 'Date',
     'locale': 'Locale',
     'time': 'Time',
-    'dateTimeBtnGroup': 'date and time functions button group'
+    'messageUtilitiesBtnGroup': 'message helper utilities button group'
 }

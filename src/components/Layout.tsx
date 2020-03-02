@@ -1,19 +1,21 @@
 import React from 'react';
 import Container from '@material-ui/core/Container';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 
 import {Options} from './Options';
 import {Send} from './Send';
 import {Documentation} from './Documentation';
 import {Snackbars} from './Snackbars';
 import {BottomNav} from './BottomNav';
+import {History} from './History';
 import {TopNav} from './TopNav';
-import {setNav} from '../store/actions';
+import {RootState} from '../store/reducers';
+import {Contacts} from './Contacts';
+
+export type Route = 'send' | 'options' | 'history' | 'docs' | 'contacts'
 
 export const Layout = () => {
-    const nav = useSelector((s: any) => s.nav);
-
-    const dispatch = useDispatch();
+    const nav = useSelector((s: RootState) => s.nav);
 
     return <>
         <TopNav/>
@@ -22,10 +24,20 @@ export const Layout = () => {
             <Snackbars/>
 
             <main>
-                {0 === nav ? <Send/> : 1 === nav ? <Options/> : <Documentation/>}
+                {
+                    'send' === nav
+                        ? <Send/>
+                        : 'options' === nav
+                            ? <Options/>
+                            : 'history' === nav
+                                ? <History/>
+                                : 'contacts' === nav
+                                ? <Contacts />
+                                :  <Documentation/>
+                }
             </main>
         </Container>
 
-        <BottomNav onChange={newNav => dispatch(setNav(newNav))}/>
+        <BottomNav/>
     </>;
 };

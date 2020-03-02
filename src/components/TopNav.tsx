@@ -11,10 +11,18 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import {shell} from 'electron';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
+import HelpIcon from '@material-ui/icons/HelpOutline';
+import ComputerIcon from '@material-ui/icons/Computer';
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
+import {System} from './System';
 
 const logoWhite = require('../assets/img/white-3240x640.png').default;
 
 export const TopNav = () => {
+    const [open, setOpen] = React.useState(false);
+
     const {t} = useTranslation();
 
     const classes = makeStyles({
@@ -58,6 +66,21 @@ export const TopNav = () => {
 
                 <Button className={classes.link} onClick={() => shell.openExternal('https://github.com/sms77io')}>
                     <GitHubIcon/>
+                </Button>
+
+                <Button className={classes.link} onClick={() => setOpen(!open)}>
+                    <ComputerIcon/>
+
+                    <Dialog onClose={() => setOpen(false)} aria-labelledby='systemDialog' open={open}>
+                        <DialogTitle id='systemDialog'>{t('systemInfo')}</DialogTitle>
+
+                        <System/>
+                    </Dialog>
+                </Button>
+
+                <Button className={classes.link}
+                        onClick={() => shell.openExternal('https://www.sms77.io/en/company/contact/')}>
+                    <HelpIcon/>
                 </Button>
             </ButtonGroup>
         </Toolbar>

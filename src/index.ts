@@ -1,10 +1,10 @@
 import {app, BrowserWindow} from 'electron';
-import installExtension, {REACT_DEVELOPER_TOOLS} from 'electron-devtools-installer';
+import installExtension, {REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer';
 import * as path from 'path';
 
 app.allowRendererProcessReuse = true;
 
-const isDev = process.env.NODE_ENV.startsWith('dev');
+const isDev = process.env.NODE_ENV!.startsWith('dev');
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
@@ -25,12 +25,15 @@ const createWindow = async () => {
     });
 
     if (isDev) {
-        await installExtension(REACT_DEVELOPER_TOOLS);
+        await installExtension([
+            REACT_DEVELOPER_TOOLS,
+            REDUX_DEVTOOLS,
+        ]);
 
         mainWindow.webContents.openDevTools(); // Open the DevTools.
     }
 
-    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY); // and load the index.html of the app.
+    await mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY); // and load the index.html of the app.
 };
 
 // This method will be called when Electron has finished initialization and is ready to create browser windows.
@@ -45,10 +48,10 @@ app.on('window-all-closed', () => {
     }
 });
 
-app.on('activate', () => {
+app.on('activate', async () => {
     // On OS X it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow();
+        await createWindow();
     }
 });
 

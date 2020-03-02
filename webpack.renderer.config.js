@@ -20,6 +20,6 @@ module.exports = {
     plugins,
     resolve: {
         alias: {'react-dom': '@hot-loader/react-dom'},
-        extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.scss', '.sass'],
+        extensions: ['.js', '.ts', '.jsx', '.tsx', '.css', '.scss', '.sass', 'json',],
     },
 };

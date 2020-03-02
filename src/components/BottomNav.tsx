@@ -2,20 +2,23 @@ import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import HelpIcon from '@material-ui/icons/HelpOutline';
 import DescriptionIcon from '@material-ui/icons/Description';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SmsIcon from '@material-ui/icons/Sms';
 import {useTranslation} from 'react-i18next';
-import {shell} from 'electron';
+import {useDispatch} from 'react-redux';
+import HistoryIcon from '@material-ui/icons/History';
+import ContactsIcon from '@material-ui/icons/Contacts';
 
-export type BottomNavProps = {
-    onChange: (value: number) => void
-}
+import {setNav} from '../store/actions';
+import {Route} from './Layout';
 
-export const BottomNav = ({onChange}: BottomNavProps) => {
-    const [nav, setNav] = React.useState(0);
+export const BottomNav = () => {
+    const [navIndex, setNavIndex] = React.useState('send');
+
     const {t} = useTranslation();
+
+    const dispatch = useDispatch();
 
     const classes = makeStyles({
         bottomNavigation: {
@@ -28,22 +31,22 @@ export const BottomNav = ({onChange}: BottomNavProps) => {
 
     return <BottomNavigation
         className={classes.bottomNavigation}
-        onChange={(e: any, newNav: any) => {
-            if (3 === newNav) {
-                shell.openExternal('https://www.sms77.io/en/company/contact/');
-            }
-            else {
-                setNav(newNav);
+        onChange={(e: any, newNavIndex: Route) => {
+            setNavIndex(newNavIndex);
 
-                onChange(newNav);
-            }
+            dispatch(setNav(newNavIndex));
         }}
         showLabels
-        value={nav}
+        value={navIndex}
     >
-        <BottomNavigationAction label={t('SMS')} icon={<SmsIcon/>}/>
-        <BottomNavigationAction label={t('options')} icon={<SettingsIcon/>}/>
-        <BottomNavigationAction label={t('documentation')} icon={<DescriptionIcon/>}/>
-        <BottomNavigationAction label={t('support')} icon={<HelpIcon/>}/>
+        <BottomNavigationAction label={t('SMS')} value='send' icon={<SmsIcon/>}/>
+
+        <BottomNavigationAction label={t('options')} value='options' icon={<SettingsIcon/>}/>
+
+        <BottomNavigationAction label={t('history')} value='history' icon={<HistoryIcon/>}/>
+
+        <BottomNavigationAction label={t('contacts')} value='contacts' icon={<ContactsIcon/>}/>
+
+        <BottomNavigationAction label={t('documentation')} value='docs' icon={<DescriptionIcon/>}/>
     </BottomNavigation>;
 };

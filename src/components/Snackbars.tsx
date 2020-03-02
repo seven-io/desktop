@@ -6,9 +6,10 @@ import IconButton from '@material-ui/core/IconButton';
 import {useDispatch, useSelector} from 'react-redux';
 
 import {removeSnackbar} from '../store/actions';
+import {RootState} from '../store/reducers';
 
 export const Snackbars = () => {
-    const snackbars = useSelector((s: any) => s.snackbars);
+    const snackbars = useSelector((s: RootState) => s.snackbars);
 
     const dispatch = useDispatch();
 

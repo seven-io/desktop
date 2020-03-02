@@ -1,0 +1,9 @@
+{
+  "env": {
+    "development": {
+      "application/javascript": {
+        "plugins": ["react-hot-loader/babel", "@babel/plugin-transform-runtime"]
+      }
+    }
+  }
+}

@@ -1,13 +1,13 @@
 import React, {useEffect, useState, SyntheticEvent} from 'react';
-import TextField from '@material-ui/core/TextField';
+import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 import {useTranslation} from 'react-i18next';
 
-export type ApiKeyProps = {
+export type ApiKeyProps = TextFieldProps & {
     value: string,
     onChange: (e: SyntheticEvent) => void
 }
 
-export const ApiKey = ({value, onChange}: ApiKeyProps) => {
+export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
     const [apiKey, setApiKey] = useState('');
     const {t} = useTranslation();
 
@@ -20,5 +20,7 @@ export const ApiKey = ({value, onChange}: ApiKeyProps) => {
         onChange={onChange}
         required
         value={apiKey}
+
+        {...props}
     />;
 };

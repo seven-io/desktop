@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 
@@ -10,6 +10,8 @@ import {Signature} from './Signature';
 import {Configuration, defaultOptions} from '../util/defaultOptions';
 
 export const Options = () => {
+    const $apiKey = useRef();
+
     const {t} = useTranslation();
 
     const classes = makeStyles(theme => ({
@@ -29,7 +31,13 @@ export const Options = () => {
     };
 
     useEffect(() => {
-        setState(LocalStore.get('options') as Configuration);
+        const options = LocalStore.get('options') as Configuration;
+
+        setState(options);
+
+        if (!options.apiKey.length) {
+            ($apiKey.current! as HTMLInputElement).focus();
+        }
     }, []);
 
     return <section>
@@ -46,7 +54,7 @@ export const Options = () => {
         </div>
 
         <form className={classes.root}>
-            <ApiKey onChange={handleChange} value={state.apiKey}/>
+            <ApiKey inputRef={$apiKey} onChange={handleChange} value={state.apiKey}/>
 
             <From onChange={from => handleChange({target: {name: 'from', value: from}})} value={state.from}/>
 

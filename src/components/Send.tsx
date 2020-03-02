@@ -4,8 +4,10 @@ import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import {red} from '@material-ui/core/colors';
 import {useDispatch} from 'react-redux';
-import Grid from '@material-ui/core/Grid';
 import {useTranslation} from 'react-i18next';
+import ClearIcon from '@material-ui/icons/Clear';
+import ButtonGroup from '@material-ui/core/ButtonGroup';
+import IconButton from '@material-ui/core/IconButton';
 
 import {To} from './To';
 import {From} from './From';
@@ -15,13 +17,25 @@ import {addSnackbar, setNav} from '../store/actions';
 import {MessageToolbar} from './MessageToolbar';
 
 export const Send = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const apiKey = LocalStore.get('options.apiKey') as string;
+
+        if ('' === apiKey || !apiKey) {
+            dispatch(addSnackbar(t('pleaseSetApiKey')));
+
+            dispatch(setNav('options'));
+        }
+
+        setDefaults();
+    }, []);
+
     const _red = red['900'];
 
     const classes = makeStyles(theme => ({
         clear: {
             color: _red,
-            border: '1px solid ' + _red,
-            marginRight: theme.spacing(1),
         },
         form: {
             '& .MuiTextField-root': {
@@ -33,8 +47,14 @@ export const Send = () => {
     const [text, setText] = useState('');
     const [to, setTo] = useState('');
     const [from, setFrom] = useState('');
-    const dispatch = useDispatch();
     const {t} = useTranslation('send');
+    const $textarea = useRef();
+
+    const onClear = () => {
+        setText('');
+
+        setDefaults();
+    };
 
     const setDefaults = () => {
         const signature = LocalStore.get('options.signature') as string;
@@ -48,24 +68,6 @@ export const Send = () => {
         setTo(LocalStore.get('options.to') as string);
     };
 
-    useEffect(() => {
-        const apiKey = LocalStore.get('options.apiKey') as string;
-
-        if ('' === apiKey || !apiKey) {
-            dispatch(setNav(1));
-        }
-
-        setDefaults();
-    }, []);
-
-    const onClear = () => {
-        setText('');
-
-        setDefaults();
-    };
-
-    const textarea = useRef();
-
     return <form className={classes.form} onSubmit={async e => {
         e.preventDefault();
 
@@ -73,13 +75,13 @@ export const Send = () => {
     }}>
         <h1>{t('Send SMS')}</h1>
 
-        <MessageToolbar onAction={setText} textarea={textarea}/>
+        <MessageToolbar onAction={setText} textarea={$textarea.current!}/>
 
         <TextField
             fullWidth
             label={t('Message Content')}
             helperText={t('This defines the actual SMS content.')}
-            inputRef={textarea}
+            inputRef={$textarea}
             multiline
             onChange={ev => setText(ev.target.value)}
             required
@@ -91,14 +93,14 @@ export const Send = () => {
 
         <From onChange={from => setFrom(from)} value={from}/>
 
-        <Grid container spacing={1}>
-            <Grid item xs={6}>
-                <Button variant='outlined' fullWidth className={classes.clear} onClick={onClear}>{t('Clear')}</Button>
-            </Grid>
+        <ButtonGroup fullWidth variant='contained'>
+            <IconButton aria-label={t('Clear')} className={classes.clear} onClick={onClear}>
+                <ClearIcon/>
+            </IconButton>
 
-            <Grid item xs={6}>
-                <Button variant='outlined' fullWidth color='primary' type='submit'>{t('Send')}</Button>
-            </Grid>
-        </Grid>
+            <Button color='primary' disabled={!text.length} type='submit'>
+                {t('Send')}
+            </Button>
+        </ButtonGroup>
     </form>;
 };
