@@ -12,4 +12,7 @@ export const history = {
     from: 'From',
     messages: 'Messages',
     noEntries: 'It doesnt look like you have set any messages yet. Go try it out!',
+    tooltips: {
+        message: 'May contain useful information from transit providers etc.',
+    }
 };

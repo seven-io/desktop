@@ -4,4 +4,4 @@ export const messageToolbar = {
     'locale': 'Locale',
     'time': 'Time',
     'messageUtilitiesBtnGroup': 'message helper utilities button group'
-}
+};

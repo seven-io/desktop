@@ -4,10 +4,8 @@ import React from 'react';
 
 import {PopupMenu} from './PopupMenu';
 
-export type EmojiPickerProps = IEmojiPickerProps
-
-export const EmojiPicker = (props: EmojiPickerProps) => <PopupMenu buttonText='Emoji' items={
+export const EmojiPicker = (props: IEmojiPickerProps) => <PopupMenu buttonText='Emoji' identifier='emoji'>
     <MenuItem>
         <Picker {...props} />
     </MenuItem>
-} identifier='emoji'/>;
+</PopupMenu>;

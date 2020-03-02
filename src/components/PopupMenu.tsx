@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {PropsWithChildren} from 'react';
 import Button from '@material-ui/core/Button';
 import PopupStateComp, {bindMenu, bindTrigger} from 'material-ui-popup-state';
 import {PopupState} from 'material-ui-popup-state/core';
 import Menu from '@material-ui/core/Menu';
-import {MenuItemProps} from '@material-ui/core';
 
-export type MessageToolbarProps = {
+export type MessageToolbarBaseProps = {
     buttonText: string
-    items: React.ComponentElement<MenuItemProps, any>
     identifier: string
 }
 
-export const PopupMenu = ({items, identifier, buttonText}: MessageToolbarProps) => {
+export type MessageToolbarProps = PropsWithChildren<MessageToolbarBaseProps>
+
+export const PopupMenu = ({children , identifier, buttonText}: MessageToolbarProps) => {
     const state: PopupState | {} = {};
     const popupId = `${identifier}-popup`;
     const menuId = `${popupId}-menu`;
@@ -27,7 +27,7 @@ export const PopupMenu = ({items, identifier, buttonText}: MessageToolbarProps) 
                 </Button>
 
                 <Menu id={menuId} {...bindMenu(state as PopupState)}>
-                    {items.props.children}
+                    {children}
                 </Menu>
             </>;
         }}

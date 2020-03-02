@@ -15,13 +15,17 @@ import HelpIcon from '@material-ui/icons/HelpOutline';
 import ComputerIcon from '@material-ui/icons/Computer';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import DescriptionIcon from '@material-ui/icons/Description';
+import {useDispatch} from 'react-redux';
 
-import {System} from './System';
-
-const logoWhite = require('../assets/img/white-3240x640.png').default;
+import {System} from '../System';
+import {setNav} from '../../store/actions';
 
 export const TopNav = () => {
-    const [open, setOpen] = React.useState(false);
+    const dispatch = useDispatch();
+
+    const [systemDialogOpen, setSystemDialogOpen] = React.useState(false);
 
     const {t} = useTranslation();
 
@@ -37,17 +41,16 @@ export const TopNav = () => {
         }
     })();
 
-    return <AppBar position='static'>
-        <Toolbar className={classes.toolbar}>
-
+    return <AppBar variant='outlined' position='static'>
+        <Toolbar variant='dense' className={classes.toolbar}>
             <a href='#!' onClick={() => shell.openExternal('https://www.sms77.io/')}>
-                <img src={logoWhite} alt='' className={classes.logo}/>
+                <img src={require('../../assets/img/white-3240x640.png').default} alt='' className={classes.logo}/>
             </a>
 
             <ButtonGroup color='primary' aria-label={t('socialsBtnGroup')}>
-                <Button className={classes.link}
+                <Button className={classes.link} size='small'
                         onClick={() => shell.openExternal('https://www.facebook.com/sms77.io/')}>
-                    <FacebookIcon/>
+                    <FacebookIcon />
                 </Button>
 
                 <Button className={classes.link}
@@ -68,19 +71,28 @@ export const TopNav = () => {
                     <GitHubIcon/>
                 </Button>
 
-                <Button className={classes.link} onClick={() => setOpen(!open)}>
+                <Button className={classes.link} onClick={() => setSystemDialogOpen(!systemDialogOpen)}>
                     <ComputerIcon/>
 
-                    <Dialog onClose={() => setOpen(false)} aria-labelledby='systemDialog' open={open}>
+                    <Dialog onClose={() => setSystemDialogOpen(false)} aria-labelledby='systemDialog'
+                            open={systemDialogOpen}>
                         <DialogTitle id='systemDialog'>{t('systemInfo')}</DialogTitle>
 
                         <System/>
                     </Dialog>
                 </Button>
 
+                <Button className={classes.link} onClick={() => dispatch(setNav('pricing'))}>
+                    <LocalAtmIcon/>
+                </Button>
+
                 <Button className={classes.link}
                         onClick={() => shell.openExternal('https://www.sms77.io/en/company/contact/')}>
                     <HelpIcon/>
+                </Button>
+
+                <Button className={classes.link} onClick={() => dispatch(setNav('docs'))}>
+                    <DescriptionIcon/>
                 </Button>
             </ButtonGroup>
         </Toolbar>

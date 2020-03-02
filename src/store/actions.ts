@@ -1,4 +1,4 @@
-import {Route} from '../components/Layout';
+import {Route} from './reducers/nav';
 
 export const addSnackbar = (message: string) => ({
     type: 'ADD_SNACKBAR',
@@ -13,4 +13,10 @@ export const removeSnackbar = (index: number) => ({
 export const setNav = (nav: Route) => ({
     type: 'SET_NAV',
     nav,
+});
+
+
+export const setTo = (to: string) => ({
+    type: 'SET_TO',
+    to,
 });

@@ -5,12 +5,14 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import {useTranslation} from 'react-i18next';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-import IconButton from '@material-ui/core/IconButton';
 
 import {LocalStore} from '../util/LocalStore';
 import {SmsDump} from '../util/sendSms';
+import {numberFormatter} from '../util/numberFormatter';
+import {PreviousListItemButton} from './PreviousListItemButton';
+import {NextListItemButton} from './NextListItemButton';
+import Chip from '@material-ui/core/Chip';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export const History = () => {
     const histories = LocalStore.get('history') as SmsDump[];
@@ -33,15 +35,13 @@ export const History = () => {
         <h1>{t('history')}</h1>
 
         {
-            history && <IconButton style={{position: 'absolute', left: '0px'}} onClick={() => handleNavigation('-')}>
-                <ArrowLeftIcon fontSize='large' style={{fontSize: '3rem'}}/>
-            </IconButton>
-        }
+            history && <>
+                <PreviousListItemButton index={index} list={histories}
+                                        IconButtonProps={{onClick: () => handleNavigation('-')}}/>
 
-        {
-            history && <IconButton style={{position: 'absolute', right: '0px'}} onClick={() => handleNavigation('+')}>
-                <ArrowRightIcon fontSize='large' style={{fontSize: '3rem'}}/>
-            </IconButton>
+                <NextListItemButton index={index} list={histories}
+                                    IconButtonProps={{onClick: () => handleNavigation('+')}}/>
+            </>
         }
 
         <TableContainer>
@@ -76,7 +76,8 @@ export const History = () => {
                                     </TableCell>
 
                                     <TableCell align='right'>
-                                        {t(row.success ? 'true' : 'false')}
+                                        <Chip style={{backgroundColor: row.success ? 'green' : 'red', color: '#fff'}}
+                                              label={t(row.success ? 'true' : 'false')}/>
                                     </TableCell>
                                 </TableRow>
 
@@ -116,18 +117,15 @@ export const History = () => {
                                     </TableCell>
 
                                     <TableCell align='right'>
-                                        {
-                                            new Intl.NumberFormat('en-US', {
-                                                currency: 'EUR',
-                                                style: 'currency',
-                                            }).format(row.price)
-                                        }
+                                        {numberFormatter.format(row.price)}
                                     </TableCell>
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell component='th' scope='row'>
-                                        {t('messages')}
+                                        <Tooltip title={t('tooltips.message')}>
+                                            <span>{t('messages')}</span>
+                                        </Tooltip>
                                     </TableCell>
 
                                     <TableCell align='right'>

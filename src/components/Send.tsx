@@ -3,21 +3,39 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import {red} from '@material-ui/core/colors';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import ClearIcon from '@material-ui/icons/Clear';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import IconButton from '@material-ui/core/IconButton';
+import Grid from '@material-ui/core/Grid';
+import SendIcon from '@material-ui/icons/Send';
 
 import {To} from './To';
 import {From} from './From';
 import {LocalStore} from '../util/LocalStore';
 import {sendSms} from '../util/sendSms';
-import {addSnackbar, setNav} from '../store/actions';
+import {addSnackbar, setNav, setTo} from '../store/actions';
 import {MessageToolbar} from './MessageToolbar';
+import {RootState} from '../store/reducers';
+
+const _red = red['900'];
 
 export const Send = () => {
     const dispatch = useDispatch();
+    const classes = makeStyles(theme => ({
+        clear: {
+            color: _red,
+        },
+        form: {
+            '& .MuiTextField-root': {
+                margin: theme.spacing(1),
+            },
+        },
+    }))();
+    const [text, setText] = useState('');
+    const [from, setFrom] = useState('');
+    const {t} = useTranslation('send');
+    const $textarea = useRef();
+    const to = useSelector((state: RootState) => state.to);
 
     useEffect(() => {
         const apiKey = LocalStore.get('options.apiKey') as string;
@@ -31,26 +49,7 @@ export const Send = () => {
         setDefaults();
     }, []);
 
-    const _red = red['900'];
-
-    const classes = makeStyles(theme => ({
-        clear: {
-            color: _red,
-        },
-        form: {
-            '& .MuiTextField-root': {
-                margin: theme.spacing(1),
-            },
-        },
-    }))();
-
-    const [text, setText] = useState('');
-    const [to, setTo] = useState('');
-    const [from, setFrom] = useState('');
-    const {t} = useTranslation('send');
-    const $textarea = useRef();
-
-    const onClear = () => {
+    const handleClear = () => {
         setText('');
 
         setDefaults();
@@ -73,14 +72,14 @@ export const Send = () => {
 
         dispatch(addSnackbar(await sendSms({text, to, from})));
     }}>
-        <h1>{t('Send SMS')}</h1>
+        <h1>{t('h1')}</h1>
 
         <MessageToolbar onAction={setText} textarea={$textarea.current!}/>
 
         <TextField
             fullWidth
-            label={t('Message Content')}
-            helperText={t('This defines the actual SMS content.')}
+            label={t('label')}
+            helperText={t('helperText')}
             inputRef={$textarea}
             multiline
             onChange={ev => setText(ev.target.value)}
@@ -89,18 +88,26 @@ export const Send = () => {
             value={text}
         />
 
-        <To onChange={to => setTo(to)} value={to}/>
+        <To onChange={to => dispatch(setTo(to))} value={to}/>
 
         <From onChange={from => setFrom(from)} value={from}/>
 
-        <ButtonGroup fullWidth variant='contained'>
-            <IconButton aria-label={t('Clear')} className={classes.clear} onClick={onClear}>
-                <ClearIcon/>
-            </IconButton>
+        <Grid container>
+            <Grid item xs={3}>
+                <Button variant='outlined' endIcon={<ClearIcon/>} fullWidth aria-label={t('clear')}
+                        className={classes.clear}
+                        onClick={handleClear}>
+                    {t('clear')}
+                </Button>
+            </Grid>
 
-            <Button color='primary' disabled={!text.length} type='submit'>
-                {t('Send')}
-            </Button>
-        </ButtonGroup>
+            <Grid item xs={9}>
+                <Button variant='outlined' endIcon={<SendIcon/>} fullWidth color='primary' disabled={!text.length}
+                        type='submit'>
+                    {t('send')}
+                </Button>
+            </Grid>
+
+        </Grid>
     </form>;
 };

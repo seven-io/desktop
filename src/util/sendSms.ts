@@ -1,4 +1,4 @@
-import Sms77Client, {SmsParams} from 'sms77-client';
+import Sms77Client, {SmsJsonResponse, SmsParams} from 'sms77-client';
 
 import {notify} from './notify';
 import {LocalStore} from './LocalStore';
@@ -8,27 +8,6 @@ export type SendSmsProps = {
     to: string
     from: string
 }
-
-export type SmsJsonResponse = {
-    debug: 'true' | 'false'
-    balance: number
-    messages: [{
-        encoding: string
-        error: string | null
-        error_text: string | null
-        id: string,
-        messages?: string[]
-        parts: number
-        price: number,
-        recipient: string
-        sender: string
-        success: boolean
-        text: string
-    }],
-    sms_type: 'direct' | 'economy'
-    success: string
-    total_price: number
-};
 
 export type SmsDump = { res: SmsJsonResponse, notification: string, errors: string[], opts: SmsParams };
 
@@ -76,7 +55,7 @@ export const sendSms = async ({text, to, from}: SendSmsProps): Promise<string> =
 
     res = await (new Sms77Client(apiKey as string, 'desktop')).sms(opts);
 
-    const {balance, messages, sms_type, success, total_price} = res;
+    const {balance, messages, sms_type, success, total_price} = res as SmsJsonResponse;
 
     if (100 === Number.parseInt(success)) {
         lines.push(
@@ -104,7 +83,7 @@ export const sendSms = async ({text, to, from}: SendSmsProps): Promise<string> =
 
     const notification = lines.join('\n');
 
-    const dump: SmsDump = {res, notification, errors, opts};
+    const dump: SmsDump = {res: res as SmsJsonResponse, notification, errors, opts};
 
     LocalStore.append('history', dump);
 

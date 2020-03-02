@@ -5,8 +5,8 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import {ThemeProvider} from '@material-ui/core/styles';
 import {Provider} from 'react-redux';
 
-import './i18n'
-import {Layout} from './components/Layout';
+import './i18n';
+import {Layout} from './components/Layout/Layout';
 import theme from './theme';
 import {store} from './store';
 

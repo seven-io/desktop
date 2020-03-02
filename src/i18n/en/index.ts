@@ -3,11 +3,13 @@ import {messageToolbar} from './messageToolbar';
 import {system} from './system';
 import {history} from './history';
 import {contacts} from './contacts';
+import {pricing} from './pricing';
 
 export default {
     contacts,
     history,
     messageToolbar,
+    pricing,
     send,
     system,
     translation: {
@@ -15,6 +17,7 @@ export default {
         'SMS': 'SMS',
         'options': 'Options',
         'support': 'Support',
+        'pricing': 'Pricing',
         'documentation': 'Documentation',
         'senderIdentifier': 'Sender Identifier',
         'onePlusNumberContact': 'One or more number(s) and/or contact(s) separated by comma e.g. +4901234567890,Peter',

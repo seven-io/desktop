@@ -1,19 +1,20 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
+import {useDispatch} from 'react-redux';
 
-import {LocalStore} from '../util/LocalStore';
+import {LocalStore} from '../../util/LocalStore';
 import {ApiKey} from './ApiKey';
-import {From} from './From';
-import {To} from './To';
+import {From} from '../From';
+import {To} from '../To';
 import {Signature} from './Signature';
-import {Configuration, defaultOptions} from '../util/defaultOptions';
+import {Configuration, defaultOptions} from '../../util/defaultOptions';
+import {setTo} from '../../store/actions';
 
 export const Options = () => {
     const $apiKey = useRef();
-
+    const dispatch = useDispatch();
     const {t} = useTranslation();
-
     const classes = makeStyles(theme => ({
         root: {
             '& .MuiTextField-root, .MuiFormControl-root': {
@@ -21,14 +22,7 @@ export const Options = () => {
             },
         },
     }))();
-
     const [state, setState] = useState<Configuration>(defaultOptions);
-
-    const handleChange = ({target: {name, value}}: any) => {
-        setState({...state, [name]: value});
-
-        LocalStore.set(`options.${name}`, value);
-    };
 
     useEffect(() => {
         const options = LocalStore.get('options') as Configuration;
@@ -40,7 +34,13 @@ export const Options = () => {
         }
     }, []);
 
-    return <section>
+    const handleChange = ({target: {name, value}}: any) => {
+        setState({...state, [name]: value});
+
+        LocalStore.set(`options.${name}`, value);
+    };
+
+    return <>
         <h1>Options</h1>
 
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -58,9 +58,13 @@ export const Options = () => {
 
             <From onChange={from => handleChange({target: {name: 'from', value: from}})} value={state.from}/>
 
-            <To onChange={to => handleChange({target: {name: 'to', value: to}})} value={state.to}/>
+            <To onChange={to => {
+                handleChange({target: {name: 'to', value: to}});
+
+                dispatch(setTo(to));
+            }} value={state.to}/>
 
             <Signature onChange={handleChange} signature={state.signature}/>
         </form>
-    </section>;
+    </>;
 };

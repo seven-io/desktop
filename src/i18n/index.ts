@@ -1,17 +1,19 @@
 import i18n from 'i18next';
 import {initReactI18next} from 'react-i18next';
 
-import resources from './resources';
+import en from './en';
 
 i18n
-    .use(initReactI18next) // passes i18n down to react-i18next
+    .use(initReactI18next) // pass i18n down to react-i18next
     .init({
-        resources,
+        resources: {
+            en
+        },
 
         lng: 'en',
 
         interpolation: {
-            escapeValue: false, // react already safes from xss
+            escapeValue: false, // react already prevents xss
         },
     })
     .then(() => {

@@ -12,9 +12,10 @@ export type MessageToolbarProps = {
 export const SystemUtils = ({onClick}: MessageToolbarProps) => {
     const {t} = useTranslation('system');
 
-    return <PopupMenu buttonText='System' items={<>
-        {SYSTEM_PAIRS.map((p, i) => <MenuItem key={i} onClick={() => onClick(p.value as string)}>
+    const children = SYSTEM_PAIRS.map((p, i) =>
+        <MenuItem key={i} onClick={() => onClick(p.value as string)}>
             {t(p.name)}
-        </MenuItem>)}
-    </>} identifier='system'/>;
+        </MenuItem>);
+
+    return <PopupMenu buttonText='System' children={children} identifier='system'/>;
 };
