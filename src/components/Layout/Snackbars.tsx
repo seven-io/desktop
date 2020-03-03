@@ -1,37 +1,33 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
+import {useDispatch, useSelector} from 'react-redux';
+import {useTranslation} from 'react-i18next';
 import Snackbar from '@material-ui/core/Snackbar';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
-import {useDispatch, useSelector} from 'react-redux';
 
 import {removeSnackbar} from '../../store/actions';
 import {RootState} from '../../store/reducers';
 
 export const Snackbars = () => {
-    const snackbars = useSelector((s: RootState) => s.snackbars);
-
+    const {t} = useTranslation();
     const dispatch = useDispatch();
 
     const handleClose = (i: number) => dispatch(removeSnackbar(i));
 
-    return snackbars.map((msg: string, i: number) => <Snackbar
-        action={
-            <>
-                <Button color='secondary' size='small' onClick={() => handleClose(i)}>
-                    Cancel
-                </Button>
+    return useSelector((s: RootState) => s.snackbars).map((msg: string, i: number) => {
+        const Action = () => <IconButton aria-label={t('close')} color='inherit' onClick={() => handleClose(i)}
+                                         size='small'>
+            <CloseIcon fontSize='small'/>
+        </IconButton>;
 
-                <IconButton size='small' aria-label='close' color='inherit' onClick={() => handleClose(i)}>
-                    <CloseIcon fontSize='small'/>
-                </IconButton>
-            </>
-        }
-        anchorOrigin={{vertical: 'bottom', horizontal: 'left',}}
-        autoHideDuration={6000}
-        key={i}
-        onClose={() => handleClose(i)}
-        open={true}
-        message={msg}
-    />);
+        return <Snackbar
+            action={<Action/>}
+            anchorOrigin={{vertical: 'bottom', horizontal: 'left',}}
+            autoHideDuration={6000}
+            key={i}
+            onClose={() => handleClose(i)}
+            open={true}
+            message={msg}
+        />;
+    });
 };

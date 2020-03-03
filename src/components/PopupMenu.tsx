@@ -11,7 +11,7 @@ export type MessageToolbarBaseProps = {
 
 export type MessageToolbarProps = PropsWithChildren<MessageToolbarBaseProps>
 
-export const PopupMenu = ({children , identifier, buttonText}: MessageToolbarProps) => {
+export const PopupMenu = ({children, identifier, buttonText}: MessageToolbarProps) => {
     const state: PopupState | {} = {};
     const popupId = `${identifier}-popup`;
     const menuId = `${popupId}-menu`;

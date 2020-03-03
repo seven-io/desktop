@@ -1,18 +1,12 @@
 {
     "compilerOptions": {
-        "baseUrl": ".",
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "jsx": "react",
-        "skipLibCheck": true,
         "module": "commonjs",
         "moduleResolution": "node",
         "outDir": "dist",
-        "paths": {
-            "*": [
-                "node_modules/*"
-            ]
-        },
+        "skipLibCheck": true,
         "sourceMap": true,
         "strict": true
     },

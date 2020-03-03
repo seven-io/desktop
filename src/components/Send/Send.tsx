@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {SyntheticEvent, useEffect, useRef, useState} from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import makeStyles from '@material-ui/core/styles/makeStyles';
@@ -9,13 +9,13 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Grid from '@material-ui/core/Grid';
 import SendIcon from '@material-ui/icons/Send';
 
-import {To} from './To';
-import {From} from './From';
-import {LocalStore} from '../util/LocalStore';
-import {sendSms} from '../util/sendSms';
-import {addSnackbar, setNav, setTo} from '../store/actions';
+import {To} from '../To';
+import {From} from '../From';
+import {LocalStore} from '../../util/LocalStore';
+import {sendSms} from '../../util/sendSms';
+import {addSnackbar, setNav, setTo} from '../../store/actions';
 import {MessageToolbar} from './MessageToolbar';
-import {RootState} from '../store/reducers';
+import {RootState} from '../../store/reducers';
 
 const _red = red['900'];
 
@@ -55,6 +55,12 @@ export const Send = () => {
         setDefaults();
     };
 
+    const handleSubmit = async (e: SyntheticEvent) => {
+        e.preventDefault();
+
+        dispatch(addSnackbar(await sendSms({text, to, from})));
+    };
+
     const setDefaults = () => {
         const signature = LocalStore.get('options.signature') as string;
 
@@ -67,11 +73,7 @@ export const Send = () => {
         setTo(LocalStore.get('options.to') as string);
     };
 
-    return <form className={classes.form} onSubmit={async e => {
-        e.preventDefault();
-
-        dispatch(addSnackbar(await sendSms({text, to, from})));
-    }}>
+    return <form className={classes.form} onSubmit={handleSubmit}>
         <h1>{t('h1')}</h1>
 
         <MessageToolbar onAction={setText} textarea={$textarea.current!}/>
@@ -94,16 +96,15 @@ export const Send = () => {
 
         <Grid container>
             <Grid item xs={3}>
-                <Button variant='outlined' endIcon={<ClearIcon/>} fullWidth aria-label={t('clear')}
-                        className={classes.clear}
-                        onClick={handleClear}>
+                <Button className={classes.clear} endIcon={<ClearIcon/>} fullWidth
+                        onClick={handleClear} variant='outlined'>
                     {t('clear')}
                 </Button>
             </Grid>
 
             <Grid item xs={9}>
-                <Button variant='outlined' endIcon={<SendIcon/>} fullWidth color='primary' disabled={!text.length}
-                        type='submit'>
+                <Button color='primary' disabled={!text.length} endIcon={<SendIcon/>} fullWidth type='submit'
+                        variant='outlined'>
                     {t('send')}
                 </Button>
             </Grid>

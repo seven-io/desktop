@@ -1,22 +1,23 @@
 export const pricing = {
-    noEntries: 'No locally saved pricing found. Click on the reload button to fetch pricing information.',
-    pricing: 'Pricing Information',
+    ariaLabels: {
+        countryTable: 'Country Pricing',
+        network: 'Networks for Country',
+    },
     choices: 'Available',
+    choose: 'Choose a Country',
     chosen: 'In Selection',
-    pricingFor: 'Pricing for {{countNetworks}} network(s) in {{countCountries}} country/countries.',
     code: 'Code',
-    prefix: 'prefix',
-    name: 'name',
-    networks: 'Networks',
-    mcc: 'MCC',
-    mncs: 'MNCS',
-    networkName: 'Network name',
-    price: 'Price',
-    features: 'Features',
     countCountries: 'Number of Countries',
     countNetworks: 'Number of Networks',
-    choose: 'Choose a Country',
-    ariaLabels: {
-        network: 'Networks for Country'
-    }
+    features: 'Features',
+    noEntries: 'No locally saved pricing found. Click on the reload button to fetch pricing information.',
+    pricing: 'Pricing Information',
+    pricingFor: 'Pricing for {{countNetworks}} network(s) in {{countCountries}} country/countries.',
+    prefix: 'prefix',
+    mcc: 'MCC',
+    mncs: 'MNCS',
+    name: 'name',
+    networkName: 'Network name',
+    networks: 'Networks',
+    price: 'Price',
 };

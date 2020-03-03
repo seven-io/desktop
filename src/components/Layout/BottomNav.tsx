@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import HistoryIcon from '@material-ui/icons/History';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
+import PolicyIcon from '@material-ui/icons/Policy';
 
 import {setNav} from '../../store/actions';
 import {Route} from '../../store/reducers/nav';
@@ -19,7 +20,7 @@ export const BottomNav = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
     const classes = makeStyles({
-        bottomNavigation: {
+        root: {
             bottom: 0,
             justifyContent: 'space-evenly',
             position: 'fixed',
@@ -28,12 +29,14 @@ export const BottomNav = () => {
     })();
 
     return <BottomNavigation
-        className={classes.bottomNavigation}
+        className={classes.root}
         onChange={(e: any, newNavId: Route) => dispatch(setNav(newNavId))}
         showLabels
         value={navId}
     >
-        <BottomNavigationAction label={t('SMS')} value='send' icon={<SmsIcon/>}/>
+        <BottomNavigationAction label={t('sms')} value='send' icon={<SmsIcon/>}/>
+
+        <BottomNavigationAction label={t('lookup')} value='lookup' icon={<PolicyIcon/>}/>
 
         <BottomNavigationAction label={t('options')} value='options' icon={<SettingsIcon/>}/>
 

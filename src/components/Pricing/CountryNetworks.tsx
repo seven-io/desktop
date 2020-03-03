@@ -7,9 +7,9 @@ import TableCell from '@material-ui/core/TableCell';
 import {useTranslation} from 'react-i18next';
 import {CountryPricing} from 'sms77-client';
 import Chip from '@material-ui/core/Chip';
+import Divider from '@material-ui/core/Divider';
 
 import {numberFormatter} from '../../util/numberFormatter';
-import Divider from '@material-ui/core/Divider';
 
 export type CountryNetworksProps = {
     networks: CountryPricing['networks']

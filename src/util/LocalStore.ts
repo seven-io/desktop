@@ -1,13 +1,32 @@
 import Store from 'electron-store';
 
-import {defaultOptions} from './defaultOptions';
+import {IOptions} from '../components/Options/Options';
+import {LookupResponse} from '../components/Lookup/Lookup';
+import {SmsDump} from './sendSms';
 
-const defaults = {
-    history: [],
-    options: defaultOptions,
+const options: IOptions = {
+    apiKey: '',
+    from: 'sms77io',
+    signature: '',
+    signaturePosition: 'append',
+    to: '',
 };
 
-const localStore = new Store({defaults});
+export type ILocalStore = {
+    history: SmsDump[],
+    lookups: LookupResponse[],
+    options: IOptions
+}
+
+const defaults: ILocalStore = {
+    history: [],
+    lookups: [],
+    options,
+};
+
+const localStore = new Store<ILocalStore>({
+    defaults,
+});
 
 export class LocalStore {
     static get(mixed: any): { [k: string]: any } | string | number | undefined {

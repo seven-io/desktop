@@ -2,7 +2,7 @@ import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
 import {useTranslation} from 'react-i18next';
 
-import {PopupMenu} from './PopupMenu';
+import {PopupMenu} from '../PopupMenu';
 
 export type MessageToolbarProps = {
     onClick: (label: string) => void

@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
@@ -7,9 +7,16 @@ import {LocalStore} from '../../util/LocalStore';
 import {ApiKey} from './ApiKey';
 import {From} from '../From';
 import {To} from '../To';
-import {Signature} from './Signature';
-import {Configuration, defaultOptions} from '../../util/defaultOptions';
+import {Signature, SignaturePosition} from './Signature';
 import {setTo} from '../../store/actions';
+
+export type IOptions = {
+    apiKey: string,
+    from: string,
+    signature: string,
+    signaturePosition: SignaturePosition,
+    to: string,
+};
 
 export const Options = () => {
     const $apiKey = useRef();
@@ -22,16 +29,10 @@ export const Options = () => {
             },
         },
     }))();
-    const [state, setState] = useState<Configuration>(defaultOptions);
+    const [state, setState] = useState<IOptions>(LocalStore.get('options') as IOptions);
 
     useEffect(() => {
-        const options = LocalStore.get('options') as Configuration;
-
-        setState(options);
-
-        if (!options.apiKey.length) {
-            ($apiKey.current! as HTMLInputElement).focus();
-        }
+        !state.apiKey.length && ($apiKey.current! as HTMLInputElement).focus();
     }, []);
 
     const handleChange = ({target: {name, value}}: any) => {

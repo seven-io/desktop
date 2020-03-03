@@ -50,7 +50,7 @@ export const TopNav = () => {
             <ButtonGroup color='primary' aria-label={t('socialsBtnGroup')}>
                 <Button className={classes.link} size='small'
                         onClick={() => shell.openExternal('https://www.facebook.com/sms77.io/')}>
-                    <FacebookIcon />
+                    <FacebookIcon/>
                 </Button>
 
                 <Button className={classes.link}

@@ -42,7 +42,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^3.4.2",
-    "electron": "^8.0.2",
+    "electron": "^8.0.3",
     "electron-devtools-installer": "^2.2.4",
     "file-loader": "^5.1.0",
     "fork-ts-checker-webpack-plugin": "^4.0.5",
@@ -54,7 +54,7 @@
     "ts-loader": "^6.2.1",
     "typeface-roboto": "^0.0.75",
     "typescript": "^3.8.3",
-    "webpack": "^4.41.6"
+    "webpack": "^4.42.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.8.4",
@@ -72,7 +72,7 @@
     "react-i18next": "^11.3.3",
     "react-redux": "^7.2.0",
     "redux": "^4.0.5",
-    "sms77-client": "^1.4.2",
+    "sms77-client": "^1.8.4",
     "smshelper": "^0.1.0"
   },
   "optionalDependencies": {
