@@ -6,14 +6,13 @@ import TableCell from '@material-ui/core/TableCell';
 import Tooltip from '@material-ui/core/Tooltip';
 
 import {numberFormatter} from '../../util/numberFormatter';
+import {BaseHistory} from '../BaseHistory/BaseHistory';
 import {BoolChip} from '../BoolChip';
-import {BaseHistory} from './BaseHistory';
 
 export const History = () => {
     const {t} = useTranslation('history');
 
     return <BaseHistory
-        nsKey={'history'}
         path='.res.messages'
         rowHandler={(row: SmsMessage, i: number) =>
             <React.Fragment key={i}>

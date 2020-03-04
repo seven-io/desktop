@@ -10,6 +10,7 @@ export const Documentation = () => {
         <webview id='docs' src='https://www.sms77.io/en/docs/gateway/http-api/' style={{height: '65vh'}}/>
 
         <h2>{t('help')}</h2>
+
         <p dangerouslySetInnerHTML={{__html: t('mailUs')}}/>
     </section>;
 };

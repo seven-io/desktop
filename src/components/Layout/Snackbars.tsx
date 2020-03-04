@@ -11,12 +11,14 @@ import {RootState} from '../../store/reducers';
 export const Snackbars = () => {
     const {t} = useTranslation();
     const dispatch = useDispatch();
-
     const handleClose = (i: number) => dispatch(removeSnackbar(i));
 
     return useSelector((s: RootState) => s.snackbars).map((msg: string, i: number) => {
-        const Action = () => <IconButton aria-label={t('close')} color='inherit' onClick={() => handleClose(i)}
-                                         size='small'>
+        const Action = () => <IconButton
+            aria-label={t('close')}
+            color='inherit'
+            onClick={() => handleClose(i)}
+            size='small'>
             <CloseIcon fontSize='small'/>
         </IconButton>;
 

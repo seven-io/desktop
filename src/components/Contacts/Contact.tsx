@@ -1,11 +1,12 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
+import {Contact as IContact} from 'sms77-client/dist/types';
+
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import {useTranslation} from 'react-i18next';
-import {Contact as IContact} from 'sms77-client';
 
 export type ContactProps = {
     contact: IContact

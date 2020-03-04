@@ -1,7 +1,7 @@
 import Store from 'electron-store';
 
-import {IOptions} from '../components/Options/Options';
-import {LookupResponse} from '../components/Lookup/Lookup';
+import {LookupResponse} from '../components/Lookup/types';
+import {IOptions} from '../components/Options/types';
 import {SmsDump} from './sendSms';
 
 const options: IOptions = {

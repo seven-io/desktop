@@ -1,6 +1,6 @@
-import MenuItem from '@material-ui/core/MenuItem';
-import Picker, {IEmojiPickerProps} from 'emoji-picker-react';
 import React from 'react';
+import Picker, {IEmojiPickerProps} from 'emoji-picker-react';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import {PopupMenu} from '../PopupMenu';
 

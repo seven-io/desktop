@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import TextField from '@material-ui/core/TextField';
 import {useTranslation} from 'react-i18next';
+import TextField from '@material-ui/core/TextField';
 
 export type FromProps = {
     value: string,

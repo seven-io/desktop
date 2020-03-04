@@ -1,6 +1,6 @@
-import React, {useEffect, useState, SyntheticEvent} from 'react';
-import TextField, {TextFieldProps} from '@material-ui/core/TextField';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
+import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 
 export type ApiKeyProps = TextFieldProps & {
     value: string,

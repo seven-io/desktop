@@ -1,22 +1,15 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
+import {makeStyles} from '@material-ui/core/styles';
 
 import {LocalStore} from '../../util/LocalStore';
+import {setTo} from '../../store/actions';
 import {ApiKey} from './ApiKey';
 import {From} from '../From';
 import {To} from '../To';
-import {Signature, SignaturePosition} from './Signature';
-import {setTo} from '../../store/actions';
-
-export type IOptions = {
-    apiKey: string,
-    from: string,
-    signature: string,
-    signaturePosition: SignaturePosition,
-    to: string,
-};
+import {Signature} from './Signature';
+import {IOptions} from './types';
 
 export const Options = () => {
     const $apiKey = useRef();

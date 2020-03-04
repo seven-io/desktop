@@ -1,5 +1,4 @@
 import {send} from './send';
-import {messageToolbar} from './messageToolbar';
 import {system} from './system';
 import {history} from './history';
 import {contacts} from './contacts';
@@ -10,7 +9,6 @@ export default {
     contacts,
     history,
     lookup,
-    messageToolbar,
     pricing,
     send,
     system,

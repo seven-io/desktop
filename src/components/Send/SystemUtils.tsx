@@ -1,6 +1,6 @@
 import React from 'react';
-import MenuItem from '@material-ui/core/MenuItem';
 import {useTranslation} from 'react-i18next';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import {PopupMenu} from '../PopupMenu';
 import {SYSTEM_PAIRS} from '../System';

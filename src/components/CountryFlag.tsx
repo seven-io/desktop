@@ -14,7 +14,5 @@ export const CountryFlag = ({pricing}: CountryFlagProps) => {
 
     const flag = pricing.countryCode ? toFlag() : 'eu';
 
-    const className = `flag-icon flag-icon-${flag}`;
-
-    return <span className={className}/>;
+    return <span className={`flag-icon flag-icon-${flag}`}/>;
 };

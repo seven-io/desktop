@@ -1,4 +1,5 @@
 import React from 'react';
+import {useDispatch} from 'react-redux';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -17,7 +18,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import DescriptionIcon from '@material-ui/icons/Description';
-import {useDispatch} from 'react-redux';
 
 import {System} from '../System';
 import {setNav} from '../../store/actions';

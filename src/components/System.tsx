@@ -1,16 +1,16 @@
 import React from 'react';
+import {useTranslation} from 'react-i18next';
 import os from 'os';
+import electron from 'electron';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import {useTranslation} from 'react-i18next';
-import electron from 'electron';
+
+import {toMegaBytes} from '../util/toMegaBytes';
 
 const userInfo = os.userInfo();
-
-const toMB = (bytes: number) => (bytes / (1024 * 1024)).toFixed(2) + ' MB';
 
 export const SYSTEM_PAIRS: { name: string, value: string | number }[] = [
     {
@@ -47,7 +47,7 @@ export const SYSTEM_PAIRS: { name: string, value: string | number }[] = [
     },
     {
         name: 'ramFree',
-        value: toMB(os.freemem()),
+        value: toMegaBytes(os.freemem()),
     },
     {
         name: 'homeDir',
@@ -71,7 +71,7 @@ export const SYSTEM_PAIRS: { name: string, value: string | number }[] = [
     },
     {
         name: 'ramTotal',
-        value: toMB(os.totalmem()),
+        value: toMegaBytes(os.totalmem()),
     },
     {
         name: 'osType',

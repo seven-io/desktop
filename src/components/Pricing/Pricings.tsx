@@ -1,20 +1,20 @@
-import React, {useEffect, useState, ChangeEvent} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
+import {useDispatch} from 'react-redux';
+import Sms77Client, {CountryPricing, PricingResponse} from 'sms77-client';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import {useTranslation} from 'react-i18next';
-import Sms77Client, {CountryPricing, PricingResponse} from 'sms77-client';
-import {useDispatch} from 'react-redux';
 import Table from '@material-ui/core/Table';
 import TextField, {TextFieldProps} from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 import {LocalStore} from '../../util/LocalStore';
 import {addSnackbar, setNav} from '../../store/actions';
-import {Pricing} from './Pricing';
 import {CountryFlag} from '../CountryFlag';
-import Button from '@material-ui/core/Button';
+import {Pricing} from './Pricing';
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing');
@@ -51,6 +51,8 @@ export const Pricings = () => {
         }
     };
 
+    const populationFields: (keyof PricingResponse)[] = ['countCountries', 'countNetworks'];
+
     return <>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
             <h1 style={{display: 'inline-flex'}}>{t('pricing')}</h1>
@@ -61,27 +63,18 @@ export const Pricings = () => {
         </div>
 
         <TableContainer style={{marginBottom: '2em'}}>
-            <Table size='small' aria-label={t('ariaLabels.countryTable')}>
+            <Table aria-label={t('ariaLabels.countryTable')} size='small'>
                 <TableBody>
-                    <TableRow>
+
+                    {populationFields.map((o, i) => <TableRow key={i}>
                         <TableCell component='th' scope='row'>
-                            {t('countCountries')}
+                            {t(o)}
                         </TableCell>
 
                         <TableCell align='right'>
-                            {pricing.countCountries}
+                            {pricing[o]}
                         </TableCell>
-                    </TableRow>
-
-                    <TableRow>
-                        <TableCell component='th' scope='row'>
-                            {t('countNetworks')}
-                        </TableCell>
-
-                        <TableCell align='right'>
-                            {pricing.countNetworks}
-                        </TableCell>
-                    </TableRow>
+                    </TableRow>)}
                 </TableBody>
             </Table>
         </TableContainer>

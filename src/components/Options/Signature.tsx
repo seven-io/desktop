@@ -7,6 +7,8 @@ export type SignatureProps = {
     signature: string
 }
 
+export type SignaturePosition = 'append' | 'prepend';
+
 export const Signature = ({onChange, signature}: SignatureProps) => {
     const {t} = useTranslation();
 
@@ -19,4 +21,3 @@ export const Signature = ({onChange, signature}: SignatureProps) => {
         value={signature}
     />;
 };
-export type SignaturePosition = 'append' | 'prepend';

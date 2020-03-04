@@ -1,16 +1,16 @@
 {
-    "compilerOptions": {
-        "esModuleInterop": true,
-        "experimentalDecorators": true,
-        "jsx": "react",
-        "module": "commonjs",
-        "moduleResolution": "node",
-        "outDir": "dist",
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "strict": true
-    },
-    "include": [
-        "src/**/*"
-    ]
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "jsx": "react",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "strict": true
+  },
+  "include": [
+    "src/**/*"
+  ]
 }
