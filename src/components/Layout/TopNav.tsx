@@ -1,5 +1,4 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -16,15 +15,10 @@ import HelpIcon from '@material-ui/icons/HelpOutline';
 import ComputerIcon from '@material-ui/icons/Computer';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
-import DescriptionIcon from '@material-ui/icons/Description';
 
 import {System} from '../System';
-import {setNav} from '../../store/actions';
 
 export const TopNav = () => {
-    const dispatch = useDispatch();
-
     const [systemDialogOpen, setSystemDialogOpen] = React.useState(false);
 
     const {t} = useTranslation();
@@ -80,10 +74,6 @@ export const TopNav = () => {
 
                         <System/>
                     </Dialog>
-                </Button>
-
-                <Button className={classes.link} onClick={() => dispatch(setNav('pricing'))}>
-                    <LocalAtmIcon/>
                 </Button>
 
                 <Button className={classes.link}
