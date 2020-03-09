@@ -101,7 +101,9 @@ export const Send = () => {
                     </Button>
                 </Grid>
 
-                <Grid item xs={9}>
+                <Grid item xs={1} />
+
+                <Grid item xs={8}>
                     <Button color='primary' disabled={!text.length} endIcon={<SendIcon/>} fullWidth type='submit'
                             variant='outlined'>
                         {t('send')}
