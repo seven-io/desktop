@@ -25,4 +25,10 @@ module.exports = [
             },
         }
     },
+    {
+        test: /\.(woff|woff2|eot|ttf|otf|png|jpg|jpeg|webp|svg)$/,
+        use: [
+            'file-loader',
+        ],
+    },
 ];

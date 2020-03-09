@@ -1,10 +1,11 @@
 const path = require('path');
 const fs = require('fs');
+const assert = require('assert');
+
 const pkg = require('./package.json');
 
-const icon = path.join(__dirname, './src/assets/img/logos/128x128.png');
-
-console.assert(fs.existsSync(icon));
+const icon = path.join(__dirname, './src/assets/img/128x128.png');
+assert.ok(fs.existsSync(icon));
 
 module.exports = {
     makers: [

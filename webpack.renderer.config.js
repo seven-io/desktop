@@ -6,13 +6,6 @@ rules.push({
     use: [{loader: 'style-loader'}, {loader: 'css-loader'}, {loader: 'sass-loader'}],
 });
 
-rules.push({
-    test: /\.(woff|woff2|eot|ttf|otf|png|jpg|jpeg|webp|svg)$/,
-    use: [
-        'file-loader',
-    ],
-});
-
 module.exports = {
     module: {
         rules,
