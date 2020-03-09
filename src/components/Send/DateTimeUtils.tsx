@@ -9,46 +9,45 @@ export type MessageToolbarProps = {
 }
 
 export const DateTimeUtils = ({onClick}: MessageToolbarProps) => {
-    const {t} = useTranslation('messageToolbar');
+    const {t} = useTranslation('send');
 
     return <PopupMenu buttonText='Date/Time' identifier='date-time'>
         <MenuItem onClick={() => onClick(Date.now().toString())}>
-            {t('timestamp')}&nbsp;<code>Date.now().toString()</code>
+            {t('toolbar.timestamp')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toString())}>
-            {t('date')}&nbsp;<code>new Date().toString()</code>
+            {t('toolbar.date')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toLocaleString())}>
-            {t('locale')}&nbsp;<code>new Date().toLocaleString()</code>
+            {t('toolbar.locale')}
         </MenuItem>
 
         <MenuItem
             onClick={() => onClick(new Date().toLocaleDateString())}>
-            {t('locale')} {t('date')}&nbsp;<code>new Date().toLocaleDateString()</code>
+            {t('toolbar.locale')} {t('toolbar.date')}
         </MenuItem>
 
         <MenuItem
             onClick={() => onClick(new Date().toLocaleTimeString())}>
-            {t('locale')} {t('time')}&nbsp;
-            <code>new Date().toLocaleTimeString()</code>
+            {t('toolbar.locale')} {t('toolbar.time')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toDateString())}>
-            {t('date')}&nbsp;<code>new Date().toDateString()</code>
+            {t('toolbar.date')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toISOString())}>
-            ISO&nbsp;<code>new Date().toISOString()</code>
+            ISO {t('toolbar.date')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toTimeString())}>
-            {t('time')}&nbsp;<code>new Date().toTimeString()</code>
+            {t('toolbar.time')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toUTCString())}>
-            UTC&nbsp;<code>new Date().toUTCString()</code>
+            UTC {t('toolbar.date')}
         </MenuItem>
     </PopupMenu>;
 };
