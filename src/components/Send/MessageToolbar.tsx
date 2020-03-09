@@ -19,7 +19,7 @@ export const MessageToolbar = ({onAction, textarea}: MessageToolbarProps) => {
         onAction(textarea!.value);
     };
 
-    return <ButtonGroup variant='text' color='primary' aria-label={t('toolbar.label')}>
+    return <ButtonGroup variant='text' aria-label={t('toolbar.label')}>
         <EmojiPicker onEmojiClick={(e, data) => setRangeText(data.emoji)}/>
 
         <DateTimeUtils onClick={s => setRangeText(s)}/>
