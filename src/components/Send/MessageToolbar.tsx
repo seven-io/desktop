@@ -4,7 +4,6 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 
 import {EmojiPicker} from './EmojiPicker';
 import {DateTimeUtils} from './DateTimeUtils';
-import {SystemUtils} from './SystemUtils';
 
 export type MessageToolbarProps = {
     onAction: (msg: string) => void
@@ -24,7 +23,5 @@ export const MessageToolbar = ({onAction, textarea}: MessageToolbarProps) => {
         <EmojiPicker onEmojiClick={(e, data) => setRangeText(data.emoji)}/>
 
         <DateTimeUtils onClick={s => setRangeText(s)}/>
-
-        <SystemUtils onClick={s => setRangeText(s)}/>
     </ButtonGroup>;
 };
