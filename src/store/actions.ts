@@ -20,3 +20,8 @@ export const setTo = (to: string) => ({
     type: 'SET_TO',
     to,
 });
+
+export const setBackdrop = (backdrop: boolean) => ({
+    type: 'SET_BACKDROP',
+    backdrop,
+});

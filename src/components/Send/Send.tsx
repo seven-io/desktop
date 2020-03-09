@@ -12,7 +12,7 @@ import {To} from '../To';
 import {From} from '../From';
 import {LocalStore} from '../../util/LocalStore';
 import {sendSms} from '../../util/sendSms';
-import {addSnackbar, setNav, setTo} from '../../store/actions';
+import {addSnackbar, setBackdrop, setNav, setTo} from '../../store/actions';
 import {RootState} from '../../store/reducers';
 import {History} from './History';
 import {MessageToolbar} from './MessageToolbar';
@@ -56,7 +56,9 @@ export const Send = () => {
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
+        dispatch(setBackdrop(true));
         dispatch(addSnackbar(await sendSms({text, to, from})));
+        dispatch(setBackdrop(false));
     };
 
     const setDefaults = () => {

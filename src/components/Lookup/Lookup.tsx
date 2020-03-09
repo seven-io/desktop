@@ -14,7 +14,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-import {addSnackbar, setNav} from '../../store/actions';
+import {addSnackbar, setBackdrop, setNav} from '../../store/actions';
 import {LocalStore} from '../../util/LocalStore';
 import {toString} from '../../util/toString';
 import {History} from './History';
@@ -43,7 +43,9 @@ export const Lookup = () => {
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
+        dispatch(setBackdrop(true));
         const res = await (new Sms77Client(apiKey)).lookup({json: true, number, type}) as LookupResponse;
+        dispatch(setBackdrop(false));
 
         LocalStore.append('lookups', res);
 

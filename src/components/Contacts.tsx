@@ -10,7 +10,7 @@ import List from '@material-ui/core/List';
 
 import {notify} from '../util/notify';
 import {LocalStore} from '../util/LocalStore';
-import {addSnackbar, setNav, setTo} from '../store/actions';
+import {addSnackbar, setBackdrop, setNav, setTo} from '../store/actions';
 
 export const Contacts = () => {
     const {t} = useTranslation('contacts');
@@ -35,9 +35,10 @@ export const Contacts = () => {
     }, []);
 
     const getAndStore = async () => {
-        const client = new Sms77Client(apiKey as string);
-
-        const contacts = await client.contacts({action: 'read', json: true,}) as Sms77Contact[];
+        dispatch(setBackdrop(true));
+        const contacts = await (new Sms77Client(apiKey as string))
+            .contacts({action: 'read', json: true,}) as Sms77Contact[];
+        dispatch(setBackdrop(false));
 
         LocalStore.set('contacts', contacts);
 

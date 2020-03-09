@@ -12,20 +12,18 @@ import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import {LocalStore} from '../../util/LocalStore';
-import {addSnackbar, setNav} from '../../store/actions';
+import {addSnackbar, setBackdrop, setNav} from '../../store/actions';
 import {CountryFlag} from '../CountryFlag';
 import {Pricing} from './Pricing';
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing');
     const [country, setCountry] = useState<CountryPricing | null>(null);
-
     const dispatch = useDispatch();
     const apiKey = LocalStore.get('options.apiKey');
+    const [pricing, setPricing] = useState<PricingResponse>(LocalStore.get('pricing') as PricingResponse);
 
     useEffect(() => {
-        console.log({apiKey});
-
         if (!apiKey || '' === apiKey) {
             dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
 
@@ -34,25 +32,21 @@ export const Pricings = () => {
             return;
         }
 
-        getAndStore()
-            .then()
-            .catch(e => console.error(e));
+        if (!pricing) {
+            getAndStore()
+                .then()
+                .catch(e => console.error(e));
+        }
     });
 
-    const [pricing, setPricing] = useState<PricingResponse>(LocalStore.get('pricing') as PricingResponse);
-
     const getAndStore = async () => {
-        let pricing = LocalStore.get('pricing') as PricingResponse;
+        dispatch(setBackdrop(true));
+        const pricing = await (new Sms77Client(apiKey as string)).pricing({format: 'json'}) as PricingResponse;
+        dispatch(setBackdrop(false));
 
-        if (!Array.isArray(pricing.countries)) {
-            const client = new Sms77Client(apiKey as string);
+        LocalStore.set('pricing', pricing);
 
-            pricing = await client.pricing({format: 'json'}) as PricingResponse;
-
-            LocalStore.set('pricing', pricing);
-
-            setPricing(pricing);
-        }
+        setPricing(pricing);
     };
 
     const populationFields: (keyof PricingResponse)[] = ['countCountries', 'countNetworks'];
