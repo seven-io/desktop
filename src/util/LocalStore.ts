@@ -3,6 +3,7 @@ import Store from 'electron-store';
 import {LookupResponse} from '../components/Lookup/types';
 import {IOptions} from '../components/Options/types';
 import {SmsDump} from './sendSms';
+import {Contact} from 'sms77-client';
 
 const options: IOptions = {
     apiKey: '',
@@ -13,12 +14,14 @@ const options: IOptions = {
 };
 
 export type ILocalStore = {
+    contacts: Contact[],
     history: SmsDump[],
     lookups: LookupResponse[],
-    options: IOptions
+    options: IOptions,
 }
 
 const defaults: ILocalStore = {
+    contacts: [],
     history: [],
     lookups: [],
     options,

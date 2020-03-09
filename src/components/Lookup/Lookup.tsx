@@ -34,7 +34,7 @@ export const Lookup = () => {
 
     useEffect(() => {
         if ('' === apiKey || !apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey')));
+            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
 
             dispatch(setNav('options'));
         }

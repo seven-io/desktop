@@ -1,10 +1,10 @@
 export const contacts = {
     contacts: 'Contacts',
-    noEntries: 'No contacts could be found.',
-    reload: 'Reload',
-    nick: 'Nick',
     email: 'Email',
     id: 'ID',
+    nick: 'Nick',
+    noEntries: 'No contacts could be found.',
     number: 'Number',
+    reload: 'Reload',
     send: 'Send SMS',
 };

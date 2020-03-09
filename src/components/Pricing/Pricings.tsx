@@ -24,16 +24,20 @@ export const Pricings = () => {
     const apiKey = LocalStore.get('options.apiKey');
 
     useEffect(() => {
-        if ('' === apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey')));
+        console.log({apiKey});
+
+        if (!apiKey || '' === apiKey) {
+            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
 
             dispatch(setNav('options'));
-        } else {
-            getAndStore()
-                .then()
-                .catch(e => console.error(e));
+
+            return;
         }
-    }, []);
+
+        getAndStore()
+            .then()
+            .catch(e => console.error(e));
+    });
 
     const [pricing, setPricing] = useState<PricingResponse>(LocalStore.get('pricing') as PricingResponse);
 
@@ -59,14 +63,14 @@ export const Pricings = () => {
 
             <Button onClick={() => getAndStore()}>
                 {t('reload')}
-            </Button>
+            </Button>^
         </div>
 
         <TableContainer style={{marginBottom: '2em'}}>
             <Table aria-label={t('ariaLabels.countryTable')} size='small'>
                 <TableBody>
 
-                    {populationFields.map((o, i) => <TableRow key={i}>
+                    {pricing && populationFields.map((o, i) => <TableRow key={i}>
                         <TableCell component='th' scope='row'>
                             {t(o)}
                         </TableCell>
@@ -79,7 +83,7 @@ export const Pricings = () => {
             </Table>
         </TableContainer>
 
-        <Autocomplete
+        {pricing && <Autocomplete
             getOptionLabel={(o: CountryPricing) => `${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
             onChange={(ev: ChangeEvent<{}>, cP: CountryPricing | null) => setCountry(cP)}
             options={pricing.countries}
@@ -90,7 +94,7 @@ export const Pricings = () => {
                 label={t('choose')}
                 variant='outlined'
             />}
-        />
+        />}
 
         {country && <Pricing pricing={country}/>}
     </>;

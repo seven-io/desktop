@@ -18,7 +18,7 @@ export const Contacts = () => {
 
     useEffect(() => {
         if ('' === apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey')));
+            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
 
             dispatch(setNav('options'));
         } else {
@@ -57,6 +57,7 @@ export const Contacts = () => {
                     {contacts.map((c, i) => <Grid key={i} item md={6} lg={4}>
                         <Button size='small' fullWidth disabled={0 === c.number.length} onClick={() => {
                             dispatch(setTo(c.number));
+
                             dispatch(setNav('send'));
                         }} variant='outlined'>{t('send')}</Button>
 

@@ -39,7 +39,7 @@ export const Send = () => {
         const apiKey = LocalStore.get('options.apiKey') as string;
 
         if ('' === apiKey || !apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey')));
+            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
 
             dispatch(setNav('options'));
         }

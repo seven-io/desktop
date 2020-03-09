@@ -26,6 +26,7 @@ export default {
         onePlusRecipient: 'Recipient(s)',
         options: 'Options',
         optionsSavedAutomatically: 'All options are saved automatically after changing.',
+        pleaseSetApiKey: 'Please set your API key from sms77.io.',
         pricing: 'Pricing',
         senderIdentifier: 'Sender Identifier',
         signatureExplanation: 'Signature added to all outgoing messages',
