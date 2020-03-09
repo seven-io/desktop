@@ -1,4 +1,4 @@
-export type Route = 'send' | 'options' | 'docs' | 'contacts' | 'pricing' | 'lookup'
+export type Route = 'send' | 'options' | 'contacts' | 'pricing' | 'lookup'
 
 export default (state: Route = 'send', action: any) => {
     switch (action.type) {

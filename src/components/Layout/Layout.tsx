@@ -8,7 +8,6 @@ import {BottomNav} from './BottomNav';
 import {RootState} from '../../store/reducers';
 import {Options} from '../Options/Options';
 import {Send} from '../Send/Send';
-import {Documentation} from '../Documentation';
 import {Contacts} from '../Contacts/Contacts';
 import {Pricings} from '../Pricing/Pricings';
 import {Lookup} from '../Lookup/Lookup';
@@ -31,9 +30,7 @@ export const Layout = () => {
                         ? <Contacts/>
                         : 'pricing' === nav
                             ? <Pricings/>
-                            : 'lookup' === nav
-                                ? <Lookup/>
-                                : <Documentation/>
+                            : <Lookup/>
             }
         </Container>
 

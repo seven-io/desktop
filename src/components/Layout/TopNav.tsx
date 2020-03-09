@@ -90,10 +90,6 @@ export const TopNav = () => {
                         onClick={() => shell.openExternal('https://www.sms77.io/en/company/contact/')}>
                     <HelpIcon/>
                 </Button>
-
-                <Button className={classes.link} onClick={() => dispatch(setNav('docs'))}>
-                    <DescriptionIcon/>
-                </Button>
             </ButtonGroup>
         </Toolbar>
     </AppBar>;
