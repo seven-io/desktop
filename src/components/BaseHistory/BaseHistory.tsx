@@ -8,12 +8,13 @@ import {usePrevious} from '../../util/usePrevious';
 import {Navigation} from './Navigation';
 
 export type BaseHistoryProps = {
+    onNavigation?: (isCurrent: boolean) => void
     path?: string
     rowHandler: (row: any, i: number) => any
     storeKey: keyof ILocalStore
 }
 
-export const BaseHistory = ({path, storeKey, rowHandler}: BaseHistoryProps) => {
+export const BaseHistory = ({onNavigation, path, rowHandler, storeKey}: BaseHistoryProps) => {
     const list = LocalStore.get(storeKey) as any;
     const previousList = usePrevious<any>(list);
     const getLastIndex = () => list.length - 1;
@@ -27,7 +28,13 @@ export const BaseHistory = ({path, storeKey, rowHandler}: BaseHistoryProps) => {
     }, [list]);
 
     return <>
-        {entry && <Navigation index={index} list={list} onNavigation={(n) => setIndex(n)}/>}
+        {entry && <Navigation index={index} list={list} onNavigation={(n) => {
+            setIndex(n);
+
+            const isCurrent = n + 1 === list.length;
+
+            onNavigation && onNavigation(isCurrent);
+        }}/>}
 
         <TableContainer>
             <Table size='small'>

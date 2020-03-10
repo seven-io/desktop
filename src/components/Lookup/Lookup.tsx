@@ -17,19 +17,21 @@ import Button from '@material-ui/core/Button';
 import {addSnackbar, setBackdrop, setNav} from '../../store/actions';
 import {LocalStore} from '../../util/LocalStore';
 import {toString} from '../../util/toString';
-import {History} from './History';
+import {TableRowSpreader} from '../TableRowSpreader';
+import {BaseHistory} from '../BaseHistory/BaseHistory';
 import {LookupResponse} from './types';
 
 export const Lookup = () => {
+    const dispatch = useDispatch();
     const {t} = useTranslation('lookup');
     const [type, setType] = React.useState<LookupType>('format');
     const [number, setNumber] = React.useState('');
+    const [historyTransKey, setHistoryTransKey] = React.useState<'response' | 'history'>('response');
     const classes = makeStyles((theme: Theme) => createStyles({
         formControl: {
             margin: theme.spacing(3),
         },
     }))();
-    const dispatch = useDispatch();
     const apiKey = LocalStore.get('options.apiKey') as string;
 
     useEffect(() => {
@@ -46,6 +48,7 @@ export const Lookup = () => {
         dispatch(setBackdrop(true));
         const res = await (new Sms77Client(apiKey)).lookup({json: true, number, type}) as LookupResponse;
         dispatch(setBackdrop(false));
+        setHistoryTransKey('response');
 
         LocalStore.append('lookups', res);
 
@@ -53,6 +56,7 @@ export const Lookup = () => {
     };
 
     const getPairs = (res: LookupResponse) => Object.entries(res!).filter(([, v]) => null !== v);
+
 
     return <>
         <Grid alignItems='center' container justify='space-between'>
@@ -100,6 +104,13 @@ export const Lookup = () => {
             </Grid>
         </Grid>
 
-        <History/>
+        <h1>{t(historyTransKey)}</h1>
+
+        <BaseHistory onNavigation={isCurrent => setHistoryTransKey(isCurrent ? 'response' : 'history')}
+                     rowHandler={(row: LookupResponse, i: number) => <React.Fragment key={i}>
+                         <TableRowSpreader nsKey={'lookup'} pairs={Object.entries(row)}/>
+                     </React.Fragment>}
+                     storeKey={'lookups'}
+        />
     </>;
 };

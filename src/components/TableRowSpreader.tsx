@@ -11,10 +11,10 @@ import {CarrierTable} from './Lookup/CarrierTable';
 export type TableRowSpreader = {
     nsKey: string
     pairs: any[]
-    transEditor?: (k: string) => string
+    transEditor?: (k: string, v: any) => string
 }
 
-const carrierKeys: string[] = ['current_carrier' as keyof HLR, 'original_carrier' as keyof HLR];
+const carrierKeys: (keyof HLR)[] = ['current_carrier', 'original_carrier'];
 
 export const TableRowSpreader = ({nsKey, pairs, transEditor}: TableRowSpreader) => {
     const {t} = useTranslation(nsKey);
@@ -24,14 +24,14 @@ export const TableRowSpreader = ({nsKey, pairs, transEditor}: TableRowSpreader) 
             pairs.map(([k, v], i) =>
                 <TableRow key={i}>
                     <TableCell component='th' scope='row'>
-                        {t(transEditor ? transEditor(k) : k)}
+                        {t(transEditor ? transEditor(k, v) : k)}
                     </TableCell>
 
                     <TableCell align='right'>
                         {'boolean' === typeof v
                             ? <BoolChip value={v}/>
                             : carrierKeys.includes(k)
-                                ? <CarrierTable carrier={v}/>
+                                ? 'object' === typeof v ? <CarrierTable carrier={v}/> : {v}
                                 : toString(v)}
                     </TableCell>
                 </TableRow>)

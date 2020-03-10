@@ -14,7 +14,9 @@ export const CarrierTable = ({carrier}: CarrierTableProps) => {
     return <TableContainer>
         <Table size='small'>
             <TableBody>
-                <TableRowSpreader nsKey={'lookup'} pairs={Object.entries(carrier)} transEditor={k => `carrier.${k}`}/>
+                <TableRowSpreader nsKey={'lookup'} pairs={Object.entries(carrier)} transEditor={(k, v) => {
+                    return 'object' === typeof v ? `Carrier.${k}` : 'carrier';
+                }}/>
             </TableBody>
         </Table>
     </TableContainer>;

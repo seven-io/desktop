@@ -1,5 +1,6 @@
 export const lookup = {
-    carrier: {
+    carrier: 'Carrier',
+    Carrier: {
         country: 'Country',
         name: 'Name',
         network_code: 'Network Code',
@@ -16,11 +17,11 @@ export const lookup = {
     gsm_code: 'GSM Code',
     gsm_message: 'GSM Message',
     hlr: 'HLR',
+    history: 'History',
     international: 'International',
     international_formatted: 'International Formatted',
     international_format_number: 'International Format Number',
     lookup: 'Lookup',
-    lookups: 'History',
     lookup_outcome: 'Outcome',
     lookup_outcome_message: 'Outcome Message',
     mnp: 'MNP',
@@ -32,7 +33,7 @@ export const lookup = {
     original_carrier: 'Original Carrier',
     ported: 'Porting Status',
     reachable: 'Reachable Status',
-    response: 'Lookup Response',
+    response: 'Last Response',
     roaming: 'Roaming Status',
     status: 'Status',
     status_message: 'Status Message',
