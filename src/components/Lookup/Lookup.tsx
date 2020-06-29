@@ -46,7 +46,7 @@ export const Lookup = () => {
         e.preventDefault();
 
         dispatch(setBackdrop(true));
-        const res = await (new Sms77Client(apiKey)).lookup({json: true, number, type}) as LookupResponse;
+        const res = await (new Sms77Client(apiKey as string, 'Shopify')).lookup({json: true, number, type}) as LookupResponse;
         dispatch(setBackdrop(false));
         setHistoryTransKey('response');
 
@@ -83,7 +83,7 @@ export const Lookup = () => {
                         {
                             Object.values(LOOKUP_TYPES)
                                 .filter(v => !Number.isInteger(v as number))
-                                .map((type, i) => <Tooltip key={i} title={t(`tooltips.${type}`)}>
+                                .map((type, i) => <Tooltip key={i} title={t(`tooltips.${type}`) as string}>
                                     <FormControlLabel control={<Radio/>}
                                                       label={t(type as string)}
                                                       labelPlacement='bottom' value={type}/>

@@ -36,7 +36,7 @@ export const Contacts = () => {
 
     const getAndStore = async () => {
         dispatch(setBackdrop(true));
-        const contacts = await (new Sms77Client(apiKey as string))
+        const contacts = await (new Sms77Client(apiKey as string, 'Shopify'))
             .contacts({action: 'read', json: true,}) as Sms77Contact[];
         dispatch(setBackdrop(false));
 

@@ -88,7 +88,7 @@ export const History = () => {
 
                 <TableRow>
                     <TableCell component='th' scope='row'>
-                        <Tooltip title={t('tooltips.message')}>
+                        <Tooltip title={t('tooltips.message') as string}>
                             <span>{t('messages')}</span>
                         </Tooltip>
                     </TableCell>

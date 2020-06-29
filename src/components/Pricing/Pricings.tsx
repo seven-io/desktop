@@ -41,7 +41,7 @@ export const Pricings = () => {
 
     const getAndStore = async () => {
         dispatch(setBackdrop(true));
-        const pricing = await (new Sms77Client(apiKey as string)).pricing({format: 'json'}) as PricingResponse;
+        const pricing = await (new Sms77Client(apiKey as string, 'Shopify')).pricing({format: 'json'}) as PricingResponse;
         dispatch(setBackdrop(false));
 
         LocalStore.set('pricing', pricing);
