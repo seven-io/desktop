@@ -36,7 +36,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "css-loader": "^3.6.0",
-    "electron": "^8.3.4",
+    "electron": "^8.5.2",
     "electron-devtools-installer": "^3.1.0",
     "file-loader": "^5.1.0",
     "fork-ts-checker-webpack-plugin": "^4.1.6",
