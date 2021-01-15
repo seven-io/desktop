@@ -10,7 +10,7 @@ export const BoolChip = ({value}: BoolChipProps) => {
     const {t} = useTranslation();
 
     return <Chip
-        label={t(Boolean(value) ? 'true' : 'false')}
+        label={t(value.toString())}
         style={{backgroundColor: value ? 'green' : 'red', color: '#fff'}}
     />;
 };
