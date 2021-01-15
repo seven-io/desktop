@@ -1,5 +1,8 @@
 import {app, BrowserWindow} from 'electron';
-import installExtension, {REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer';
+import installExtension, {
+    REACT_DEVELOPER_TOOLS,
+    REDUX_DEVTOOLS
+} from 'electron-devtools-installer';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
@@ -28,7 +31,12 @@ const createWindow = async () => {
             REDUX_DEVTOOLS,
         ]);
 
-        mainWindow.webContents.openDevTools(); // Open the DevTools.
+        mainWindow.webContents.on('did-frame-finish-load', () => {
+            mainWindow.webContents.once(
+                'devtools-opened', () => mainWindow.focus());
+
+            mainWindow.webContents.openDevTools();
+        });
     }
 
     await mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY); // and load the index.html of the app.
