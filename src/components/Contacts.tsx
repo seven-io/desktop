@@ -15,8 +15,8 @@ import {addSnackbar, setBackdrop, setNav, setTo} from '../store/actions';
 export const Contacts = () => {
     const {t} = useTranslation('contacts');
     const dispatch = useDispatch();
-    const apiKey = LocalStore.get('options.apiKey');
-    const [contacts, setContacts] = useState<Sms77Contact[]>(LocalStore.get('contacts') as Sms77Contact[]);
+    const apiKey = LocalStore.get<string>('options.apiKey');
+    const [contacts, setContacts] = useState(LocalStore.get<Sms77Contact[]>('contacts'));
 
     useEffect(() => {
         if ('' === apiKey) {
@@ -36,7 +36,7 @@ export const Contacts = () => {
 
     const getAndStore = async () => {
         dispatch(setBackdrop(true));
-        const contacts = await (new Sms77Client(apiKey as string, 'Shopify'))
+        const contacts = await (new Sms77Client(apiKey, 'Shopify'))
             .contacts({action: 'read', json: true,}) as Sms77Contact[];
         dispatch(setBackdrop(false));
 
@@ -56,7 +56,6 @@ export const Contacts = () => {
 
         {
             contacts.length
-
                 ? <List>
                     {contacts.map((c, i) => <ListItem button key={i}>
                         <ListItemText primary={`${c.nick} ● ${c.number} ● ${c.email}`}/>

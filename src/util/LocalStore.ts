@@ -32,7 +32,7 @@ const localStore = new Store<ILocalStore>({
 });
 
 export class LocalStore {
-    static get(mixed: any): { [k: string]: any } | string | number | undefined {
+    static get<T = any>(mixed: any): T {
         return localStore.get(mixed);
     }
 
