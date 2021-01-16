@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import Sms77Client, {CountryPricing, PricingResponse} from 'sms77-client';
+import Sms77Client, {CountryPricing} from 'sms77-client';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
@@ -15,13 +15,15 @@ import {LocalStore} from '../../util/LocalStore';
 import {addSnackbar, setBackdrop, setNav} from '../../store/actions';
 import {CountryFlag} from '../CountryFlag';
 import {Pricing} from './Pricing';
+import {PricingResponseJson} from 'sms77-client/dist/types';
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing');
     const [country, setCountry] = useState<CountryPricing | null>(null);
     const dispatch = useDispatch();
-    const apiKey = LocalStore.get('options.apiKey');
-    const [pricing, setPricing] = useState<PricingResponse>(LocalStore.get('pricing') as PricingResponse);
+    const apiKey = LocalStore.get('options.apiKey', '');
+    const [pricing, setPricing] = useState(
+        LocalStore.get<'pricing', PricingResponseJson>('pricing'));
 
     useEffect(() => {
         if (!apiKey || '' === apiKey) {
@@ -41,15 +43,14 @@ export const Pricings = () => {
 
     const getAndStore = async () => {
         dispatch(setBackdrop(true));
-        const pricing = await (new Sms77Client(apiKey as string, 'Shopify')).pricing({format: 'json'}) as PricingResponse;
+        const pricing = await (new Sms77Client(apiKey, 'Desktop'))
+            .pricing({format: 'json'}) as PricingResponseJson;
         dispatch(setBackdrop(false));
 
         LocalStore.set('pricing', pricing);
 
         setPricing(pricing);
     };
-
-    const populationFields: (keyof PricingResponse)[] = ['countCountries', 'countNetworks'];
 
     return <>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
@@ -64,25 +65,30 @@ export const Pricings = () => {
             <Table aria-label={t('ariaLabels.countryTable')} size='small'>
                 <TableBody>
 
-                    {pricing && populationFields.map((o, i) => <TableRow key={i}>
-                        <TableCell component='th' scope='row'>
-                            {t(o)}
-                        </TableCell>
+                    {pricing &&
+                    (['countCountries', 'countNetworks'] as (keyof PricingResponseJson)[])
+                        .map((o, i) => <TableRow key={i}>
+                            <TableCell component='th' scope='row'>
+                                {t(o)}
+                            </TableCell>
 
-                        <TableCell align='right'>
-                            {pricing[o]}
-                        </TableCell>
-                    </TableRow>)}
+                            <TableCell align='right'>
+                                {pricing[o]}
+                            </TableCell>
+                        </TableRow>)}
                 </TableBody>
             </Table>
         </TableContainer>
 
         {pricing && <Autocomplete
-            getOptionLabel={(o: CountryPricing) => `${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
+            getOptionLabel={(o: CountryPricing) =>
+                `${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
             onChange={(ev: ChangeEvent<{}>, cP: CountryPricing | null) => setCountry(cP)}
             options={pricing.countries}
             renderOption={(o: CountryPricing) => <>
-                <CountryFlag pricing={o}/>&nbsp;{` ${o.countryCode} ${o.countryName} ${o.countryPrefix}`}</>}
+                <CountryFlag pricing={o}/>&nbsp;
+                {` ${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
+            </>}
             renderInput={(params: TextFieldProps) => <TextField
                 {...params}
                 label={t('choose')}

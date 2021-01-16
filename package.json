@@ -66,7 +66,7 @@
     "react-i18next": "^11.8.5",
     "react-redux": "^7.2.2",
     "redux": "^4.0.5",
-    "sms77-client": "^1.9.1",
+    "sms77-client": "^2.4.2",
     "smshelper": "^0.1.0"
   },
   "optionalDependencies": {

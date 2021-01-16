@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import List from '@material-ui/core/List';
-
+import {ContactsAction} from 'sms77-client/dist/constants/enums/ContactsAction';
 import {notify} from '../util/notify';
 import {LocalStore} from '../util/LocalStore';
 import {addSnackbar, setBackdrop, setNav, setTo} from '../store/actions';
@@ -15,8 +15,9 @@ import {addSnackbar, setBackdrop, setNav, setTo} from '../store/actions';
 export const Contacts = () => {
     const {t} = useTranslation('contacts');
     const dispatch = useDispatch();
-    const apiKey = LocalStore.get<string>('options.apiKey');
-    const [contacts, setContacts] = useState(LocalStore.get<Sms77Contact[]>('contacts'));
+    const apiKey = LocalStore.get('options.apiKey', '');
+    const [contacts, setContacts] = useState(
+        LocalStore.get('contacts', []));
 
     useEffect(() => {
         if ('' === apiKey) {
@@ -36,8 +37,8 @@ export const Contacts = () => {
 
     const getAndStore = async () => {
         dispatch(setBackdrop(true));
-        const contacts = await (new Sms77Client(apiKey, 'Shopify'))
-            .contacts({action: 'read', json: true,}) as Sms77Contact[];
+        const contacts = await (new Sms77Client(apiKey, 'Desktop'))
+            .contacts({action: ContactsAction.Read, json: true}) as Sms77Contact[];
         dispatch(setBackdrop(false));
 
         LocalStore.set('contacts', contacts);
@@ -61,11 +62,13 @@ export const Contacts = () => {
                         <ListItemText primary={`${c.nick} ● ${c.number} ● ${c.email}`}/>
 
                         <ListItemSecondaryAction>
-                            <Button disabled={0 === c.number.length} fullWidth onClick={() => {
-                                dispatch(setTo(c.number));
+                            <Button disabled={0 === (c.number || '').length} fullWidth
+                                    onClick={() => {
+                                        dispatch(setTo(c.number!));
 
-                                dispatch(setNav('send'));
-                            }} size='small' variant='outlined'>{t('send')}</Button>
+                                        dispatch(setNav('send'));
+                                    }} size='small' variant='outlined'>{t('send')}
+                            </Button>
                         </ListItemSecondaryAction>
                     </ListItem>)}
                 </List>

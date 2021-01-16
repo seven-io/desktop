@@ -1,56 +1,42 @@
-import Store from 'electron-store';
-
+import ElectronStore from 'electron-store';
+import {Contact} from 'sms77-client';
 import {LookupResponse} from '../components/Lookup/types';
 import {IOptions} from '../components/Options/types';
 import {SmsDump} from './sendSms';
-import {Contact} from 'sms77-client';
-
-const options: IOptions = {
-    apiKey: '',
-    from: 'sms77io',
-    signature: '',
-    signaturePosition: 'append',
-    to: '',
-};
+import {VoiceDump} from '../components/Voice/History';
 
 export type ILocalStore = {
     contacts: Contact[],
     history: SmsDump[],
     lookups: LookupResponse[],
     options: IOptions,
+    voices: VoiceDump[],
 }
 
-const defaults: ILocalStore = {
-    contacts: [],
-    history: [],
-    lookups: [],
-    options,
-};
+export type ArrayOption = keyof Omit<ILocalStore, 'options'>
+export type ArrayStorageVal<T extends ArrayOption> =
+    ILocalStore[T]
+    | ILocalStore[T][number]
 
-const localStore = new Store<ILocalStore>({
-    defaults,
+export const LocalStore = new (class AppStore extends ElectronStore<ILocalStore> {
+    append<T extends ArrayOption>(key: ArrayOption, value: ArrayStorageVal<T>): void {
+        const stored = this.get(key);
+        const append = Array.isArray(value) ? value : [value];
+
+        this.set(key, Array.isArray(stored) ? [...stored, ...append] : append);
+    }
+})({
+    defaults: {
+        contacts: [],
+        history: [],
+        lookups: [],
+        options: {
+            apiKey: '',
+            from: 'sms77io',
+            signature: '',
+            signaturePosition: 'append',
+            to: '',
+        },
+        voices: [],
+    },
 });
-
-export class LocalStore {
-    static get<T = any>(mixed: any): T {
-        return localStore.get(mixed);
-    }
-
-    static set(key: any, value?: any): void {
-        undefined === value
-            ? localStore.set(key)
-            : localStore.set(key, value);
-    }
-
-    static append(key: string, value: any): void {
-        const list = LocalStore.get(key);
-
-        if (Array.isArray(list)) {
-            list.push(value);
-
-            LocalStore.set(key, list);
-        } else {
-            LocalStore.set(key, [value]);
-        }
-    }
-}

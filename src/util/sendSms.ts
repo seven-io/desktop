@@ -1,19 +1,24 @@
-import Sms77Client, {SmsJsonResponse, SmsParams} from 'sms77-client';
-
+import {SmsJsonResponse, SmsParams} from 'sms77-client';
 import {notify} from './notify';
 import {LocalStore} from './LocalStore';
+import {
+    CommonMessagePropKeys,
+    CommonMessageProps,
+    DispatchProps,
+    MessageDispatchProps
+} from '../components/Message/Message';
 
-export type SendSmsProps = {
-    text: string
-    to: string
-    from: string
-}
+export type SmsPartialProps = Omit<SmsParams, CommonMessagePropKeys>
+export type SendSmsProps = MessageDispatchProps<SmsPartialProps>
+export type SmsDump = {
+    errors: string[]
+    notification: string
+    opts: SmsParams
+    res: SmsJsonResponse
+};
 
-export type SmsDump = { res: SmsJsonResponse, notification: string, errors: string[], opts: SmsParams };
-
-const getOpts = (text: string, to: string, from?: string): SmsParams => {
-    const opts: any = {
-        json: 1,
+export const getOpts = (text: string, to: string, from?: string): CommonMessageProps => {
+    const opts: SmsParams = {
         text,
         to,
     };
@@ -25,37 +30,12 @@ const getOpts = (text: string, to: string, from?: string): SmsParams => {
     return opts;
 };
 
-export const sendSms = async ({text, to, from}: SendSmsProps): Promise<string> => {
-    let res = null;
-    const errors = [];
-
-    const apiKey = LocalStore.get('options.apiKey');
-
-    if ('' === apiKey) {
-        errors.push('API key missing!');
-    } else {
-        to = to.length ? to : LocalStore.get('options.to') as string;
-
-        from = from.length ? from : LocalStore.get('options.from') as string;
-    }
-
-    const opts = getOpts(text, to, from);
-
-    if (errors.length) {
-        errors.unshift('Error(s) while sending:');
-
-        const notification = errors.join('\n');
-
-        await notify(notification);
-
-        return notification;
-    }
+export const sendSms = async (p: DispatchProps<SendSmsProps>): Promise<string> => {
+    (p.options as SmsParams).json = true;
 
     const lines = [];
-
-    res = await (new Sms77Client(apiKey as string, 'desktop')).sms(opts);
-
-    const {balance, messages, sms_type, success, total_price} = res as SmsJsonResponse;
+    const res = await p.client.sms(p.options) as SmsJsonResponse;
+    const {balance, messages, sms_type, success, total_price} = res;
 
     if (100 === Number.parseInt(success)) {
         lines.push(
@@ -73,21 +53,24 @@ export const sendSms = async ({text, to, from}: SendSmsProps): Promise<string> =
                 line += ` from ${sms.sender} with encoding ${sms.sender}: ${sms.encoding}`;
             }
 
-            sms.messages && sms.messages.forEach((msg: string) => line += ` / ${msg}`);
+            sms.messages && sms.messages.forEach(msg => line += ` / ${msg}`);
 
             lines.push(line);
         }
     } else {
-        lines.push(`An error occured while sending SMS to "${to}": ${JSON.stringify(res)}`);
+        lines.push(`Error sending SMS to "${p.options.to}": ${JSON.stringify(res)}`);
     }
 
-    const notification = lines.join('\n');
-
-    const dump: SmsDump = {res: res as SmsJsonResponse, notification, errors, opts};
+    const dump: SmsDump = {
+        errors: [],
+        notification: lines.join('\n'),
+        opts: p.options,
+        res: res as SmsJsonResponse,
+    };
 
     LocalStore.append('history', dump);
 
-    await notify(notification);
+    await notify(dump.notification);
 
-    return notification;
+    return dump.notification;
 };

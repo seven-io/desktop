@@ -2,8 +2,10 @@ import {send} from './send';
 import {system} from './system';
 import {history} from './history';
 import {contacts} from './contacts';
+import {message} from './message';
 import {pricing} from './pricing';
 import {lookup} from './lookup';
+import {voice} from './voice';
 
 export default {
     contacts,
@@ -12,6 +14,8 @@ export default {
     pricing,
     send,
     system,
+    voice,
+    message,
     translation: {
         apiKeyRequired: 'API key from sms77.io required for sending',
         close: 'Close',
@@ -34,5 +38,6 @@ export default {
         socialsBtnGroup: 'social media button group',
         support: 'Support',
         systemInfo: 'System Information',
+        voice: 'Voice',
     },
 };

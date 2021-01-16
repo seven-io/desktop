@@ -6,7 +6,7 @@ export const lookup = {
         network_code: 'Network Code',
         network_type: 'Network Type'
     },
-    cname: 'CNAM',
+    cnam: 'CNAM',
     code: 'Code',
     country_code: 'Country Code',
     country_iso: 'Country ISO',
@@ -40,7 +40,7 @@ export const lookup = {
     submit: 'Perform Lookup',
     success: 'Success',
     tooltips: {
-        cname: 'Returns information related to Calling Name Delivery',
+        cnam: 'Returns information related to Calling Name Delivery',
         format: 'Returns the formatted number',
         hlr: 'Returns information related to Home Location Register',
         mnp: 'Returns information related to Mobile Number Portability',

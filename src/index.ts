@@ -1,14 +1,12 @@
 import {app, BrowserWindow} from 'electron';
-import installExtension, {
-    REACT_DEVELOPER_TOOLS,
-    REDUX_DEVTOOLS
-} from 'electron-devtools-installer';
+import installExtension, {REACT_DEVELOPER_TOOLS} from 'electron-devtools-installer';
+import {IS_DEV} from './util/constants';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
 app.allowRendererProcessReuse = true;
-
-const isDev = process.env.NODE_ENV!.startsWith('dev');
+//app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors'); // TODO: add back if cors failure in production?
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -17,19 +15,23 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 const createWindow = async () => {
     const mainWindow = new BrowserWindow({
-        height: isDev ? 1080 : 600,
-        width: isDev ? 1920 : 800,
+        height: IS_DEV ? 1080 : 600,
         webPreferences: {
+            allowRunningInsecureContent: false,
             nodeIntegration: true,
-            webviewTag: true,
+            webSecurity: !IS_DEV,
         },
+        width: IS_DEV ? 1920 : 800,
     });
 
-    if (isDev) {
-        await installExtension([
-            REACT_DEVELOPER_TOOLS,
-            REDUX_DEVTOOLS,
-        ]);
+    if (IS_DEV) {
+        try {
+            await installExtension([
+                REACT_DEVELOPER_TOOLS,
+                //REDUX_DEVTOOLS, // TODO: extension says redux could not be found
+            ]);
+        } finally {
+        }
 
         mainWindow.webContents.on('did-frame-finish-load', () => {
             mainWindow.webContents.once(
@@ -39,26 +41,16 @@ const createWindow = async () => {
         });
     }
 
-    await mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY); // and load the index.html of the app.
+    await mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY); // load index.html
 };
 
-// This method will be called when Electron has finished initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-    // On OS X it is common for applications and their menu bar to stay active until the user quits explicitly with Cmd + Q
-    if (process.platform !== 'darwin') {
-        app.quit();
-    }
-});
+// On OS X it is common for applications and their menu bar to stay active until the user quits explicitly with Cmd + Q
+app.on('window-all-closed',
+    () => 'darwin' !== process.platform && app.quit());
 
-app.on('activate', async () => {
-    // On OS X it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) {
-        await createWindow();
-    }
-});
-
-// In this file you can include the rest of your app's specific main process code. You can also put them in separate files and import them here.
+// On OS X it's common to re-create a window in the app when the dock icon is clicked and there are no other windows open.
+app.on('activate',
+    () => 0 === BrowserWindow.getAllWindows().length && createWindow());

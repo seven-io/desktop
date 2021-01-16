@@ -15,6 +15,7 @@ import {Contacts} from '../Contacts';
 import {Pricings} from '../Pricing/Pricings';
 import {Lookup} from '../Lookup/Lookup';
 import {setBackdrop} from '../../store/actions';
+import {Voice} from '../Voice/Voice';
 
 export const Layout = () => {
     const dispatch = useDispatch();
@@ -47,7 +48,9 @@ export const Layout = () => {
                         ? <Contacts/>
                         : 'pricing' === nav
                             ? <Pricings/>
-                            : <Lookup/>
+                            : 'voice' === nav
+                                ? <Voice/>
+                                : <Lookup/>
             }
         </Container>
 

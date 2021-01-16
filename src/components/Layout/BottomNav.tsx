@@ -9,6 +9,7 @@ import SmsIcon from '@material-ui/icons/Sms';
 import ContactsIcon from '@material-ui/icons/Contacts';
 import LocalAtmIcon from '@material-ui/icons/LocalAtm';
 import PolicyIcon from '@material-ui/icons/Policy';
+import VoiceIcon from '@material-ui/icons/PermPhoneMsg';
 
 import {setNav} from '../../store/actions';
 import {Route} from '../../store/reducers/nav';
@@ -29,6 +30,7 @@ export const BottomNav = () => {
 
     const actions: BottomNavigationActionProps[] = [
         {label: 'sms', value: 'send', icon: <SmsIcon/>},
+        {label: 'voice', value: 'voice', icon: <VoiceIcon/>},
         {label: 'lookup', value: 'lookup', icon: <PolicyIcon/>},
         {label: 'options', value: 'options', icon: <SettingsIcon/>},
         {label: 'contacts', value: 'contacts', icon: <ContactsIcon/>},
@@ -41,7 +43,11 @@ export const BottomNav = () => {
         showLabels
         value={navId}
     >
-        {actions.map((a, i) => <BottomNavigationAction icon={a.icon} key={i} label={t(a.label as string)}
-                                                       value={a.value}/>)}
+        {actions.map((a, i) => <BottomNavigationAction
+            icon={a.icon}
+            key={i}
+            label={t(a.label as string)}
+            value={a.value}
+        />)}
     </BottomNavigation>;
 };
