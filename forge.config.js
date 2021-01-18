@@ -1,21 +1,23 @@
 const path = require('path');
 const fs = require('fs');
 const assert = require('assert');
-
 const pkg = require('./package.json');
 
 const icon = path.join(__dirname, './src/assets/img/128x128.png');
 assert.ok(fs.existsSync(icon));
+
+const description = 'Send SMS, Text2Speech messages and more via Sms77.io.';
 
 module.exports = {
     makers: [
         {
             name: '@electron-forge/maker-squirrel',
             config: {
+                description,
                 iconUrl: icon,
                 name: pkg.name,
                 setupIcon: icon
-            }
+            },
         },
         {
             name: '@electron-forge/maker-deb',
@@ -25,7 +27,7 @@ module.exports = {
                         'Utility',
                         'Office'
                     ],
-                    description: 'Application to send SMS through the sms77io gateway.',
+                    description,
                     genericName: 'sms77io Desktop Application',
                     homepage: 'https://www.sms77.io/',
                     icon,
@@ -34,7 +36,7 @@ module.exports = {
                     productDescription: 'Application to send SMS through the sms77io gateway.',
                     productName: 'sms77io Desktop Application',
                     section: 'mail',
-                    version: '1.0.0'
+                    version: pkg.version
                 }
             }
         },
@@ -45,10 +47,19 @@ module.exports = {
                 name: pkg.name,
             }
         },
+        {
+            name: '@electron-forge/maker-rpm',
+            config: {
+                description,
+                icon: icon,
+                name: pkg.name,
+                version: pkg.version,
+            }
+        }
     ],
     packagerConfig: {
         appCategoryType: 'public.app-category.social-networking', // MacOSX only
-        appCopyright: 'sms77 e.K.',
+        appCopyright: pkg.author,
         icon, // omit file extension for auto detecting according to OS
     },
     plugins: [

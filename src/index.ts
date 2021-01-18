@@ -1,8 +1,11 @@
 import {app, BrowserWindow} from 'electron';
-import installExtension, {REACT_DEVELOPER_TOOLS} from 'electron-devtools-installer';
+import installExtension, {
+    REACT_DEVELOPER_TOOLS,
+    REDUX_DEVTOOLS
+} from 'electron-devtools-installer';
 import {IS_DEV} from './util/constants';
 
-declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
 app.allowRendererProcessReuse = true;
@@ -18,6 +21,8 @@ const createWindow = async () => {
         height: IS_DEV ? 1080 : 600,
         webPreferences: {
             allowRunningInsecureContent: false,
+            contextIsolation: false,
+            enableRemoteModule: true,
             nodeIntegration: true,
             webSecurity: !IS_DEV,
         },
@@ -27,8 +32,7 @@ const createWindow = async () => {
     if (IS_DEV) {
         try {
             await installExtension([
-                REACT_DEVELOPER_TOOLS,
-                //REDUX_DEVTOOLS, // TODO: extension says redux could not be found
+                REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS,
             ]);
         } finally {
         }
