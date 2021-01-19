@@ -6,5 +6,5 @@ export const contacts = {
     noEntries: 'No contacts could be found.',
     number: 'Number',
     reload: 'Reload',
-    send: 'Send SMS',
+    sms: 'Send SMS',
 };

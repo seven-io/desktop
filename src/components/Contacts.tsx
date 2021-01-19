@@ -66,8 +66,8 @@ export const Contacts = () => {
                                     onClick={() => {
                                         dispatch(setTo(c.number!));
 
-                                        dispatch(setNav('send'));
-                                    }} size='small' variant='outlined'>{t('send')}
+                                        dispatch(setNav('sms'));
+                                    }} size='small' variant='outlined'>{t('sms')}
                             </Button>
                         </ListItemSecondaryAction>
                     </ListItem>)}

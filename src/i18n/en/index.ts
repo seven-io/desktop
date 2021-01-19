@@ -1,4 +1,4 @@
-import {send} from './send';
+import {sms} from './sms';
 import {system} from './system';
 import {history} from './history';
 import {contacts} from './contacts';
@@ -12,7 +12,7 @@ export default {
     history,
     lookup,
     pricing,
-    send,
+    sms,
     system,
     voice,
     message,

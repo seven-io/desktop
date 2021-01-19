@@ -9,7 +9,7 @@ export type MessageToolbarProps = {
 }
 
 export const DateTimeUtils = ({onClick}: MessageToolbarProps) => {
-    const {t} = useTranslation('send');
+    const {t} = useTranslation('sms');
 
     return <PopupMenu buttonText='Date/Time' identifier='date-time'>
         <MenuItem onClick={() => onClick(Date.now().toString())}>

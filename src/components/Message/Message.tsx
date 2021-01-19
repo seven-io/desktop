@@ -10,12 +10,13 @@ import Grid from '@material-ui/core/Grid';
 import SendIcon from '@material-ui/icons/Send';
 import {To} from '../To';
 import {From} from '../From';
-import {LocalStore} from '../../util/LocalStore';
+import {LocalStore, localStoreDefaults} from '../../util/LocalStore';
 import {getOpts, SendSmsProps} from '../../util/sendSms';
 import {addSnackbar, setBackdrop, setNav, setTo} from '../../store/actions';
 import {RootState} from '../../store/reducers';
 import {MessageToolbar, MessageToolbarProps} from './MessageToolbar';
 import {notify} from '../../util/notify';
+import {initClient} from '../../util/initClient';
 
 export type CommonMessagePropKeys = 'from' | 'text' | 'to'
 export type CommonMessageProps = Pick<SmsParams, CommonMessagePropKeys>
@@ -28,6 +29,7 @@ export type DispatchProps<T> = {
 
 export type MessageProps<T> = {
     dispatchFn(p: DispatchProps<T>): Promise<string>
+    FormAddons?: ReactNode
     History: ReactNode
     ns: string,
     ToolbarAddons?: (p: MessageToolbarProps) => JSX.Element
@@ -37,7 +39,7 @@ export type MessageTranslations = {
     h1: string
 }
 
-export function Message<T>({dispatchFn, History, ns, ToolbarAddons}: MessageProps<T>) {
+export function Message<T>(p: MessageProps<T>) {
     const dispatch = useDispatch();
     const classes = makeStyles(theme => ({
         clear: {
@@ -51,9 +53,9 @@ export function Message<T>({dispatchFn, History, ns, ToolbarAddons}: MessageProp
     }))();
     const [text, setText] = useState('');
     const [from, setFrom] = useState('');
-    const {t} = useTranslation(['message', ns]);
-    const $textarea = useRef();
     const to = useSelector((state: RootState) => state.to);
+    const {t} = useTranslation(['message', p.ns]);
+    const $textarea = useRef();
 
     useEffect(() => {
         const apiKey = LocalStore.get('options.apiKey', '');
@@ -73,10 +75,11 @@ export function Message<T>({dispatchFn, History, ns, ToolbarAddons}: MessageProp
         setDefaults();
     };
 
-    const handleSubmit = async (e: SyntheticEvent) => {
+    const handleSubmit = async (e: SyntheticEvent): Promise<void> => {
         e.preventDefault();
 
         dispatch(setBackdrop(true));
+
         const props: SendSmsProps = {text, to, from};
         const errors = [];
         const apiKey = LocalStore.get('options.apiKey', '');
@@ -94,15 +97,19 @@ export function Message<T>({dispatchFn, History, ns, ToolbarAddons}: MessageProp
 
         if (errors.length) {
             errors.unshift('Error(s) while validation:');
+
             const notification = errors.join('\n');
             await notify(notification);
-            return dispatch(addSnackbar(notification));
+            dispatch(addSnackbar(notification));
+
+            return;
         }
 
-        dispatch(addSnackbar(await dispatchFn({
-            client: new Sms77Client(apiKey, 'Desktop'),
+        dispatch(addSnackbar(await p.dispatchFn({
+            client: initClient(apiKey),
             options: getOpts(props.text, props.to, props.from),
         })));
+
         dispatch(setBackdrop(false));
     };
 
@@ -113,21 +120,21 @@ export function Message<T>({dispatchFn, History, ns, ToolbarAddons}: MessageProp
             setText(signature);
         }
 
-        setFrom(LocalStore.get('options.from', ''));
+        setFrom(LocalStore.get('options.from', localStoreDefaults.options.from));
 
-        setTo(LocalStore.get('options.to', ''));
+        setTo(LocalStore.get('options.to', localStoreDefaults.options.to));
     };
 
     const toolbarProps: MessageToolbarProps = {
         onAction: setText,
         textarea: $textarea.current!,
     };
-    if (ToolbarAddons) {
-        toolbarProps.Addons = <ToolbarAddons {...toolbarProps} />;
+    if (p.ToolbarAddons) {
+        toolbarProps.Addons = <p.ToolbarAddons {...toolbarProps} />;
     }
 
     return <>
-        <h1>{t(`${ns}:h1`)}</h1>
+        <h1>{t(`${p.ns}:h1`)}</h1>
 
         <form className={classes.form} onSubmit={handleSubmit}>
             <MessageToolbar {...toolbarProps} />
@@ -146,12 +153,19 @@ export function Message<T>({dispatchFn, History, ns, ToolbarAddons}: MessageProp
 
             <To onChange={to => dispatch(setTo(to))} value={to}/>
 
-            <From onChange={from => setFrom(from)} value={from}/>
+            <From onChange={setFrom} value={from}/>
+
+            {p.FormAddons}
 
             <Grid container>
                 <Grid item xs={3}>
-                    <Button className={classes.clear} endIcon={<ClearIcon/>} fullWidth
-                            onClick={handleClear} variant='outlined'>
+                    <Button
+                        className={classes.clear}
+                        endIcon={<ClearIcon/>}
+                        fullWidth
+                        onClick={handleClear}
+                        variant='outlined'
+                    >
                         {t('clear')}
                     </Button>
                 </Grid>
@@ -159,15 +173,19 @@ export function Message<T>({dispatchFn, History, ns, ToolbarAddons}: MessageProp
                 <Grid item xs={1}/>
 
                 <Grid item xs={8}>
-                    <Button color='primary' disabled={!text.length} endIcon={<SendIcon/>}
-                            fullWidth type='submit'
-                            variant='outlined'>
+                    <Button
+                        color='primary'
+                        disabled={!text.length}
+                        endIcon={<SendIcon/>}
+                        fullWidth type='submit'
+                        variant='outlined'
+                    >
                         {t('send')}
                     </Button>
                 </Grid>
             </Grid>
         </form>
 
-        {History}
+        {p.History}
     </>;
-};
+}

@@ -17,7 +17,7 @@ export type MessageToolbarProps = {
 }
 
 export const MessageToolbar = ({Addons, ...props}: MessageToolbarProps) => {
-    const {t} = useTranslation('send');
+    const {t} = useTranslation('sms');
 
     return <ButtonGroup variant='text' aria-label={t('toolbar.label')}>
         {Addons}

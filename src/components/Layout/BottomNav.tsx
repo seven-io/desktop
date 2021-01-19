@@ -29,7 +29,7 @@ export const BottomNav = () => {
     })();
 
     const actions: BottomNavigationActionProps[] = [
-        {label: 'sms', value: 'send', icon: <SmsIcon/>},
+        {label: 'sms', value: 'sms', icon: <SmsIcon/>},
         {label: 'voice', value: 'voice', icon: <VoiceIcon/>},
         {label: 'lookup', value: 'lookup', icon: <PolicyIcon/>},
         {label: 'options', value: 'options', icon: <SettingsIcon/>},

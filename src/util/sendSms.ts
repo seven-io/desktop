@@ -31,6 +31,9 @@ export const getOpts = (text: string, to: string, from?: string): CommonMessageP
 };
 
 export const sendSms = async (p: DispatchProps<SendSmsProps>): Promise<string> => {
+    Object.entries(p.options)
+        .forEach(([k, v]) => console.log(`${k} = ${v}`));
+
     (p.options as SmsParams).json = true;
 
     const lines = [];

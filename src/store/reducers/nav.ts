@@ -1,6 +1,6 @@
-export type Route = 'send' | 'options' | 'contacts' | 'pricing' | 'lookup' | 'voice'
+export type Route = 'sms' | 'options' | 'contacts' | 'pricing' | 'lookup' | 'voice'
 
-export default (state: Route = 'send', action: any) => {
+export default (state: Route = 'sms', action: any) => {
     switch (action.type) {
         case 'SET_NAV':
             state = action.nav;

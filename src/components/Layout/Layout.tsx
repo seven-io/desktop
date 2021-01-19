@@ -4,13 +4,12 @@ import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import {Backdrop, createStyles, Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
-
 import {TopNav} from './TopNav';
 import {Snackbars} from './Snackbars';
 import {BottomNav} from './BottomNav';
 import {RootState} from '../../store/reducers';
 import {Options} from '../Options/Options';
-import {Send} from '../Send/Send';
+import {Sms} from '../Sms/Sms';
 import {Contacts} from '../Contacts';
 import {Pricings} from '../Pricing/Pricings';
 import {Lookup} from '../Lookup/Lookup';
@@ -27,12 +26,16 @@ export const Layout = () => {
         },
     }))();
 
-    const {backdrop, nav} = useSelector(({backdrop, nav}: RootState) => ({backdrop, nav}));
+    const {backdrop, nav} = useSelector(({backdrop, nav}: RootState) => ({
+        backdrop,
+        nav
+    }));
 
     return <>
         <TopNav/>
 
-        <Backdrop className={classes.backdrop} open={backdrop} onClick={() => dispatch(setBackdrop(false))}>
+        <Backdrop className={classes.backdrop} open={backdrop}
+                  onClick={() => dispatch(setBackdrop(false))}>
             <CircularProgress/>
         </Backdrop>
 
@@ -40,8 +43,8 @@ export const Layout = () => {
 
         <Container component='main'>
             {
-                'send' === nav
-                    ? <Send/>
+                'sms' === nav
+                    ? <Sms/>
                     : 'options' === nav
                     ? <Options/>
                     : 'contacts' === nav
