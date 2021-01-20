@@ -40,6 +40,13 @@ export const Sms = () => {
             />
 
             <BoolInput<PartParams>
+                label={t('performanceTracking')}
+                setState={setParams}
+                state={params}
+                stateKey='performance_tracking'
+            />
+
+            <BoolInput<PartParams>
                 label={t('unicode')}
                 setState={setParams}
                 state={params}
