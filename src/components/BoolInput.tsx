@@ -5,10 +5,17 @@ import {BaseInputProps} from '../types';
 
 export type BoolInputProps = SwitchProps & BaseInputProps<boolean, boolean>
 
-export const BoolInput = ({handleChange, label, stateKey, value = false, ...props}: BoolInputProps) =>
+export const BoolInput = ({
+                              color = 'primary',
+                              handleChange, label,
+                              stateKey,
+                              value = false,
+                              ...props
+                          }: BoolInputProps) =>
     <FormControlLabel
         control={<Switch
             checked={value}
+            color={color}
             name={stateKey}
             onChange={e => handleChange(stateKey, e.target.checked)}
             {...props}

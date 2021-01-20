@@ -14,48 +14,54 @@ type PartParams = Omit<SmsParams, CommonMessagePropKeys | 'json'>
 export const Sms = () => {
     const {t} = useTranslation('sms');
 
-    const [partParams, setPartParams] = useState<PartParams>({});
+    const [params, setParams] = useState<PartParams>({});
 
-    const setPartParam = (key: keyof PartParams, value: PartParams[keyof PartParams]) =>
-        setPartParams({...partParams, [key]: value});
+    const setPartParam = (k: keyof PartParams, v: PartParams[keyof PartParams]) =>
+        setParams({...params, [k]: v});
 
     return <Message<PartParams>
-        dispatchFn={p => sendSms({...p, options: {...p.options, ...partParams}})}
+        dispatchFn={p => sendSms({...p, options: {...p.options, ...params}})}
         FormAddons={<>
             <BoolInput
-                color='primary'
                 handleChange={setPartParam}
                 label={t('debug')}
                 stateKey='debug'
-                value={partParams.debug}
+                value={params.debug}
+            />
+
+            <BoolInput
+                handleChange={setPartParam}
+                label={t('noReload')}
+                stateKey='no_reload'
+                value={params.no_reload}
             />
 
             <TextInput
                 handleChange={setPartParam}
                 label={t('delay')}
                 stateKey='delay'
-                value={partParams.delay}
+                value={params.delay}
             />
 
             <TextInput
                 handleChange={setPartParam}
                 label={t('label')}
                 stateKey='label'
-                value={partParams.label}
+                value={params.label}
             />
 
             <TextInput
                 handleChange={setPartParam}
                 label={t('foreignId')}
                 stateKey='foreign_id'
-                value={partParams.foreign_id}
+                value={params.foreign_id}
             />
 
             <TextInput
                 handleChange={setPartParam}
                 label={t('udh')}
                 stateKey='udh'
-                value={partParams.udh}
+                value={params.udh}
             />
 
             <TextInput
@@ -63,7 +69,7 @@ export const Sms = () => {
                 label={t('ttl')}
                 stateKey='ttl'
                 type='number'
-                value={partParams.ttl}
+                value={params.ttl}
             />
         </>}
         History={<History/>}
