@@ -5,14 +5,15 @@ import {History} from './History';
 import {CommonMessagePropKeys, Message} from '../Message/Message';
 import {MessageToolbarProps, setRangeText} from '../Message/MessageToolbar';
 import {EmojiPicker} from '../Message/EmojiPicker';
-import {Label} from './Label';
+import {useTranslation} from 'react-i18next';
+import {TextInput} from '../Message/TextInput';
 
 type PartParams = Omit<SmsParams, CommonMessagePropKeys | 'json'>
 
 export const Sms = () => {
-    const [partParams, setPartParams] = useState<PartParams>({
-        label: undefined,
-    });
+    const {t} = useTranslation('sms');
+
+    const [partParams, setPartParams] = useState<PartParams>({});
 
     const setPartParam = (key: keyof PartParams, value: any) =>
         setPartParams({...partParams, [key]: value});
@@ -24,7 +25,19 @@ export const Sms = () => {
             return sendSms(p);
         }}
         FormAddons={<>
-            <Label onChange={label => setPartParam('label', label)}/>
+            <TextInput
+                label={t('label')}
+                onChange={setPartParam}
+                stateKey='label'
+                value={partParams.label}
+            />
+
+            <TextInput
+                label={t('foreignId')}
+                onChange={setPartParam}
+                stateKey='foreign_id'
+                value={partParams.foreign_id}
+            />
         </>}
         History={<History/>}
         ns='sms'
