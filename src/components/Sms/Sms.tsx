@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {SmsParams} from 'sms77-client';
+import {LABEL_MAX_LENGTH} from 'sms77-client/dist/validators/request/sms';
 import {sendSms} from '../../util/sendSms';
 import {History} from './History';
 import {CommonMessagePropKeys, Message} from '../Message/Message';
@@ -8,6 +8,7 @@ import {MessageToolbarProps, setRangeText} from '../Message/MessageToolbar';
 import {EmojiPicker} from '../Message/EmojiPicker';
 import {TextInput} from '../TextInput';
 import {BoolInput} from '../BoolInput';
+import {SmsParams} from 'sms77-client';
 
 type PartParams = Omit<SmsParams, CommonMessagePropKeys | 'json'>
 
@@ -68,6 +69,7 @@ export const Sms = () => {
             />
 
             <TextInput<PartParams>
+                inputProps={{'maxLength': LABEL_MAX_LENGTH}}
                 label={t('label')}
                 setState={setParams}
                 state={params}

@@ -2,7 +2,7 @@ import React, {SyntheticEvent, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import Sms77Client from 'sms77-client';
-import {LookupType} from 'sms77-client/dist/constants/enums/LookupType';
+import {LookupType} from 'sms77-client/dist/constants/byEndpoint/lookup/LookupType';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import RadioGroup from '@material-ui/core/RadioGroup';

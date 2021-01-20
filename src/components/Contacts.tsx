@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import List from '@material-ui/core/List';
-import {ContactsAction} from 'sms77-client/dist/constants/enums/ContactsAction';
+import {ContactsAction} from 'sms77-client/dist/constants/byEndpoint/contacts/ContactsAction';
 import {notify} from '../util/notify';
 import {LocalStore} from '../util/LocalStore';
 import {addSnackbar, setBackdrop, setNav, setTo} from '../store/actions';

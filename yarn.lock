@@ -7488,10 +7488,10 @@ single-line-log@^1.1.2:
   dependencies:
     string-width "^1.0.1"
 
-sms77-client@^2.4.2:
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/sms77-client/-/sms77-client-2.4.2.tgz#1ed8c6682c39caf93d9e1e6f364c71d4ef254f50"
-  integrity sha512-Q1jXJrLb8+z4nZlhnfpSrjXMZ9wo5lv9MfQmqO01c2e2AtcJy3MGcfHkwbxQHA7FUEGiW6rXZeR/03f/MynwFg==
+sms77-client@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/sms77-client/-/sms77-client-2.5.1.tgz#a9d3c01392909f5e32721c18a1cc5fa210e2e9f6"
+  integrity sha512-jL9P9qcjkaOA33ifapdXq7YB1A678RlC7VU8z4mrEYE9FpSl712/V/X5Je1zbh+bNp7xTvwCZhGtgQxD91N3Zg==
   dependencies:
     date-fns "^2.16.1"
 

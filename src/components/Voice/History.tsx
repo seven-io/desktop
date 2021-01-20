@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import {VoiceResponseJson} from 'sms77-client';
+import {VoiceJsonResponse} from 'sms77-client';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import {BaseHistory} from '../BaseHistory/BaseHistory';
@@ -9,7 +9,7 @@ import {SendSmsProps} from '../../util/sendSms';
 export type VoiceDump = {
     notification: string,
     options: SendSmsProps
-    response: VoiceResponseJson
+    response: VoiceJsonResponse
 }
 
 export const VoiceHistory = () => {
@@ -52,7 +52,7 @@ export const VoiceHistory = () => {
             </TableCell>
 
             <TableCell align='right'>
-                {row.response.code}
+                {row.response.success}
             </TableCell>
         </TableRow>
 
@@ -62,7 +62,7 @@ export const VoiceHistory = () => {
             </TableCell>
 
             <TableCell align='right'>
-                {row.response.cost}
+                {row.response.total_price}
             </TableCell>
         </TableRow>
 
@@ -72,7 +72,7 @@ export const VoiceHistory = () => {
             </TableCell>
 
             <TableCell align='right'>
-                {row.response.id}
+                {row.response.messages[0].id}
             </TableCell>
         </TableRow>
     </React.Fragment>;
