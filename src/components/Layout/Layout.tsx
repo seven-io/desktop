@@ -1,3 +1,4 @@
+import {hot} from 'react-hot-loader';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Container from '@material-ui/core/Container';
@@ -16,7 +17,7 @@ import {Lookup} from '../Lookup/Lookup';
 import {setBackdrop} from '../../store/actions';
 import {Voice} from '../Voice/Voice';
 
-export const Layout = () => {
+export const Layout = hot(module)(() => {
     const dispatch = useDispatch();
 
     const classes = makeStyles((theme: Theme) => createStyles({
@@ -59,4 +60,5 @@ export const Layout = () => {
 
         <BottomNav/>
     </>;
-};
+});
+
