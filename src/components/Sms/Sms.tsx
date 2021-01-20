@@ -52,6 +52,14 @@ export const Sms = () => {
                 stateKey='udh'
                 value={partParams.udh}
             />
+
+            <TextInput
+                label={t('ttl')}
+                onChange={setPartParam}
+                stateKey='ttl'
+                type='number'
+                value={partParams.ttl as unknown as string}
+            />
         </>}
         History={<History/>}
         ns='sms'

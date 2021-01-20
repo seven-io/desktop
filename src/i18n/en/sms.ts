@@ -6,5 +6,6 @@ export const sms: MessageTranslations & AnyObject = {
     foreignId: 'Foreign ID',
     h1: 'Send SMS',
     label: 'Label',
+    ttl: 'Time to Live',
     udh: 'User Data Header'
 };
