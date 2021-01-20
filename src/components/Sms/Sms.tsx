@@ -46,6 +46,13 @@ export const Sms = () => {
                 stateKey='unicode'
             />
 
+            <BoolInput<PartParams>
+                label={t('utf8')}
+                setState={setParams}
+                state={params}
+                stateKey='utf8'
+            />
+
             <TextInput<PartParams>
                 label={t('delay')}
                 setState={setParams}

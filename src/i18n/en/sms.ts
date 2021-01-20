@@ -12,4 +12,5 @@ export const sms: MessageTranslations & AnyObject = {
     ttl: 'Time to Live',
     udh: 'User Data Header',
     unicode: 'Unicode',
+    utf8: 'UTF-8',
 };
