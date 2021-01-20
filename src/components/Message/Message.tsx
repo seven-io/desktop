@@ -18,7 +18,7 @@ import {MessageToolbar, MessageToolbarProps} from './MessageToolbar';
 import {notify} from '../../util/notify';
 import {initClient} from '../../util/initClient';
 
-export type CommonMessagePropKeys = 'from' | 'text' | 'to'
+export type CommonMessagePropKeys = 'from' | 'text' | 'to' | 'json'
 export type CommonMessageProps = Pick<SmsParams, CommonMessagePropKeys>
 export type MessageDispatchProps<T> = T & CommonMessageProps
 
@@ -107,7 +107,7 @@ export function Message<T>(p: MessageProps<T>) {
 
         dispatch(addSnackbar(await p.dispatchFn({
             client: initClient(apiKey),
-            options: getOpts(props.text, props.to, props.from),
+            options: {...getOpts(props.text, props.to, props.from), json: true},
         })));
 
         dispatch(setBackdrop(false));

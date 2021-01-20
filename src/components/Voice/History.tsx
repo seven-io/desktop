@@ -13,7 +13,7 @@ export type VoiceDump = {
 }
 
 export const VoiceHistory = () => {
-    const {t} = useTranslation('history');
+    const {t} = useTranslation(['history', 'voice']);
 
     const rowHandler = (row: VoiceDump, i: number) => <React.Fragment key={i}>
         <TableRow>
@@ -48,7 +48,7 @@ export const VoiceHistory = () => {
 
         <TableRow>
             <TableCell component='th' scope='row'>
-                {t('code')}
+                {t('voice:code')}
             </TableCell>
 
             <TableCell align='right'>
@@ -58,7 +58,7 @@ export const VoiceHistory = () => {
 
         <TableRow>
             <TableCell component='th' scope='row'>
-                {t('cost')}
+                {t('voice:cost')}
             </TableCell>
 
             <TableCell align='right'>
