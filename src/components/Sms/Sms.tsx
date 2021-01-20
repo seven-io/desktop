@@ -26,6 +26,13 @@ export const Sms = () => {
         }}
         FormAddons={<>
             <TextInput
+                label={t('delay')}
+                onChange={setPartParam}
+                stateKey='delay'
+                value={partParams.delay}
+            />
+
+            <TextInput
                 label={t('label')}
                 onChange={setPartParam}
                 stateKey='label'
