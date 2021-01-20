@@ -26,6 +26,13 @@ export const Sms = () => {
             />
 
             <BoolInput<PartParams>
+                label={t('flash')}
+                setState={setParams}
+                state={params}
+                stateKey='flash'
+            />
+
+            <BoolInput<PartParams>
                 label={t('noReload')}
                 setState={setParams}
                 state={params}
