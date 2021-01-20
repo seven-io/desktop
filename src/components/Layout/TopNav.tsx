@@ -12,15 +12,8 @@ import {shell} from 'electron';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
 import HelpIcon from '@material-ui/icons/HelpOutline';
-import ComputerIcon from '@material-ui/icons/Computer';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-
-import {System} from '../System';
 
 export const TopNav = () => {
-    const [systemDialogOpen, setSystemDialogOpen] = React.useState(false);
-
     const {t} = useTranslation();
 
     const classes = makeStyles({
@@ -38,7 +31,8 @@ export const TopNav = () => {
     return <AppBar variant='outlined' position='static'>
         <Toolbar variant='dense' className={classes.toolbar}>
             <a href='#!' onClick={() => shell.openExternal('https://www.sms77.io/')}>
-                <img src={require('../../assets/img/white-3240x640.png').default} alt='' className={classes.logo}/>
+                <img src={require('../../assets/img/white-3240x640.png').default} alt=''
+                     className={classes.logo}/>
             </a>
 
             <ButtonGroup color='primary' aria-label={t('socialsBtnGroup')}>
@@ -52,7 +46,8 @@ export const TopNav = () => {
                     <LinkedInIcon/>
                 </Button>
 
-                <Button className={classes.link} onClick={() => shell.openExternal('https://twitter.com/sms77io')}>
+                <Button className={classes.link}
+                        onClick={() => shell.openExternal('https://twitter.com/sms77io')}>
                     <TwitterIcon/>
                 </Button>
 
@@ -61,19 +56,9 @@ export const TopNav = () => {
                     <RssFeedIcon/>
                 </Button>
 
-                <Button className={classes.link} onClick={() => shell.openExternal('https://github.com/sms77io')}>
+                <Button className={classes.link}
+                        onClick={() => shell.openExternal('https://github.com/sms77io')}>
                     <GitHubIcon/>
-                </Button>
-
-                <Button className={classes.link} onClick={() => setSystemDialogOpen(!systemDialogOpen)}>
-                    <ComputerIcon/>
-
-                    <Dialog onClose={() => setSystemDialogOpen(false)} aria-labelledby='systemDialog'
-                            open={systemDialogOpen}>
-                        <DialogTitle id='systemDialog'>{t('systemInfo')}</DialogTitle>
-
-                        <System/>
-                    </Dialog>
                 </Button>
 
                 <Button className={classes.link}

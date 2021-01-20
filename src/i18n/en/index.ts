@@ -1,5 +1,4 @@
 import {sms} from './sms';
-import {system} from './system';
 import {history} from './history';
 import {contacts} from './contacts';
 import {message} from './message';
@@ -13,7 +12,6 @@ export default {
     lookup,
     pricing,
     sms,
-    system,
     voice,
     message,
     translation: {

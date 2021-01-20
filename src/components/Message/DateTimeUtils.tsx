@@ -1,7 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import {PopupMenu} from '../PopupMenu';
 
 export type MessageToolbarProps = {
@@ -9,45 +8,49 @@ export type MessageToolbarProps = {
 }
 
 export const DateTimeUtils = ({onClick}: MessageToolbarProps) => {
-    const {t} = useTranslation('sms');
+    const trans = useTranslation('message');
+    const t = (k: string) => trans.t(`toolbar.${k}`);
 
-    return <PopupMenu buttonText='Date/Time' identifier='date-time'>
+    return <PopupMenu
+        buttonText={`${t('date')}/${t('time')}`}
+        identifier='date-time'
+    >
         <MenuItem onClick={() => onClick(Date.now().toString())}>
-            {t('toolbar.timestamp')}
+            {t('timestamp')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toString())}>
-            {t('toolbar.date')}
+            {t('date')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toLocaleString())}>
-            {t('toolbar.locale')}
+            {t('locale')}
         </MenuItem>
 
         <MenuItem
             onClick={() => onClick(new Date().toLocaleDateString())}>
-            {t('toolbar.locale')} {t('toolbar.date')}
+            {t('locale')} {t('date')}
         </MenuItem>
 
         <MenuItem
             onClick={() => onClick(new Date().toLocaleTimeString())}>
-            {t('toolbar.locale')} {t('toolbar.time')}
+            {t('locale')} {t('time')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toDateString())}>
-            {t('toolbar.date')}
+            {t('date')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toISOString())}>
-            ISO {t('toolbar.date')}
+            ISO {t('date')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toTimeString())}>
-            {t('toolbar.time')}
+            {t('time')}
         </MenuItem>
 
         <MenuItem onClick={() => onClick(new Date().toUTCString())}>
-            UTC {t('toolbar.date')}
+            UTC {t('date')}
         </MenuItem>
     </PopupMenu>;
 };

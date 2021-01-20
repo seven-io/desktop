@@ -14,7 +14,7 @@ import {LocalStore, localStoreDefaults} from '../../util/LocalStore';
 import {getOpts, SendSmsProps} from '../../util/sendSms';
 import {addSnackbar, setBackdrop, setNav, setTo} from '../../store/actions';
 import {RootState} from '../../store/reducers';
-import {MessageToolbar, MessageToolbarProps} from './MessageToolbar';
+import {Toolbar, ToolbarProps} from './Toolbar';
 import {notify} from '../../util/notify';
 import {initClient} from '../../util/initClient';
 
@@ -27,12 +27,11 @@ export type DispatchProps<T> = {
     options: SmsParams | VoiceParams
 }
 
-export type MessageProps<T> = {
+export type MessageProps<T> = Pick<ToolbarProps, 'emoji'> & {
     dispatchFn(p: DispatchProps<T>): Promise<string>
     FormAddons?: ReactNode
     History: ReactNode
-    ns: string,
-    ToolbarAddons?: (p: MessageToolbarProps) => JSX.Element
+    ns: string
 }
 
 export type MessageTranslations = {
@@ -125,19 +124,11 @@ export function Message<T>(p: MessageProps<T>) {
         setTo(LocalStore.get('options.to', localStoreDefaults.options.to));
     };
 
-    const toolbarProps: MessageToolbarProps = {
-        onAction: setText,
-        textarea: $textarea.current!,
-    };
-    if (p.ToolbarAddons) {
-        toolbarProps.Addons = <p.ToolbarAddons {...toolbarProps} />;
-    }
-
     return <>
         <h1>{t(`${p.ns}:h1`)}</h1>
 
         <form className={classes.form} onSubmit={handleSubmit}>
-            <MessageToolbar {...toolbarProps} />
+            <Toolbar emoji={p.emoji} onAction={setText} textarea={$textarea.current!}/>
 
             <TextField
                 fullWidth
