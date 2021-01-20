@@ -5,4 +5,5 @@ export const sms: MessageTranslations & AnyObject = {
     foreignId: 'Foreign ID',
     h1: 'Send SMS',
     label: 'Label',
+    udh: 'User Data Header'
 };

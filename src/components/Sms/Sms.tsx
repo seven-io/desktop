@@ -38,6 +38,13 @@ export const Sms = () => {
                 stateKey='foreign_id'
                 value={partParams.foreign_id}
             />
+
+            <TextInput
+                label={t('udh')}
+                onChange={setPartParam}
+                stateKey='udh'
+                value={partParams.udh}
+            />
         </>}
         History={<History/>}
         ns='sms'
