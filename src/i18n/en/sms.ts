@@ -9,5 +9,6 @@ export const sms: MessageTranslations & AnyObject = {
     label: 'Label',
     noReload: 'No Reload',
     ttl: 'Time to Live',
-    udh: 'User Data Header'
+    udh: 'User Data Header',
+    unicode: 'Unicode',
 };

@@ -13,63 +13,66 @@ type PartParams = Omit<SmsParams, CommonMessagePropKeys | 'json'>
 
 export const Sms = () => {
     const {t} = useTranslation('sms');
-
     const [params, setParams] = useState<PartParams>({});
-
-    const setPartParam = (k: keyof PartParams, v: PartParams[keyof PartParams]) =>
-        setParams({...params, [k]: v});
 
     return <Message<PartParams>
         dispatchFn={p => sendSms({...p, options: {...p.options, ...params}})}
         FormAddons={<>
-            <BoolInput
-                handleChange={setPartParam}
+            <BoolInput<PartParams>
                 label={t('debug')}
+                setState={setParams}
+                state={params}
                 stateKey='debug'
-                value={params.debug}
             />
 
-            <BoolInput
-                handleChange={setPartParam}
+            <BoolInput<PartParams>
                 label={t('noReload')}
+                setState={setParams}
+                state={params}
                 stateKey='no_reload'
-                value={params.no_reload}
             />
 
-            <TextInput
-                handleChange={setPartParam}
+            <BoolInput<PartParams>
+                label={t('unicode')}
+                setState={setParams}
+                state={params}
+                stateKey='unicode'
+            />
+
+            <TextInput<PartParams>
                 label={t('delay')}
+                setState={setParams}
+                state={params}
                 stateKey='delay'
-                value={params.delay}
             />
 
-            <TextInput
-                handleChange={setPartParam}
+            <TextInput<PartParams>
                 label={t('label')}
+                setState={setParams}
+                state={params}
                 stateKey='label'
-                value={params.label}
             />
 
-            <TextInput
-                handleChange={setPartParam}
+            <TextInput<PartParams>
                 label={t('foreignId')}
+                setState={setParams}
+                state={params}
                 stateKey='foreign_id'
-                value={params.foreign_id}
             />
 
-            <TextInput
-                handleChange={setPartParam}
+            <TextInput<PartParams>
                 label={t('udh')}
+                setState={setParams}
+                state={params}
                 stateKey='udh'
-                value={params.udh}
             />
 
-            <TextInput
-                handleChange={setPartParam}
+            <TextInput<PartParams>
                 label={t('ttl')}
+                setState={setParams}
+                state={params}
                 stateKey='ttl'
                 type='number'
-                value={params.ttl}
             />
         </>}
         History={<History/>}

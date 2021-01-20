@@ -1,6 +1,6 @@
-export type BaseInputProps<V, R> = {
+export type BaseInputProps<S> = {
     label: string
-    handleChange(name: string, value: R): void
-    stateKey: string
-    value: V | undefined
+    setState(state: S): void
+    state: S
+    stateKey: keyof S
 }
