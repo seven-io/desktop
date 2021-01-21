@@ -1,10 +1,19 @@
-![alt text](https://www.sms77.io/wp-content/uploads/2019/07/sms77-Logo-400x79.png "sms77")
-# sms77io Desktop Application
+![Sms77.io Logo](https://www.sms77.io/wp-content/uploads/2019/07/sms77-Logo-400x79.png "Sms77.io Logo")
+# Official desktop application for the Sms77.io SMS gateway
 
 Distributed for Linux, MacOS and Windows.
 
 ## Installation
-Head to /releases and download the latest installer for your operating system.
+Head to [releases](https://github.com/sms77io/desktop/releases/latest) 
+and download the latest installer for your operating system.
+
+Linux (DEB):
+```sudo dpkg -i sms77-desktop-1.1.0-1.x86_64.deb```
+
+Linux (RPM):
+```sudo rpm -i sms77-desktop-1.1.0-1.x86_64.rpm```
+
+Windows/OSX:
 Follow the installer instructions to install the application on your disk.
 
 You can alternatively clone the project 
