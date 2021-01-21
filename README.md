@@ -13,39 +13,29 @@ Make sure you have NodeJS installed.
 
 ### Features
 - Send SMS to one/multiple user(s)
-- Message utilites: emojis, date/time, system-related
+- Send Text2Speech messages
+- Message utilities: emojis, date/time, system-related
 - Message history
 - Number lookups: CNAM, HLR, MNP, format
 - Lookup history
 - Retrieve pricing
 - Read contacts
 
-#### ToDo
-- Write tests
-- Add translations
-
 ##### Screenshots
-<figure>
-<figcaption>Send SMS</figcaption>
-<img alt='Send SMS' src="https://user-images.githubusercontent.com/12965261/75873156-bad0fc00-5e0f-11ea-88ba-d8d712c33cb7.png"/>
-</figure>
+SMS
+![Send SMS Screenshot](./screenshots/sms.png "Send SMS Screenshot")
 
-<figure>
-<figcaption>Lookup Number</figcaption>
-<img alt='Lookup Number' src="https://user-images.githubusercontent.com/12965261/75870168-e6051c80-5e0a-11ea-8cf4-54015ed3ed4f.png"/>
-</figure>
+Voice
+![Send Voice Screenshot](./screenshots/voice.png "Send Voice Screenshot")
 
-<figure>
-<figcaption>Options</figcaption>
-<img alt='Options' src="https://user-images.githubusercontent.com/12965261/75872404-5e211180-5e0e-11ea-915b-8c2cca0f289d.png"/>
-</figure>
+Lookup Number
+![Lookup Number Screenshot](./screenshots/lookup.png "Lookup Number Screenshot")
 
-<figure>
-<figcaption>Contacts</figcaption>
-<img alt='Contacts' src="https://user-images.githubusercontent.com/12965261/75872467-7f81fd80-5e0e-11ea-9f3d-1e5bb03f7bc0.png"/>
-</figure>
+Options
+![App Options Screenshot](./screenshots/options.png "App Options Screenshot")
 
-<figure>
-<figcaption>Pricing</figcaption>
-<img alt='Pricing' src="https://user-images.githubusercontent.com/12965261/75872517-97f21800-5e0e-11ea-8b5d-3aa96b81845f.png"/>
-</figure>
+Contacts
+![Contacts Screenshot](./screenshots/contacts.png "Contacts Screenshot")
+
+Pricing
+![Pricing Screenshot](./screenshots/pricing.png "Pricing Screenshot")
