@@ -4,10 +4,10 @@ module.exports = [
         use: 'node-loader',
     },
     {
-        test: /\.(m?js|node)$/,
         parser: {
             amd: false,
         },
+        test: /\.(m?js|node)$/,
         use: {
             loader: '@marshallofsound/webpack-asset-relocator-loader',
             options: {
@@ -16,8 +16,8 @@ module.exports = [
         },
     },
     {
-        test: /\.tsx?$/,
         exclude: /(node_modules|\.webpack)/,
+        test: /\.tsx?$/,
         use: {
             loader: 'ts-loader',
             options: {

@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {useDispatch} from 'react-redux';
 import {makeStyles} from '@material-ui/core/styles';
-
 import {LocalStore} from '../../util/LocalStore';
 import {setTo} from '../../store/actions';
 import {ApiKey} from './ApiKey';
@@ -10,9 +9,10 @@ import {From} from '../From';
 import {To} from '../To';
 import {Signature} from './Signature';
 import {IOptions} from './types';
+import {BoolInput} from '../BoolInput';
 
 export const Options = () => {
-    const $apiKey = useRef();
+    const $apiKey = useRef<HTMLInputElement>();
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const classes = makeStyles(theme => ({
@@ -22,10 +22,10 @@ export const Options = () => {
             },
         },
     }))();
-    const [state, setState] = useState<IOptions>(LocalStore.get('options') as IOptions);
+    const [state, setState] = useState<IOptions>(LocalStore.get('options'));
 
     useEffect(() => {
-        !state.apiKey.length && ($apiKey.current! as HTMLInputElement).focus();
+        !state.apiKey.length && $apiKey.current!.focus();
     }, []);
 
     const handleChange = ({target: {name, value}}: any) => {
@@ -35,7 +35,7 @@ export const Options = () => {
     };
 
     return <>
-        <h1>Options</h1>
+        <h1>{t('options')}</h1>
 
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
             <p>
@@ -50,7 +50,8 @@ export const Options = () => {
         <form className={classes.root}>
             <ApiKey inputRef={$apiKey} onChange={handleChange} value={state.apiKey}/>
 
-            <From onChange={from => handleChange({target: {name: 'from', value: from}})} value={state.from}/>
+            <From onChange={from => handleChange({target: {name: 'from', value: from}})}
+                  value={state.from}/>
 
             <To onChange={to => {
                 handleChange({target: {name: 'to', value: to}});
@@ -59,6 +60,18 @@ export const Options = () => {
             }} value={state.to}/>
 
             <Signature onChange={handleChange} signature={state.signature}/>
+
+            <BoolInput<IOptions>
+                label={t('expertMode')}
+                setState={(o) => handleChange({
+                    target: {
+                        name: 'expertMode',
+                        value: o.expertMode
+                    }
+                })}
+                state={state}
+                stateKey='expertMode'
+            />
         </form>
     </>;
 };

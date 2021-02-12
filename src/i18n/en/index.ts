@@ -19,6 +19,7 @@ export default {
         close: 'Close',
         contacts: 'Contacts',
         documentation: 'Documentation',
+        expertMode: 'Expert Mode',
         help: 'Help',
         history: 'Message History',
         lookup: 'Lookup',

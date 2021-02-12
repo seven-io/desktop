@@ -24,6 +24,7 @@ export const localStoreDefaults: ILocalStore = {
     lookups: [],
     options: {
         apiKey: '',
+        expertMode: false,
         from: 'sms77io',
         signature: '',
         signaturePosition: 'append',

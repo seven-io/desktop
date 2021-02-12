@@ -11,16 +11,19 @@ import {History} from './History';
 import {CommonMessagePropKeys, Message} from '../Message/Message';
 import {TextInput} from '../TextInput';
 import {BoolInput} from '../BoolInput';
+import {IOptions} from '../Options/types';
+import {LocalStore} from '../../util/LocalStore';
 
 type PartParams = Omit<SmsParams, CommonMessagePropKeys>
 
 export const Sms = () => {
     const {t} = useTranslation('sms');
     const [params, setParams] = useState<PartParams>({});
+    const [{expertMode}] = useState<IOptions>(LocalStore.get('options'));
 
     return <Message<PartParams>
         dispatchFn={p => sendSms({...p, options: {...p.options, ...params}})}
-        FormAddons={<>
+        FormAddons={expertMode ? <>
             <BoolInput<PartParams>
                 label={t('debug')}
                 setState={setParams}
@@ -108,7 +111,7 @@ export const Sms = () => {
                     />
                 </Grid>
             </Grid>
-        </>}
+        </> : null}
         History={<History/>}
         ns='sms'
         emoji={true}
