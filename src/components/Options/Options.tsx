@@ -48,9 +48,11 @@ export const Options = () => {
         </div>
 
         <form className={classes.root}>
-            <ApiKey inputRef={$apiKey} onChange={handleChange} value={state.apiKey}/>
+            <ApiKey inputRef={$apiKey} onChange={(e) => {
+                handleChange(e);
+            }} value={state.apiKey}/>
 
-            <From onChange={from => handleChange({target: {name: 'from', value: from}})}
+            <From onChange={value => handleChange({target: {name: 'from', value}})}
                   value={state.from}/>
 
             <To onChange={to => {
