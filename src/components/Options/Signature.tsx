@@ -1,23 +1,23 @@
-import React, {SyntheticEvent} from 'react';
-import TextField from '@material-ui/core/TextField';
+import React from 'react';
+import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 import {useTranslation} from 'react-i18next';
 
-export type SignatureProps = {
-    onChange: (ev: SyntheticEvent) => void
+export type SignatureProps = TextFieldProps & {
     signature: string
 }
 
 export type SignaturePosition = 'append' | 'prepend';
 
-export const Signature = ({onChange, signature}: SignatureProps) => {
+export const Signature = ({onChange, signature, ...props}: SignatureProps) => {
     const {t} = useTranslation();
 
     return <TextField
         fullWidth
+        helperText={t('savedAutomatically')}
         label={t('signatureExplanation')}
         multiline
         name='signature'
-        onChange={onChange}
         value={signature}
+        {...props}
     />;
 };

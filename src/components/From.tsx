@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import TextField from '@material-ui/core/TextField';
+import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 
-export type FromProps = {
-    value: string,
+export type FromProps = Omit<TextFieldProps, 'onChange'> & {
     onChange: (from: string) => void
+    value: string
 }
 
-export const From = ({value, onChange}: FromProps) => {
+export const From = ({onChange, value, ...props}: FromProps) => {
     const [from, setFrom] = useState('');
     const {t} = useTranslation();
 
@@ -19,5 +19,6 @@ export const From = ({value, onChange}: FromProps) => {
         name='from'
         onChange={e => onChange(e.target.value)}
         value={from}
+        {...props}
     />;
 };

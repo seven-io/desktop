@@ -6,6 +6,7 @@ import {SmsDump} from './sendSms';
 import {VoiceDump} from '../components/Voice/History';
 
 export type ILocalStore = {
+    balance: number | null
     contacts: Contact[],
     history: SmsDump[],
     lookups: LookupResponse[],
@@ -13,12 +14,13 @@ export type ILocalStore = {
     voices: VoiceDump[],
 }
 
-export type ArrayOption = keyof Omit<ILocalStore, 'options'>
+export type ArrayOption = keyof Omit<ILocalStore, 'options' | 'balance'>
 export type ArrayStorageVal<T extends ArrayOption> =
     ILocalStore[T]
     | ILocalStore[T][number]
 
 export const localStoreDefaults: ILocalStore = {
+    balance: null,
     contacts: [],
     history: [],
     lookups: [],

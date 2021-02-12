@@ -35,36 +35,42 @@ export const Options = () => {
     };
 
     return <>
-        <h1>{t('options')}</h1>
+        <h1>
+            {t('options')}
+        </h1>
 
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-            <p>
-                {t('optionsSavedAutomatically')}
-            </p>
+        <div className={classes.root}>
+            <ApiKey
+                inputRef={$apiKey}
+                onChange={value => handleChange({
+                    target: {
+                        name: 'apiKey',
+                        value,
+                    }
+                })}
+                value={state.apiKey}
+            />
 
-            <p>
-                {t('markedFieldsRequired')}
-            </p>
-        </div>
+            <From
+                helperText={t('savedAutomatically')}
+                onChange={value => handleChange({target: {name: 'from', value}})}
+                value={state.from}
+            />
 
-        <form className={classes.root}>
-            <ApiKey inputRef={$apiKey} onChange={(e) => {
-                handleChange(e);
-            }} value={state.apiKey}/>
+            <To
+                helperText={t('savedAutomatically')}
+                onChange={to => {
+                    handleChange({target: {name: 'to', value: to}});
 
-            <From onChange={value => handleChange({target: {name: 'from', value}})}
-                  value={state.from}/>
-
-            <To onChange={to => {
-                handleChange({target: {name: 'to', value: to}});
-
-                dispatch(setTo(to));
-            }} value={state.to}/>
+                    dispatch(setTo(to));
+                }}
+                value={state.to}
+            />
 
             <Signature onChange={handleChange} signature={state.signature}/>
 
             <BoolInput<IOptions>
-                label={t('expertMode')}
+                label={`${t('expertMode')} (${t('savedAutomatically')})`}
                 setState={(o) => handleChange({
                     target: {
                         name: 'expertMode',
@@ -74,6 +80,6 @@ export const Options = () => {
                 state={state}
                 stateKey='expertMode'
             />
-        </form>
+        </div>
     </>;
 };

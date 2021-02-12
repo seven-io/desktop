@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import TextField from '@material-ui/core/TextField';
+import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 import {useTranslation} from 'react-i18next';
 
-export type ToProps = {
+export type ToProps = Omit<TextFieldProps, 'onChange'> & {
     onChange: (to: string) => void
     value: string
 }
 
-export const To = ({onChange, value}: ToProps) => {
+export const To = ({onChange, value, ...props}: ToProps) => {
     const {t} = useTranslation();
 
     const [to, setTo] = useState('');
@@ -16,10 +16,10 @@ export const To = ({onChange, value}: ToProps) => {
 
     return <TextField
         fullWidth
-        helperText={t('onePlusNumberContact')}
         label={t('onePlusRecipient')}
         name='to'
         onChange={e => onChange(e.target.value)}
         value={to}
+        {...props}
     />;
 };
