@@ -1,5 +1,5 @@
 import {hot} from 'react-hot-loader';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -14,11 +14,25 @@ import {Sms} from '../Sms/Sms';
 import {Contacts} from '../Contacts';
 import {Pricings} from '../Pricing/Pricings';
 import {Lookup} from '../Lookup/Lookup';
-import {setBackdrop} from '../../store/actions';
+import {addSnackbar, setBackdrop, setNav} from '../../store/actions';
 import {Voice} from '../Voice/Voice';
+import {LocalStore} from '../../util/LocalStore';
+import {useTranslation} from 'react-i18next';
 
 export const Layout = hot(module)(() => {
+    const apiKey = LocalStore.get('options.apiKey', '');
     const dispatch = useDispatch();
+    const {t} = useTranslation();
+
+    useEffect(() => {
+        if ('' === apiKey) {
+            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
+
+            dispatch(setNav('options'));
+
+            return;
+        }
+    }, []);
 
     const classes = makeStyles((theme: Theme) => createStyles({
         backdrop: {
