@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,24 +9,57 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import {shell} from 'electron';
-import Button from '@material-ui/core/Button';
+import Button, {ButtonProps} from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
 import HelpIcon from '@material-ui/icons/HelpOutline';
+import {LocalStore} from '../../util/LocalStore';
+
+type ExternalButtonProps = ButtonProps & {
+    url: string
+}
 
 export const TopNav = () => {
     const {t} = useTranslation();
+    const [balance, setBalance] = useState(LocalStore.get('balance'));
+
+    LocalStore.onDidChange('balance', balance => {
+        if (typeof balance !== 'undefined') {
+            setBalance(balance);
+        }
+    });
 
     const classes = makeStyles({
-        toolbar: {
-            justifyContent: 'space-between',
+        balance: {
+            color: '#fff',
+            fontWeight: 'bold',
+            verticalAlign: 'super',
         },
         link: {
             color: '#fff',
         },
         logo: {
             maxWidth: '128px',
-        }
+        },
+        toolbar: {
+            justifyContent: 'space-between',
+        },
     })();
+
+    const ExternalButton = ({
+                                children,
+                                className,
+                                url,
+                                ...props
+                            }: ExternalButtonProps) => {
+        return <Button
+            className={classes.link}
+            onClick={() => shell.openExternal(url)}
+            {...props}
+
+        >
+            {children}
+        </Button>;
+    };
 
     return <AppBar variant='outlined' position='static'>
         <Toolbar variant='dense' className={classes.toolbar}>
@@ -35,37 +68,36 @@ export const TopNav = () => {
                      className={classes.logo}/>
             </a>
 
-            <ButtonGroup color='primary' aria-label={t('socialsBtnGroup')}>
-                <Button className={classes.link} size='small'
-                        onClick={() => shell.openExternal('https://www.facebook.com/sms77.io/')}>
-                    <FacebookIcon/>
-                </Button>
+            <div>
+                {null === balance ? null : <span className={classes.balance}>
+                        {t('balance')}: {balance}</span>}
 
-                <Button className={classes.link}
-                        onClick={() => shell.openExternal('https://www.linkedin.com/company/sms77/')}>
-                    <LinkedInIcon/>
-                </Button>
+                <ButtonGroup color='primary' aria-label={t('socialsBtnGroup')}>
+                    <ExternalButton url='https://www.facebook.com/sms77.io/' size='small'>
+                        <FacebookIcon/>
+                    </ExternalButton>
 
-                <Button className={classes.link}
-                        onClick={() => shell.openExternal('https://twitter.com/sms77io')}>
-                    <TwitterIcon/>
-                </Button>
+                    <ExternalButton url='https://www.linkedin.com/company/sms77/'>
+                        <LinkedInIcon/>
+                    </ExternalButton>
 
-                <Button className={classes.link}
-                        onClick={() => shell.openExternal('https://www.sms77.io/de/feed/')}>
-                    <RssFeedIcon/>
-                </Button>
+                    <ExternalButton url='https://twitter.com/sms77io'>
+                        <TwitterIcon/>
+                    </ExternalButton>
 
-                <Button className={classes.link}
-                        onClick={() => shell.openExternal('https://github.com/sms77io')}>
-                    <GitHubIcon/>
-                </Button>
+                    <ExternalButton url='https://www.sms77.io/de/feed/'>
+                        <RssFeedIcon/>
+                    </ExternalButton>
 
-                <Button className={classes.link}
-                        onClick={() => shell.openExternal('https://www.sms77.io/en/company/contact/')}>
-                    <HelpIcon/>
-                </Button>
-            </ButtonGroup>
+                    <ExternalButton url='https://github.com/sms77io'>
+                        <GitHubIcon/>
+                    </ExternalButton>
+
+                    <ExternalButton url='https://www.sms77.io/en/company/contact/'>
+                        <HelpIcon/>
+                    </ExternalButton>
+                </ButtonGroup>
+            </div>
         </Toolbar>
     </AppBar>;
 };

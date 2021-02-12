@@ -7,9 +7,15 @@ import {IS_DEV} from './util/constants';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 
-process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1';
 app.allowRendererProcessReuse = true;
-//app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors'); // TODO: add back if cors failure in production?
+
+/*
+TODO: add if production?
+https://www.chromestatus.com/feature/5768642492891136
+https://github.com/electron/electron/issues/23664
+app.commandLine.appendSwitch('disable-features', 'OutOfBlinkCors');
+https://stackoverflow.com/questions/57410051/chrome-not-showing-options-requests-in-network-tab
+*/
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
@@ -34,7 +40,8 @@ const createWindow = async () => {
             await installExtension([
                 REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS,
             ]);
-        } finally {
+        } catch (e) {
+            console.warn(e);
         }
 
         mainWindow.webContents.on('did-frame-finish-load', () => {

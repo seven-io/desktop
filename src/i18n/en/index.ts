@@ -16,6 +16,7 @@ export default {
     message,
     translation: {
         apiKey: 'API Key',
+        balance: 'Balance',
         close: 'Close',
         contacts: 'Contacts',
         documentation: 'Documentation',
