@@ -1,6 +1,6 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import Sms77Client, {CountryPricing} from 'sms77-client';
+import {CountryPricing, PricingResponseJson} from 'sms77-client';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
@@ -10,30 +10,20 @@ import {useTranslation} from 'react-i18next';
 import Table from '@material-ui/core/Table';
 import TextField, {TextFieldProps} from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-
 import {LocalStore} from '../../util/LocalStore';
-import {addSnackbar, setBackdrop, setNav} from '../../store/actions';
+import {setBackdrop} from '../../store/actions';
 import {CountryFlag} from '../CountryFlag';
 import {Pricing} from './Pricing';
-import {PricingResponseJson} from 'sms77-client/dist/types';
+import {initClient} from '../../util/initClient';
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing');
     const [country, setCountry] = useState<CountryPricing | null>(null);
     const dispatch = useDispatch();
-    const apiKey = LocalStore.get('options.apiKey', '');
     const [pricing, setPricing] = useState(
         LocalStore.get<'pricing', PricingResponseJson>('pricing'));
 
     useEffect(() => {
-        if (!apiKey || '' === apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
-
-            dispatch(setNav('options'));
-
-            return;
-        }
-
         if (!pricing) {
             getAndStore()
                 .then()
@@ -43,8 +33,10 @@ export const Pricings = () => {
 
     const getAndStore = async () => {
         dispatch(setBackdrop(true));
-        const pricing = await (new Sms77Client(apiKey, 'Desktop'))
+
+        const pricing = await initClient()
             .pricing({format: 'json'}) as PricingResponseJson;
+
         dispatch(setBackdrop(false));
 
         LocalStore.set('pricing', pricing);

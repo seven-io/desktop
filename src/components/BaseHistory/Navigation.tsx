@@ -1,33 +1,46 @@
 import React from 'react';
 import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
 import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-
 import {NavigationBaseButton} from './NavigationBaseButton';
-import {NavigationBaseProps} from './types';
+import {NavigationBaseProps, Operator} from '../../types';
 
 export type NavigationProps = NavigationBaseProps & {
     onNavigation: (i: number) => void
 }
 
+type NavButtonProps = {
+    operator: Operator
+}
+
 export const Navigation = ({index, list, onNavigation}: NavigationProps) => {
-    const handleNavigation = (operator: '+' | '-'): void => {
-        let newIndex: number = eval(`${index} ${operator} 1`);
+    const handleNavigation = (o: Operator): void => {
+        let newIndex = '+' === o ? index + 1 : index - 1;
 
         if (!list[newIndex]) {
-            newIndex = eval(`${newIndex} ${'+' === operator ? '-' : '+'} 1`);
+            newIndex = '+' === o ? newIndex - 1 : newIndex + 1;
         }
 
         onNavigation(newIndex);
     };
 
+    const NavButton = ({operator}: NavButtonProps) => {
+        const isPlus = '+' === operator;
+
+        return <NavigationBaseButton
+            Icon={isPlus ? ArrowRightIcon : ArrowLeftIcon}
+            IconButtonProps={{
+                onClick: () => handleNavigation(operator),
+                style: {[isPlus ? 'right' : 'left']: '0px'},
+            }}
+            index={index}
+            list={list}
+            operator={operator}
+        />;
+    };
+
     return <>
-        <NavigationBaseButton index={index} list={list}
-                              IconButtonProps={{style: {left: '0px'}, onClick: () => handleNavigation('-')}}
-                              Icon={ArrowLeftIcon} operator='-'/>
+        <NavButton operator='-'/>
 
-
-        <NavigationBaseButton index={index} list={list}
-                              IconButtonProps={{style: {right: '0px'}, onClick: () => handleNavigation('+')}}
-                              Icon={ArrowRightIcon} operator='+'/>
+        <NavButton operator='+'/>
     </>;
 };

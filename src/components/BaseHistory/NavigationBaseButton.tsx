@@ -1,21 +1,28 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import {IconButtonProps, SvgIconProps} from '@material-ui/core';
-
-import {NavigationBaseProps} from './types';
+import {NavigationBaseProps, Operator} from '../../types';
 
 export type NavigationBaseButtonProps = NavigationBaseProps & {
     Icon: React.JSXElementConstructor<SvgIconProps>
     IconButtonProps: IconButtonProps
-    operator: '+' | '-'
+    operator: Operator
 }
 
-export const NavigationBaseButton = (props: NavigationBaseButtonProps) => {
-    props.IconButtonProps.style!.position = 'absolute';
+export const NavigationBaseButton = ({
+                                         Icon,
+                                         IconButtonProps,
+                                         index,
+                                         list,
+                                         operator
+                                     }: NavigationBaseButtonProps) => {
+    IconButtonProps.style!.position = 'absolute';
 
-    return <IconButton disabled={undefined === props.list[eval(`${props.index} ${props.operator} 1`)]}
-                       onClick={props.IconButtonProps.onClick}
-                       style={{...props.IconButtonProps.style, position: 'absolute'}}>
-        <props.Icon fontSize='large' style={{fontSize: '3rem'}}/>
+    return <IconButton
+        disabled={undefined === list['+' === operator ? index + 1 : index - 1]}
+        onClick={IconButtonProps.onClick}
+        style={{...IconButtonProps.style, position: 'absolute'}}
+    >
+        <Icon fontSize='large' style={{fontSize: '3rem'}}/>
     </IconButton>;
 };
