@@ -2,7 +2,6 @@ import React, {useEffect, useState} from 'react';
 import TableContainer from '@material-ui/core/TableContainer';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
-
 import {ILocalStore, LocalStore} from '../../util/LocalStore';
 import {usePrevious} from '../../util/usePrevious';
 import {Navigation} from './Navigation';
@@ -14,10 +13,17 @@ export type BaseHistoryProps = {
     storeKey: keyof ILocalStore
 }
 
-export const BaseHistory = ({onNavigation, path, rowHandler, storeKey}: BaseHistoryProps) => {
-    const list = LocalStore.get(storeKey) as any;
-    const previousList = usePrevious<any>(list);
-    const getLastIndex = () => list.length - 1;
+export function BaseHistory<T>({
+                                   onNavigation,
+                                   path,
+                                   rowHandler,
+                                   storeKey
+                               }: BaseHistoryProps) {
+    const list = LocalStore.get(storeKey) as T[];
+    const previousList = usePrevious<T[]>(list);
+    const getLastIndex = () => {
+        return list.length - 1;
+    };
     const [index, setIndex] = useState(getLastIndex());
     const entry = list[index];
 
@@ -27,21 +33,42 @@ export const BaseHistory = ({onNavigation, path, rowHandler, storeKey}: BaseHist
         }
     }, [list]);
 
+    const handleOnNavigation = (n: number) => {
+        setIndex(n);
+
+        const isCurrent = n + 1 === list.length;
+
+        onNavigation && onNavigation(isCurrent);
+    };
+
+    const getRealEntry = (): any[] => {
+        if (!path) {
+            return [entry].flat();
+        }
+
+        let current: any = entry;
+        const objects = path.split('.') as (keyof T)[];
+
+        for (const o of objects) {
+            current = current[o];
+        }
+
+        return current as any[];
+    };
+
     return <>
-        {entry && <Navigation index={index} list={list} onNavigation={(n) => {
-            setIndex(n);
-
-            const isCurrent = n + 1 === list.length;
-
-            onNavigation && onNavigation(isCurrent);
-        }}/>}
+        {entry && <Navigation
+            index={index}
+            list={list}
+            onNavigation={handleOnNavigation}
+        />}
 
         <TableContainer>
             <Table size='small'>
                 <TableBody>
-                    {entry && (path ? eval(`entry${path}`) : [entry].flat()).map(rowHandler)}
+                    {entry && getRealEntry().map(rowHandler)}
                 </TableBody>
             </Table>
         </TableContainer>
     </>;
-};
+}

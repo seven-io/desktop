@@ -112,7 +112,7 @@ export const Lookup = () => {
 
         <h1>{t(historyTransKey)}</h1>
 
-        <BaseHistory
+        <BaseHistory<LookupResponse>
             onNavigation={
                 isCurrent => setHistoryTransKey(isCurrent ? 'response' : 'history')}
             rowHandler={(row: LookupResponse, i: number) => <React.Fragment key={i}>
