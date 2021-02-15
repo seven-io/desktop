@@ -1,11 +1,16 @@
 {
     "compilerOptions": {
+        "baseUrl": ".",
         "esModuleInterop": true,
         "experimentalDecorators": true,
         "jsx": "react",
-        "module": "commonjs",
+        "module": "CommonJS",
         "moduleResolution": "node",
         "outDir": "dist",
+        "paths": {
+            "*": ["node_modules/*"]
+        },
+        "resolveJsonModule": true,
         "skipLibCheck": true,
         "sourceMap": true,
         "strict": true,

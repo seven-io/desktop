@@ -9,23 +9,18 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import RssFeedIcon from '@material-ui/icons/RssFeed';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import {shell} from 'electron';
-import Button, {ButtonProps} from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 import {LocalStore} from '../../util/LocalStore';
-
-type ExternalButtonProps = ButtonProps & {
-    url: string
-}
+import {ExternalButton} from './ExternalButton';
+import Logo from '../../assets/img/white-3240x640.png';
 
 export const TopNav = () => {
     const {t} = useTranslation();
     const [balance, setBalance] = useState(LocalStore.get('balance'));
 
     LocalStore.onDidChange('balance', balance => {
-        if (typeof balance !== 'undefined') {
-            setBalance(balance);
-        }
+        typeof balance !== 'undefined' && setBalance(balance);
     });
 
     const classes = makeStyles({
@@ -33,9 +28,6 @@ export const TopNav = () => {
             color: '#fff',
             fontWeight: 'bold',
             verticalAlign: 'super',
-        },
-        link: {
-            color: '#fff',
         },
         logo: {
             maxWidth: '128px',
@@ -45,27 +37,10 @@ export const TopNav = () => {
         },
     })();
 
-    const ExternalButton = ({
-                                children,
-                                className,
-                                url,
-                                ...props
-                            }: ExternalButtonProps) => {
-        return <Button
-            className={classes.link}
-            onClick={() => shell.openExternal(url)}
-            {...props}
-
-        >
-            {children}
-        </Button>;
-    };
-
     return <AppBar variant='outlined' position='static'>
         <Toolbar variant='dense' className={classes.toolbar}>
             <a href='#!' onClick={() => shell.openExternal('https://www.sms77.io/')}>
-                <img src={require('../../assets/img/white-3240x640.png').default} alt=''
-                     className={classes.logo}/>
+                <img src={Logo} alt='' className={classes.logo}/>
             </a>
 
             <div>

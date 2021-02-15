@@ -6,6 +6,7 @@ import installExtension, {
 import {IS_DEV} from './util/constants';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
+declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 app.allowRendererProcessReuse = true;
 
@@ -24,12 +25,14 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
 
 const createWindow = async () => {
     const mainWindow = new BrowserWindow({
+        autoHideMenuBar: !IS_DEV,
         height: IS_DEV ? 1080 : 600,
         webPreferences: {
             allowRunningInsecureContent: false,
             contextIsolation: false,
             enableRemoteModule: true,
             nodeIntegration: true,
+            preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             webSecurity: !IS_DEV,
         },
         width: IS_DEV ? 1920 : 800,

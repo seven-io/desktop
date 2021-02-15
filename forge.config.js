@@ -1,10 +1,12 @@
 const path = require('path');
 const fs = require('fs');
 const assert = require('assert');
+const cpy = require('cpy');
 const pkg = require('./package.json');
 
 const getIconPath = (format, size = 128) => {
-    const iconPath = path.normalize(path.join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`))
+    const iconPath = path.normalize(
+        path.join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`));
     assert.ok(fs.existsSync(iconPath));
     return iconPath;
 };
@@ -12,12 +14,26 @@ const getIconPath = (format, size = 128) => {
 const icons = {
     ico: getIconPath('ico'),
     png: getIconPath('png'),
-}
+};
 
 const description = 'Send SMS, Text2Speech messages and more via Sms77.io.';
 
 module.exports = {
+    hooks: {
+        async packageAfterExtract() {
+            await cpy(
+                [path.resolve(__dirname, '.webpack/renderer/*.*')],
+                path.resolve(__dirname, '.webpack/renderer/main_window')
+            );
+        },
+    },
     makers: [
+        {
+            name: '@electron-forge/maker-zip',
+            platforms: [
+                'darwin',
+            ],
+        },
         {
             name: '@electron-forge/maker-squirrel',
             config: {
@@ -71,33 +87,38 @@ module.exports = {
         icon: icons.png, // omit file extension for auto detecting according to OS
     },
     plugins: [
+        /* TODO: add back?
+              [
+                    '@electron-forge/plugin-electronegativity',
+                    {
+                        isSarif: true,
+                    },
+                ],*/
         [
             '@electron-forge/plugin-webpack',
             {
                 mainConfig: './webpack.main.config.js',
                 renderer: {
                     config: './webpack.renderer.config.js',
-                    entryPoints: [
-                        {
-                            html: './src/index.html',
-                            js: './src/renderer.ts',
-                            name: 'main_window',
-                        },
-                    ]
+                    entryPoints: [{
+                        html: './src/index.html',
+                        js: './src/renderer.ts',
+                        name: 'main_window',
+                    },],
                 }
             }
         ]
     ],
     publishers: [
         {
-            name: '@electron-forge/publisher-github',
             config: {
+                prerelease: true,
                 repository: {
                     name: 'desktop',
                     owner: 'sms77io',
                 },
-                prerelease: true,
             },
+            name: '@electron-forge/publisher-github',
         },
     ],
 };
