@@ -4,7 +4,7 @@
     "description": "sms77io Desktop Application",
     "main": ".webpack/main",
     "scripts": {
-        "start": "electron-forge start --enable-logging",
+        "dev": "electron-forge start --enable-logging",
         "package": "electron-forge package",
         "make": "electron-forge make",
         "publish": "electron-forge publish"

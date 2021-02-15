@@ -19,6 +19,7 @@ import {LocalStore} from '../util/LocalStore';
 import {setBackdrop, setNav, setTo} from '../store/actions';
 import {notify} from '../util/notify';
 import {initClient} from '../util/initClient';
+import {cleanPhone} from '../util/cleanPhone';
 
 const styles = (theme: Theme) => {
     return createStyles({
@@ -165,11 +166,12 @@ export const Contacts = () => {
                 </Button>,
                 ID: c.ID,
                 Name: c.Name,
-                Number: c.Number,
+                Number: cleanPhone(c.Number!),
             }));
     };
 
-    const [contacts, setContacts] = useState(cleanContacts(LocalStore.get('contacts', [])));
+    const [contacts, setContacts] =
+        useState(cleanContacts(LocalStore.get('contacts', [])));
 
     useEffect(() => {
         if (!contacts.length) {
