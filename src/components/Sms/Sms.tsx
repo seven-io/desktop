@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
 import {SmsParams} from 'sms77-client';
 import {sendSms} from '../../util/sendSms';
 import {History} from './History';
@@ -11,7 +10,6 @@ import {SmsOptions} from './SmsOptions';
 export type SmsPartParams = Omit<SmsParams, CommonMessagePropKeys>
 
 export const Sms = () => {
-    const {t} = useTranslation('sms');
     const [params, setParams] = useState<SmsPartParams>({});
     const [{expertMode}] = useState<IOptions>(LocalStore.get('options'));
 
