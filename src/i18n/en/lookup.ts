@@ -28,7 +28,7 @@ export const lookup = {
     name: 'Caller ID',
     number: 'Phone Number',
     national: 'National',
-    national_format_number: 'National Format_Number',
+    national_format_number: 'National Format Number',
     network_type: 'Network Type',
     original_carrier: 'Original Carrier',
     ported: 'Porting Status',
