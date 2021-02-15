@@ -8,7 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
-import {numberFormatter} from '../../util/numberFormatter';
+import {getNumberFormatter} from '../../util/numberFormatter';
 
 type NetworkProps = {
     index: number
@@ -58,7 +58,7 @@ export const Network = ({index, network, networks}: NetworkProps) => {
                     </TableCell>
 
                     <TableCell align='right'>
-                        {numberFormatter.format(network.price)}
+                        {getNumberFormatter().format(network.price)}
                     </TableCell>
                 </TableRow>
 

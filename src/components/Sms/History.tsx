@@ -4,7 +4,7 @@ import {SmsMessage} from 'sms77-client';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import Tooltip from '@material-ui/core/Tooltip';
-import {numberFormatter} from '../../util/numberFormatter';
+import {getNumberFormatter} from '../../util/numberFormatter';
 import {BaseHistory} from '../BaseHistory/BaseHistory';
 import {BoolChip} from '../BoolChip';
 import {SmsDump} from '../../util/sendSms';
@@ -80,7 +80,7 @@ export const History = () => {
                 </TableCell>
 
                 <TableCell align='right'>
-                    {numberFormatter.format(row.price)}
+                    {getNumberFormatter().format(row.price)}
                 </TableCell>
             </TableRow>
 

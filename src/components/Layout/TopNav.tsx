@@ -16,6 +16,7 @@ import Logo from '../../assets/img/white-3240x640.png';
 import {Language} from '../Options/types';
 import {ExternalButton} from './ExternalButton';
 import i18n from '../../i18n';
+import {getNumberFormatter} from '../../util/numberFormatter';
 
 export const TopNav = () => {
     const {t} = useTranslation();
@@ -73,7 +74,7 @@ export const TopNav = () => {
 
             <div>
                 {null === balance ? null : <span className={classes.balance}>
-                        {t('balance')}: {balance}</span>}
+                        {t('balance')}: {getNumberFormatter().format(balance)}</span>}
 
                 <div className={classes.language}>
                     <Button

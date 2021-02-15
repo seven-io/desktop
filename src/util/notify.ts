@@ -1,23 +1,29 @@
+const isGranted = (): boolean => {
+    return 'granted' === Notification.permission;
+};
+
+const createNotification = (message: string): Notification => {
+    return new Notification(message);
+};
+
 export const notify = async (message: string): Promise<boolean> => {
-    const isGranted = () => 'granted' === Notification.permission;
-
-    const create = () => new Notification(message);
-
-    if (isGranted()) {
-        create();
-    } else {
+    if (!isGranted()) {
         const permission = await Notification.requestPermission();
 
-        if ('granted' === permission) {
-            create();
+        if ('granted' !== permission) {
+            window.alert(message);
+
+            return false;
         }
     }
 
     const event = new CustomEvent('sms77desktop', {
         detail: {
             action: 'NOTIFY',
-            notification: {message}
-        }
+            notification: {
+                message: createNotification(message),
+            },
+        },
     });
 
     return window.dispatchEvent(event);

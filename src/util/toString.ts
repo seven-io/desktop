@@ -1,1 +1,3 @@
-export const toString = (v: any): string => 'object' === typeof v ? JSON.stringify(v) : v;
+export const toString = (v: any) => {
+    return typeof v === 'object' ? JSON.stringify(v) : v;
+};
