@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {makeStyles} from '@material-ui/core/styles';
@@ -35,11 +35,34 @@ export const BottomNav = () => {
         {value: 'contacts', icon: <ContactsIcon/>},
     ]);
 
+    const getActionIndexByValue = (value: string): number => {
+        return actions.findIndex(a => value === a.value);
+    };
+
+    const [expertMode, setExpertMode] =
+        useState<boolean>(LocalStore.get('options.expertMode'));
+
+    useEffect(() => {
+        const pricingIndex = getActionIndexByValue('pricing');
+        const hasPricingRoute = -1 !== pricingIndex;
+        const _actions = [...actions];
+
+        if (expertMode) {
+            if (!hasPricingRoute) {
+                _actions.push({
+                    value: 'pricing',
+                    icon: <LocalAtmIcon/>
+                });
+            }
+        } else {
+            hasPricingRoute && _actions.splice(pricingIndex!, 1);
+        }
+
+        setActions(_actions);
+    }, [expertMode]);
+
     LocalStore.onDidChange('options', options => {
-        options && setActions(options.expertMode ? [...actions, {
-            value: 'pricing',
-            icon: <LocalAtmIcon/>
-        }] : actions.slice(0, actions.length - 1));
+        options && expertMode !== options.expertMode && setExpertMode(options.expertMode);
     });
 
     return <BottomNavigation

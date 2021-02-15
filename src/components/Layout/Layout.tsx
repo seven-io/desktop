@@ -1,5 +1,5 @@
 import {hot} from 'react-hot-loader';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -23,6 +23,11 @@ export const Layout = hot(module)(() => {
     const apiKey = LocalStore.get('options.apiKey', '');
     const dispatch = useDispatch();
     const {t} = useTranslation();
+    const [options, setOptions] = useState(LocalStore.get('options'));
+
+    LocalStore.onDidChange('options', options => {
+        options && setOptions(options);
+    });
 
     useEffect(() => {
         if ('' === apiKey) {

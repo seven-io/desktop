@@ -1,27 +1,63 @@
 import {Route} from './reducers/nav';
+import {IOptions} from '../components/Options/types';
 
-export const addSnackbar = (message: string) => ({
-    type: 'ADD_SNACKBAR',
-    message,
-});
+export type StoreActionType =
+    'ADD_SNACKBAR' |
+    'REMOVE_SNACKBAR' |
+    'SET_NAV' |
+    'SET_OPTIONS' |
+    'SET_TO' |
+    'SET_BACKDROP'
 
-export const removeSnackbar = (index: number) => ({
-    type: 'REMOVE_SNACKBAR',
-    index,
-});
+export type BaseAction<T extends StoreActionType> = {
+    type: T
+}
 
-export const setNav = (nav: Route) => ({
-    type: 'SET_NAV',
-    nav,
-});
+export type AddSnackbarAction = BaseAction<'ADD_SNACKBAR'> & { message: string }
+export type RemoveSnackbarAction = BaseAction<'REMOVE_SNACKBAR'> & { index: number }
+export type SetNavAction = BaseAction<'SET_NAV'> & { nav: Route }
+export type SetOptionsAction = BaseAction<'SET_OPTIONS'> & { options: IOptions }
+export type SetToAction = BaseAction<'SET_TO'> & { to: string }
+export type SetBackdropAction = BaseAction<'SET_BACKDROP'> & { backdrop: boolean }
 
+export const addSnackbar = (message: AddSnackbarAction['message']): AddSnackbarAction => {
+    return {
+        type: 'ADD_SNACKBAR',
+        message,
+    };
+};
 
-export const setTo = (to: string) => ({
-    type: 'SET_TO',
-    to,
-});
+export const removeSnackbar = (index: RemoveSnackbarAction['index']): RemoveSnackbarAction => {
+    return {
+        type: 'REMOVE_SNACKBAR',
+        index,
+    };
+};
 
-export const setBackdrop = (backdrop: boolean) => ({
-    type: 'SET_BACKDROP',
-    backdrop,
-});
+export const setNav = (nav: SetNavAction['nav']): SetNavAction => {
+    return {
+        type: 'SET_NAV',
+        nav,
+    };
+};
+
+export const setOptions = (options: SetOptionsAction['options']): SetOptionsAction => {
+    return {
+        type: 'SET_OPTIONS',
+        options,
+    };
+};
+
+export const setTo = (to: SetToAction['to']): SetToAction => {
+    return {
+        type: 'SET_TO',
+        to,
+    };
+};
+
+export const setBackdrop = (backdrop: SetBackdropAction['backdrop']): SetBackdropAction => {
+    return {
+        type: 'SET_BACKDROP',
+        backdrop,
+    };
+};
