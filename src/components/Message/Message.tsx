@@ -12,7 +12,7 @@ import {To} from '../To';
 import {From} from '../From';
 import {LocalStore, localStoreDefaults} from '../../util/LocalStore';
 import {getOpts, SendSmsProps} from '../../util/sendSms';
-import {addSnackbar, setBackdrop, setNav, setTo} from '../../store/actions';
+import {addSnackbar, setBackdrop, setTo} from '../../store/actions';
 import {RootState} from '../../store/reducers';
 import {Toolbar, ToolbarProps} from './Toolbar';
 import {notify} from '../../util/notify';
@@ -55,16 +55,14 @@ export function Message<T>(p: MessageProps<T>) {
     const to = useSelector((state: RootState) => state.to);
     const {t} = useTranslation(['message', p.ns]);
     const $textarea = useRef();
+    const [expertMode, setExpertMode] =
+        useState<boolean>(LocalStore.get('options.expertMode'));
+
+    LocalStore.onDidChange('options', options => {
+        options && setExpertMode(options.expertMode);
+    });
 
     useEffect(() => {
-        const apiKey = LocalStore.get('options.apiKey', '');
-
-        if ('' === apiKey || !apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
-
-            dispatch(setNav('options'));
-        }
-
         setDefaults();
     }, []);
 
@@ -81,17 +79,13 @@ export function Message<T>(p: MessageProps<T>) {
 
         const props: SendSmsProps = {text, to, from};
         const errors = [];
-        const apiKey = LocalStore.get('options.apiKey', '');
 
-        if ('' === apiKey) {
-            errors.push('API key missing!');
-        } else {
-            if (!props.to.length) {
-                props.to = LocalStore.get('options.to');
-            }
-            if (props.from && !props.from.length) {
-                props.from = LocalStore.get('options.from');
-            }
+        if (!props.to.length) {
+            props.to = LocalStore.get('options.to');
+        }
+
+        if (props.from && !props.from.length) {
+            props.from = LocalStore.get('options.from');
         }
 
         if (errors.length) {
@@ -105,7 +99,7 @@ export function Message<T>(p: MessageProps<T>) {
         }
 
         dispatch(addSnackbar(await p.dispatchFn({
-            client: initClient(apiKey),
+            client: initClient(),
             options: {...getOpts(props.text, props.to, props.from), json: true},
         })));
 
@@ -128,7 +122,13 @@ export function Message<T>(p: MessageProps<T>) {
         <h1>{t(`${p.ns}:h1`)}</h1>
 
         <form className={classes.form} onSubmit={handleSubmit}>
-            <Toolbar emoji={p.emoji} onAction={setText} textarea={$textarea.current!}/>
+            {expertMode
+                ? <Toolbar
+                    emoji={p.emoji}
+                    onAction={setText}
+                    textarea={$textarea.current!}
+                /> :
+                null}
 
             <TextField
                 fullWidth
