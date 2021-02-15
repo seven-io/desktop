@@ -5,6 +5,7 @@ import {
     FOREIGN_ID_MAX_LENGTH,
     LABEL_MAX_LENGTH
 } from 'sms77-client/dist/validators/request/sms';
+import {DateTimePicker} from '@material-ui/pickers';
 import {TextInput} from '../TextInput';
 import {BoolInput} from '../BoolInput';
 import {SmsPartParams} from './Sms';
@@ -80,17 +81,21 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                 />
             </Grid>
             <Grid item xs={4}>
-                <TextInput<SmsPartParams>
+                <DateTimePicker
+                    disablePast={true}
+                    format='yyyy-MM-dd hh:ii'
+                    fullWidth
+                    InputLabelProps={{shrink: true}}
                     label={t('delay')}
-                    setState={setParams}
-                    state={params}
-                    stateKey='delay'
+                    onChange={e => setParams({...params, delay: e!.toLocaleString()})}
+                    value={params.delay || null}
                 />
             </Grid>
             <Grid item xs={4}>
                 <TextInput<SmsPartParams>
                     label={t('ttl')}
                     setState={setParams}
+                    shrink={true}
                     state={params}
                     stateKey='ttl'
                     type='number'
@@ -100,6 +105,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                 <TextInput<SmsPartParams>
                     label={t('udh')}
                     setState={setParams}
+                    shrink={true}
                     state={params}
                     stateKey='udh'
                 />
