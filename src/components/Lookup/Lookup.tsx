@@ -1,7 +1,7 @@
-import React, {SyntheticEvent, useEffect} from 'react';
+import React, {SyntheticEvent} from 'react';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import Sms77Client from 'sms77-client';
+import {LookupParams} from 'sms77-client';
 import {LookupType} from 'sms77-client/dist/constants/byEndpoint/lookup/LookupType';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
@@ -13,12 +13,13 @@ import Grid from '@material-ui/core/Grid';
 import Tooltip from '@material-ui/core/Tooltip';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import {addSnackbar, setBackdrop, setNav} from '../../store/actions';
+import {addSnackbar, setBackdrop} from '../../store/actions';
 import {LocalStore} from '../../util/LocalStore';
 import {toString} from '../../util/toString';
 import {TableRowSpreader} from '../TableRowSpreader';
 import {BaseHistory} from '../BaseHistory/BaseHistory';
 import {LookupResponse} from './types';
+import {initClient} from '../../util/initClient';
 
 export const Lookup = () => {
     const dispatch = useDispatch();
@@ -32,36 +33,29 @@ export const Lookup = () => {
             margin: theme.spacing(3),
         },
     }))();
-    const apiKey = LocalStore.get('options.apiKey', '');
-
-    useEffect(() => {
-        if ('' === apiKey || !apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
-
-            dispatch(setNav('options'));
-        }
-    }, []);
-
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
         dispatch(setBackdrop(true));
-        const res = await (new Sms77Client(apiKey, 'Desktop')).lookup({
+        const lookupParams: LookupParams = {
             json: true,
             number,
-            type
-        }) as LookupResponse;
+            type,
+        };
+        const res = await initClient().lookup(lookupParams) as LookupResponse;
         dispatch(setBackdrop(false));
         setHistoryTransKey('response');
 
         LocalStore.append('lookups', res);
 
         dispatch(addSnackbar(
-            getPairs(res).map(([k, v]) => `${t(k)}: ${toString(v)}`).join(' ● ')));
+            getPairs(res).map(([k, v]) => `${t(k)}: ${toString(v)}`)
+                .join(' ● ')));
     };
 
-    const getPairs = (res: LookupResponse) =>
-        Object.entries(res!).filter(([, v]) => null !== v);
+    const getPairs = (res: LookupResponse) => {
+        return Object.entries(res!).filter(([, v]) => null !== v);
+    };
 
     return <>
         <Grid alignItems='center' container justify='space-between'>
@@ -77,10 +71,15 @@ export const Lookup = () => {
             </Grid>
         </Grid>
 
-        <Grid alignItems='center' component='form' container id='lookup'
-              justify='space-between'
-              onSubmit={handleSubmit}>
-            <Grid item lg={4}>
+        <Grid
+            alignItems='center'
+            component='form'
+            container
+            id='lookup'
+            justify='space-between'
+            onSubmit={handleSubmit}
+        >
+            <Grid item lg={12}>
                 <FormControl component='fieldset' className={classes.formControl}>
                     <FormLabel component='legend'>{t('type')}</FormLabel>
 
@@ -100,9 +99,7 @@ export const Lookup = () => {
                         }
                     </RadioGroup>
                 </FormControl>
-            </Grid>
 
-            <Grid item lg={8}>
                 <TextField
                     fullWidth
                     label={t('number')}
