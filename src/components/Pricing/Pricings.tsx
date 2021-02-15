@@ -37,7 +37,7 @@ export const Pricings = () => {
         if (!pricing) {
             getAndStore()
                 .then()
-                .catch(e => console.error(e));
+                .catch(console.error);
         }
     });
 
@@ -58,13 +58,12 @@ export const Pricings = () => {
 
             <Button onClick={() => getAndStore()}>
                 {t('reload')}
-            </Button>^
+            </Button>
         </div>
 
         <TableContainer style={{marginBottom: '2em'}}>
             <Table aria-label={t('ariaLabels.countryTable')} size='small'>
                 <TableBody>
-
                     {pricing &&
                     (['countCountries', 'countNetworks'] as (keyof PricingResponseJson)[])
                         .map((o, i) => <TableRow key={i}>

@@ -4,3 +4,8 @@ export type BaseInputProps<S> = {
     state: S
     stateKey: keyof S
 }
+
+export type KeyValue<K = any, V = any> = {
+    key: K
+    value: V
+}

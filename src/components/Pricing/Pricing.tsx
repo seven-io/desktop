@@ -6,8 +6,8 @@ import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-
 import {CountryNetworks} from './CountryNetworks';
+import {KeyValue} from '../../types';
 
 export type PricingProps = {
     pricing: CountryPricing
@@ -16,38 +16,35 @@ export type PricingProps = {
 export const Pricing = ({pricing}: PricingProps) => {
     const {t} = useTranslation('pricing');
 
-    const populationFields = [
+    const populationFields: KeyValue[] = [
         {key: 'code', value: pricing.countryCode},
         {key: 'name', value: pricing.countryName},
         {key: 'prefix', value: pricing.countryPrefix},
     ];
 
-    return <TableContainer style={{marginBottom: '1em'}}>
-        <Table size='small' aria-label={t('ariaLabels.network')}>
-            <TableBody>
+    return <>
+        <h2>{t('countryInformation')}</h2>
 
-                {
-                    populationFields.map((o, i) => <TableRow key={i}>
-                        <TableCell component='th' scope='row'>
-                            {t(o.key)}
-                        </TableCell>
+        <TableContainer style={{marginBottom: '1em'}}>
+            <Table size='small' aria-label={t('ariaLabels.network')}>
+                <TableBody>
+                    {
+                        populationFields.map((o, i) => <TableRow key={i}>
+                            <TableCell component='th' scope='row'>
+                                {t(o.key)}
+                            </TableCell>
 
-                        <TableCell align='right'>
-                            {o.value}
-                        </TableCell>
-                    </TableRow>)
-                }
+                            <TableCell align='right'>
+                                {o.value}
+                            </TableCell>
+                        </TableRow>)
+                    }
+                </TableBody>
+            </Table>
+        </TableContainer>
 
-                <TableRow>
-                    <TableCell component='th' scope='row'>
-                        {t('networks')}
-                    </TableCell>
+        <h3>{t('networks')}</h3>
 
-                    <TableCell align='right'>
-                        <CountryNetworks networks={pricing.networks}/>
-                    </TableCell>
-                </TableRow>
-            </TableBody>
-        </Table>
-    </TableContainer>;
+        <CountryNetworks networks={pricing.networks}/>
+    </>;
 };

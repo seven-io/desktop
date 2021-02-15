@@ -9,6 +9,7 @@ export const pricing = {
     code: 'Code',
     countCountries: 'Number of Countries',
     countNetworks: 'Number of Networks',
+    countryInformation: 'Country Information',
     features: 'Features',
     noEntries: 'No locally saved pricing found. Click on the reload button to fetch pricing information.',
     pricing: 'Pricing Information',
