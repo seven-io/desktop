@@ -7,7 +7,9 @@ const pkg = require('./package.json');
 const getIconPath = (format, size = 128) => {
     const iconPath = path.normalize(
         path.join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`));
+
     assert.ok(fs.existsSync(iconPath));
+
     return iconPath;
 };
 
@@ -21,7 +23,7 @@ const description = 'Send SMS, Text2Speech messages and more via Sms77.io.';
 module.exports = {
     hooks: {
         async packageAfterExtract() {
-            await cpy(
+            await cpy( // needed or logo wont be shown in production
                 [path.resolve(__dirname, '.webpack/renderer/*.*')],
                 path.resolve(__dirname, '.webpack/renderer/main_window')
             );
@@ -67,7 +69,12 @@ module.exports = {
         {
             name: '@electron-forge/maker-dmg',
             config: {
-                icon: icons.png,
+                additionalDMGOptions: {
+                    // 'code-sign': {identifier: 'io.sms77.desktop'}, // TODO: add signing-identity
+                    'icon-size': 256,
+                },
+                icon: getIconPath('png', 256),
+                iconSize: 256,
                 name: pkg.name,
             }
         },
