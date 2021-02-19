@@ -20,6 +20,7 @@ export const To = ({onChange, value, ...props}: ToProps) => {
         name='to'
         onChange={e => onChange(e.target.value)}
         value={to}
+        variant='outlined'
         {...props}
     />;
 };

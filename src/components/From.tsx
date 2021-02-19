@@ -19,6 +19,7 @@ export const From = ({onChange, value, ...props}: FromProps) => {
         name='from'
         onChange={e => onChange(e.target.value)}
         value={from}
+        variant='outlined'
         {...props}
     />;
 };

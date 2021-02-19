@@ -4,19 +4,22 @@ import {
     Button,
     FormControl,
     IconButton,
-    Input,
     InputAdornment,
     InputLabel,
-    InputProps
+    InputProps,
+    OutlinedInput
 } from '@material-ui/core';
 import {Visibility, VisibilityOff} from '@material-ui/icons';
 import {initClient} from '../../util/initClient';
 import {LocalStore} from '../../util/LocalStore';
+import {IOptions} from './types';
 
 export type ApiKeyProps = Omit<InputProps, 'onChange'> & {
     onChange: (apiKey: string) => void
     value: string
 }
+
+const identifier: keyof IOptions = 'apiKey';
 
 export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
     const [apiKey, setApiKey] = useState('');
@@ -48,8 +51,10 @@ export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
 
     return <FormControl fullWidth>
         <InputLabel
-            htmlFor='apiKey'>{t('apiKey')} - <strong>{t('required')}</strong></InputLabel>
-        <Input
+            htmlFor='apiKey'>{t('apiKey')} - <strong>{t('required')}</strong>
+        </InputLabel>
+
+        <OutlinedInput
             endAdornment={
                 <InputAdornment position='end'>
                     <IconButton
@@ -67,12 +72,12 @@ export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
             }
             error={error}
             fullWidth
-            id='apiKey'
-            name='apiKey'
+            id={identifier}
+            name={identifier}
             onChange={e => setApiKey(e.target.value)}
             required
-            value={apiKey}
             type={show ? 'text' : 'password'}
+            value={apiKey}
             {...props}
         />
     </FormControl>;

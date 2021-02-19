@@ -18,6 +18,7 @@ export const Signature = ({onChange, signature, ...props}: SignatureProps) => {
         multiline
         name='signature'
         value={signature}
+        variant='outlined'
         {...props}
     />;
 };

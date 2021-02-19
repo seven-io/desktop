@@ -140,6 +140,7 @@ export function Message<T>(p: MessageProps<T>) {
                 required
                 rows='3'
                 value={text}
+                variant='outlined'
             />
 
             <To onChange={to => dispatch(setTo(to))} value={to}/>
@@ -148,8 +149,8 @@ export function Message<T>(p: MessageProps<T>) {
 
             {p.FormAddons}
 
-            <Grid container>
-                <Grid item xs={3}>
+            <Grid container spacing={3}>
+                <Grid item xs={4}>
                     <Button
                         className={classes.clear}
                         endIcon={<ClearIcon/>}
@@ -160,8 +161,6 @@ export function Message<T>(p: MessageProps<T>) {
                         {t('clear')}
                     </Button>
                 </Grid>
-
-                <Grid item xs={1}/>
 
                 <Grid item xs={8}>
                     <Button
