@@ -12,7 +12,7 @@ import RssFeedIcon from '@material-ui/icons/RssFeed';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import HelpIcon from '@material-ui/icons/HelpOutline';
 import {LocalStore} from '../../util/LocalStore';
-import Logo from '../../assets/img/white-3240x640.png';
+import Logo from '../../assets/img/white-534x105.png';
 import {Language} from '../Options/types';
 import {ExternalButton} from './ExternalButton';
 import i18n from '../../i18n';

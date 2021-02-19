@@ -91,7 +91,7 @@ module.exports = {
     packagerConfig: {
         appCategoryType: 'public.app-category.social-networking', // MacOSX only
         appCopyright: pkg.author,
-        icon: icons.png, // omit file extension for auto detecting according to OS
+        icon: icons.png.replace('.png', ''), // omit file extension for auto detecting according to OS
     },
     plugins: [
         /* TODO: add back?
