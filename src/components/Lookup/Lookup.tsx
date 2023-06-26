@@ -1,18 +1,18 @@
+import {useTheme} from '@mui/material'
 import React, {SyntheticEvent} from 'react';
 import {useDispatch} from 'react-redux';
 import {useTranslation} from 'react-i18next';
 import {LookupParams} from 'sms77-client';
 import {LookupType} from 'sms77-client/dist/constants/byEndpoint/lookup/LookupType';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
-import Radio from '@material-ui/core/Radio';
-import Grid from '@material-ui/core/Grid';
-import Tooltip from '@material-ui/core/Tooltip';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import FormControl from '@mui/material/FormControl'
+import FormLabel from '@mui/material/FormLabel'
+import RadioGroup from '@mui/material/RadioGroup'
+import Radio from '@mui/material/Radio'
+import Grid from '@mui/material/Grid'
+import Tooltip from '@mui/material/Tooltip'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
+import FormControlLabel from '@mui/material/FormControlLabel'
 import {addSnackbar, setBackdrop} from '../../store/actions';
 import {LocalStore} from '../../util/LocalStore';
 import {toString} from '../../util/toString';
@@ -22,17 +22,13 @@ import {LookupResponse} from './types';
 import {initClient} from '../../util/initClient';
 
 export const Lookup = () => {
+    const theme = useTheme()
     const dispatch = useDispatch();
     const {t} = useTranslation('lookup');
     const [type, setType] = React.useState<LookupType>(LookupType.Format);
     const [number, setNumber] = React.useState('');
     const [historyTransKey, setHistoryTransKey] =
         React.useState<'response' | 'history'>('response');
-    const classes = makeStyles((theme: Theme) => createStyles({
-        formControl: {
-            margin: theme.spacing(3),
-        },
-    }))();
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault();
 
@@ -58,7 +54,7 @@ export const Lookup = () => {
     };
 
     return <>
-        <Grid alignItems='center' container justify='space-between'>
+        <Grid  container sx={{alignItems: 'center', justifyContent: 'space-between'}}>
             <Grid item>
                 <h1>{t('lookup')}</h1>
             </Grid>
@@ -71,44 +67,44 @@ export const Lookup = () => {
             </Grid>
         </Grid>
 
-        <Grid
-            alignItems='center'
-            component='form'
-            container
-            id='lookup'
-            justify='space-between'
-            onSubmit={handleSubmit}
-        >
-            <Grid item lg={12}>
-                <FormControl component='fieldset' className={classes.formControl}>
-                    <FormLabel component='legend'>{t('type')}</FormLabel>
+        <form id='lookup' onSubmit={handleSubmit}>
+            <Grid
+                container
+                sx={{alignItems: 'center', justifyContent: 'space-between'}}
+            >
+                <Grid item lg={12}>
+                    <FormControl component='fieldset' sx={{
+                        margin: theme.spacing(3),
+                    }}>
+                        <FormLabel component='legend'>{t('type')}</FormLabel>
 
-                    <RadioGroup row style={{}} aria-label={t('type')} value={type}
-                                onChange={e => setType(e.target.value as LookupType)}>
-                        {
-                            Object.values(LookupType)
-                                .map((type, i) =>
-                                    <Tooltip
-                                        key={i}
-                                        title={t<string>(`tooltips.${type}`)}>
-                                        <FormControlLabel control={<Radio/>}
-                                                          label={t<string>(type)}
-                                                          labelPlacement='bottom'
-                                                          value={type}/>
-                                    </Tooltip>)
-                        }
-                    </RadioGroup>
-                </FormControl>
+                        <RadioGroup row style={{}} aria-label={t('type')} value={type}
+                                    onChange={e => setType(e.target.value as LookupType)}>
+                            {
+                                Object.values(LookupType)
+                                    .map((type, i) =>
+                                        <Tooltip
+                                            key={i}
+                                            title={t(`tooltips.${type}`)}>
+                                            <FormControlLabel control={<Radio/>}
+                                                              label={t(type)}
+                                                              labelPlacement='bottom'
+                                                              value={type}/>
+                                        </Tooltip>)
+                            }
+                        </RadioGroup>
+                    </FormControl>
 
-                <TextField
-                    fullWidth
-                    label={t('number')}
-                    onChange={ev => setNumber(ev.target.value)}
-                    required
-                    value={number}
-                />
+                    <TextField
+                        fullWidth
+                        label={t('number')}
+                        onChange={ev => setNumber(ev.target.value)}
+                        required
+                        value={number}
+                    />
+                </Grid>
             </Grid>
-        </Grid>
+        </form>
 
         <h1>{t(historyTransKey)}</h1>
 

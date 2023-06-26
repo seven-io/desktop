@@ -1,10 +1,9 @@
-import {hot} from 'react-hot-loader';
+import {useTheme} from '@mui/material'
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import Container from '@material-ui/core/Container';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import {Backdrop, createStyles, Theme} from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles';
+import Container from '@mui/material/Container';
+import CircularProgress from '@mui/material/CircularProgress';
+import Backdrop from '@mui/material/Backdrop';
 import {TopNav} from './TopNav';
 import {Snackbars} from './Snackbars';
 import {BottomNav} from './BottomNav';
@@ -19,7 +18,9 @@ import {Voice} from '../Voice/Voice';
 import {LocalStore} from '../../util/LocalStore';
 import {useTranslation} from 'react-i18next';
 
-export const Layout = hot(module)(() => {
+export const Layout = () => {
+    console.log('Layout loaded...')
+    const theme = useTheme()
     const apiKey = LocalStore.get('options.apiKey', '');
     const dispatch = useDispatch();
     const {t} = useTranslation();
@@ -39,13 +40,6 @@ export const Layout = hot(module)(() => {
         }
     }, []);
 
-    const classes = makeStyles((theme: Theme) => createStyles({
-        backdrop: {
-            color: '#fff',
-            zIndex: theme.zIndex.drawer + 1,
-        },
-    }))();
-
     const {backdrop, nav} = useSelector(({backdrop, nav}: RootState) => ({
         backdrop,
         nav
@@ -54,8 +48,13 @@ export const Layout = hot(module)(() => {
     return <>
         <TopNav/>
 
-        <Backdrop className={classes.backdrop} open={backdrop}
-                  onClick={() => dispatch(setBackdrop(false))}>
+        <Backdrop open={backdrop}
+                  onClick={() => dispatch(setBackdrop(false))}
+        sx={{
+            color: '#fff',
+            zIndex: theme.zIndex.drawer + 1,
+        }}
+        >
             <CircularProgress/>
         </Backdrop>
 
@@ -66,18 +65,18 @@ export const Layout = hot(module)(() => {
                 'sms' === nav
                     ? <Sms/>
                     : 'options' === nav
-                    ? <Options/>
-                    : 'contacts' === nav
-                        ? <Contacts/>
-                        : 'pricing' === nav
-                            ? <Pricings/>
-                            : 'voice' === nav
-                                ? <Voice/>
-                                : <Lookup/>
+                        ? <Options/>
+                        : 'contacts' === nav
+                            ? <Contacts/>
+                            : 'pricing' === nav
+                                ? <Pricings/>
+                                : 'voice' === nav
+                                    ? <Voice/>
+                                    : <Lookup/>
             }
         </Container>
 
         <BottomNav/>
     </>;
-});
+}
 

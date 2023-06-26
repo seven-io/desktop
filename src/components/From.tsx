@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import TextField, {TextFieldProps} from '@material-ui/core/TextField';
+import TextField, {TextFieldProps} from '@mui/material/TextField';
 
 export type FromProps = Omit<TextFieldProps, 'onChange'> & {
     onChange: (from: string) => void

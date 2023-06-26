@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import MenuItem from '@material-ui/core/MenuItem';
+import MenuItem from '@mui/material/MenuItem';
 import {PopupMenu} from '../PopupMenu';
 
 export type MessageToolbarProps = {

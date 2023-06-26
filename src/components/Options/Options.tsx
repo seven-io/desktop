@@ -1,52 +1,51 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {useDispatch} from 'react-redux';
-import {makeStyles} from '@material-ui/core/styles';
-import {LocalStore} from '../../util/LocalStore';
-import {setTo} from '../../store/actions';
-import {ApiKey} from './ApiKey';
-import {From} from '../From';
-import {To} from '../To';
-import {Signature} from './Signature';
-import {IOptions} from './types';
-import {BoolInput} from '../BoolInput';
+import {Typography, useTheme} from '@mui/material'
+import React, {useEffect, useRef, useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import {useDispatch} from 'react-redux'
+import {LocalStore} from '../../util/LocalStore'
+import {setTo} from '../../store/actions'
+import {ApiKey} from './ApiKey'
+import {From} from '../From'
+import {To} from '../To'
+import {Signature} from './Signature'
+import {IOptions} from './types'
+import {BoolInput} from '../BoolInput'
 
 export const Options = () => {
-    const $apiKey = useRef<HTMLInputElement>();
-    const dispatch = useDispatch();
-    const {t} = useTranslation();
-    const classes = makeStyles(theme => ({
-        root: {
-            '& .MuiTextField-root, .MuiFormControl-root': {
-                marginBottom: theme.spacing(3),
-            },
-        },
-    }))();
-    const [state, setState] = useState<IOptions>(LocalStore.get('options'));
+    const theme = useTheme()
+    const $apiKey = useRef<HTMLInputElement>()
+    const dispatch = useDispatch()
+    const {t} = useTranslation()
+    const [state, setState] = useState<IOptions>(LocalStore.get('options'))
 
     useEffect(() => {
-        !state.apiKey.length && $apiKey.current!.focus();
-    }, []);
+        !state.apiKey.length && $apiKey.current!.focus()
+    }, [])
 
     const handleChange = ({target: {name, value}}: any) => {
-        setState({...state, [name]: value});
+        setState({...state, [name]: value})
 
-        LocalStore.set(`options.${name}`, value);
-    };
+        LocalStore.set(`options.${name}`, value)
+    }
 
     return <>
-        <h1>
-            {t('options')}
-        </h1>
+        <h1>{t('options')}</h1>
 
-        <div className={classes.root}>
+        <Typography
+            component='div'
+            sx={{
+                '& .MuiTextField-root, .MuiFormControl-root': {
+                    marginBottom: theme.spacing(3),
+                },
+            }}
+        >
             <ApiKey
                 inputRef={$apiKey}
                 onChange={value => handleChange({
                     target: {
                         name: 'apiKey',
                         value,
-                    }
+                    },
                 })}
                 value={state.apiKey}
             />
@@ -60,9 +59,9 @@ export const Options = () => {
             <To
                 helperText={t('savedAutomatically')}
                 onChange={to => {
-                    handleChange({target: {name: 'to', value: to}});
+                    handleChange({target: {name: 'to', value: to}})
 
-                    dispatch(setTo(to));
+                    dispatch(setTo(to))
                 }}
                 value={state.to}
             />
@@ -74,12 +73,13 @@ export const Options = () => {
                 setState={(o) => handleChange({
                     target: {
                         name: 'expertMode',
-                        value: o.expertMode
-                    }
+                        value: o.expertMode,
+                    },
                 })}
                 state={state}
                 stateKey='expertMode'
             />
-        </div>
-    </>;
-};
+        </Typography>
+    </>
+
+}

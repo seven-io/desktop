@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {Grid} from '@material-ui/core';
+import Grid from '@mui/material/Grid';
 import {
     FOREIGN_ID_MAX_LENGTH,
     LABEL_MAX_LENGTH
 } from 'sms77-client/dist/validators/request/sms';
-import {DateTimePicker} from '@material-ui/pickers';
+import {DateTimePicker} from '@mui/x-date-pickers-pro';
 import {TextInput} from '../TextInput';
 import {BoolInput} from '../BoolInput';
 import {SmsPartParams} from './Sms';
@@ -89,9 +89,9 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                 <DateTimePicker
                     disablePast={true}
                     format='yyyy-MM-dd hh:ii'
-                    fullWidth
-                    InputLabelProps={{shrink: true}}
-                    inputVariant='outlined'
+                    //fullWidth
+                    //InputLabelProps={{shrink: true}}
+                    //inputVariant='outlined'
                     label={t('delay')}
                     onChange={e => setParams({...params, delay: e!.toLocaleString()})}
                     value={params.delay || null}

@@ -1,11 +1,11 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {CountryPricing} from 'sms77-client';
-import TableContainer from '@material-ui/core/TableContainer';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import Table from '@mui/material//Table';
+import TableBody from '@mui/material//TableBody';
+import TableRow from '@mui/material//TableRow';
+import TableCell from '@mui/material//TableCell';
 import {CountryNetworks} from './CountryNetworks';
 import {KeyValue} from '../../types';
 

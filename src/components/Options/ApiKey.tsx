@@ -1,15 +1,14 @@
+import {InputProps} from '@mui/material'
 import React, {BaseSyntheticEvent, useEffect, useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-    Button,
-    FormControl,
-    IconButton,
-    InputAdornment,
-    InputLabel,
-    InputProps,
-    OutlinedInput
-} from '@material-ui/core';
-import {Visibility, VisibilityOff} from '@material-ui/icons';
+import Button from '@mui/material/Button'
+import FormControl from '@mui/material/FormControl'
+import IconButton from '@mui/material/IconButton'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
+import OutlinedInput from '@mui/material/OutlinedInput'
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import {initClient} from '../../util/initClient';
 import {LocalStore} from '../../util/LocalStore';
 import {IOptions} from './types';

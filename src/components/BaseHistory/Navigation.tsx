@@ -1,6 +1,6 @@
 import React from 'react';
-import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-import ArrowRightIcon from '@material-ui/icons/ArrowRight';
+import ArrowLeftIcon from '@mui/icons-material/ArrowLeft';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import {NavigationBaseButton} from './NavigationBaseButton';
 import {NavigationBaseProps, Operator} from '../../types';
 

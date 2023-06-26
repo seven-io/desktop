@@ -1,9 +1,8 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
 import {HLR} from 'sms77-client';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
 import {toString} from '../util/toString';
 import {BoolChip} from './BoolChip';
 import {CarrierTable} from './Lookup/CarrierTable';

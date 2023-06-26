@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
+import ButtonGroup from '@mui/material/ButtonGroup';
 import {DateTimeUtils} from './DateTimeUtils';
 import {EmojiPicker} from './EmojiPicker';
 import {SystemUtils} from './SystemUtils';
@@ -23,7 +23,7 @@ export const Toolbar = ({emoji, onAction, textarea}: ToolbarProps) => {
 
     return <ButtonGroup variant='text' aria-label={t('toolbar.label')}>
         {emoji && <EmojiPicker
-            onEmojiClick={(e, d) => setRangeText(d.emoji)}
+            onEmojiClick={(e, d) => setRangeText(e.emoji)}
         />}
 
         <DateTimeUtils onClick={setRangeText}/>

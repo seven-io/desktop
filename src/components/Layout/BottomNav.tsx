@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useTranslation} from 'react-i18next';
-import {makeStyles} from '@material-ui/core/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
-import BottomNavigationAction, {BottomNavigationActionProps} from '@material-ui/core/BottomNavigationAction';
-import SettingsIcon from '@material-ui/icons/Settings';
-import SmsIcon from '@material-ui/icons/Sms';
-import ContactsIcon from '@material-ui/icons/Contacts';
-import LocalAtmIcon from '@material-ui/icons/LocalAtm';
-import PolicyIcon from '@material-ui/icons/Policy';
-import VoiceIcon from '@material-ui/icons/PermPhoneMsg';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction, {BottomNavigationActionProps} from '@mui/material/BottomNavigationAction';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SmsIcon from '@mui/icons-material/Sms';
+import ContactsIcon from '@mui/icons-material/Contacts';
+import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import PolicyIcon from '@mui/icons-material/Policy';
+import VoiceIcon from '@mui/icons-material/PermPhoneMsg';
+
 import {setNav} from '../../store/actions';
 import {Route} from '../../store/reducers/nav';
 import {RootState} from '../../store/reducers';
@@ -19,14 +19,6 @@ export const BottomNav = () => {
     const navId = useSelector((state: RootState) => state.nav);
     const {t} = useTranslation();
     const dispatch = useDispatch();
-    const classes = makeStyles({
-        root: {
-            bottom: 0,
-            justifyContent: 'space-evenly',
-            position: 'fixed',
-            width: '100%',
-        },
-    })();
     const [actions, setActions] = useState<BottomNavigationActionProps[]>([
         {value: 'sms', icon: <SmsIcon/>},
         {value: 'voice', icon: <VoiceIcon/>},
@@ -66,10 +58,15 @@ export const BottomNav = () => {
     });
 
     return <BottomNavigation
-        className={classes.root}
         onChange={(e: any, newNavId: Route) => dispatch(setNav(newNavId))}
         showLabels
         value={navId}
+        sx={{
+            bottom: 0,
+            justifyContent: 'space-evenly',
+            position: 'fixed',
+            width: '100%',
+        }}
     >
         {actions.map((a, i) => <BottomNavigationAction
             icon={a.icon}

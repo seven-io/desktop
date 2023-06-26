@@ -1,8 +1,8 @@
+import {PopupState, usePopupState} from 'material-ui-popup-state/hooks'
 import React, {PropsWithChildren} from 'react';
 import PopupStateComp, {bindMenu, bindTrigger} from 'material-ui-popup-state';
-import {PopupState} from 'material-ui-popup-state/core';
-import Menu from '@material-ui/core/Menu';
-import Button from '@material-ui/core/Button';
+import Menu from '@mui/material/Menu';
+import Button from '@mui/material/Button';
 
 export type MessageToolbarBaseProps = {
     buttonText: string
@@ -12,9 +12,9 @@ export type MessageToolbarBaseProps = {
 export type PopupMenuProps = PropsWithChildren<MessageToolbarBaseProps>
 
 export const PopupMenu = ({children, identifier, buttonText}: PopupMenuProps) => {
-    const state: PopupState | {} = {};
     const popupId = `${identifier}-popup`;
     const menuId = `${popupId}-menu`;
+    const state = usePopupState({popupId, variant: 'popover'})
 
     return <PopupStateComp popupId={popupId} variant='popover'>
         {pS => {
@@ -22,7 +22,7 @@ export const PopupMenu = ({children, identifier, buttonText}: PopupMenuProps) =>
 
             return <>
                 <Button
-                    {...bindTrigger(state as PopupState)}
+                    {...bindTrigger(state)}
                     aria-controls={menuId}
                     aria-haspopup='true'
                     color='primary'
@@ -30,7 +30,7 @@ export const PopupMenu = ({children, identifier, buttonText}: PopupMenuProps) =>
                     style={{color: '#fff'}}
                 >{buttonText}</Button>
 
-                <Menu  {...bindMenu(state as PopupState)} id={menuId}>
+                <Menu  {...bindMenu(state)} id={menuId}>
                     {children}
                 </Menu>
             </>;

@@ -1,6 +1,6 @@
+import {FormControlLabel} from '@mui/material'
 import React from 'react';
-import {FormControlLabel, Switch} from '@material-ui/core';
-import {SwitchProps} from '@material-ui/core/Switch';
+import Switch, {SwitchProps} from '@mui/material/Switch';
 import {BaseInputProps} from '../types';
 
 export type BoolInputProps<S> = SwitchProps & BaseInputProps<S>

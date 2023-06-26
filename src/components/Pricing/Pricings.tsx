@@ -1,15 +1,15 @@
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {CountryPricing, PricingResponseJson} from 'sms77-client';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableBody from '@material-ui/core/TableBody';
-import TableRow from '@material-ui/core/TableRow';
-import TableCell from '@material-ui/core/TableCell';
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import TableContainer from '@mui/material/TableContainer';
+import TableBody from '@mui/material/TableBody';
+import TableRow from '@mui/material/TableRow';
+import TableCell from '@mui/material/TableCell';
+import Autocomplete from '@mui/material/Autocomplete';
 import {useTranslation} from 'react-i18next';
-import Table from '@material-ui/core/Table';
-import TextField, {TextFieldProps} from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import Table from '@mui/material/Table';
+import TextField, {TextFieldProps} from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 import {LocalStore} from '../../util/LocalStore';
 import {setBackdrop} from '../../store/actions';
 import {CountryFlag} from '../CountryFlag';
@@ -64,7 +64,7 @@ export const Pricings = () => {
                             </TableCell>
 
                             <TableCell align='right'>
-                                {pricing[o]}
+                                {pricing[o].toString()}
                             </TableCell>
                         </TableRow>)}
                 </TableBody>
@@ -76,7 +76,7 @@ export const Pricings = () => {
                 `${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
             onChange={(ev: ChangeEvent<{}>, cP: CountryPricing | null) => setCountry(cP)}
             options={pricing.countries}
-            renderOption={(o: CountryPricing) => <>
+            renderOption={(p, o: CountryPricing) => <>
                 <CountryFlag pricing={o}/>&nbsp;
                 {` ${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
             </>}

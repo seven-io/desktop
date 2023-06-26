@@ -3,15 +3,15 @@ import installExtension, {
     REACT_DEVELOPER_TOOLS,
     REDUX_DEVTOOLS
 } from 'electron-devtools-installer';
-import {initRenderer} from 'electron-store'
+//import {initRenderer} from 'electron-store'
 import {IS_DEV} from './util/constants';
 
-initRenderer()
+//initRenderer()
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
-app.allowRendererProcessReuse = true;
+//app.allowRendererProcessReuse = true;
 
 /*
 TODO: add if production?
@@ -31,9 +31,9 @@ const createWindow = async () => {
         autoHideMenuBar: !IS_DEV,
         height: IS_DEV ? 1080 : 600,
         webPreferences: {
-            //allowRunningInsecureContent: false,
-            //contextIsolation: false,
-            enableRemoteModule: true,
+            allowRunningInsecureContent: false,
+            contextIsolation: false,
+            //enableRemoteModule: true,
             nodeIntegration: true,
             preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
             webSecurity: !IS_DEV,
@@ -41,10 +41,11 @@ const createWindow = async () => {
         width: IS_DEV ? 1920 : 800,
     });
 
-    if (IS_DEV) {
+    if (!IS_DEV) { // TODO revert logic
         try {
             await installExtension([
-                REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS,
+                REACT_DEVELOPER_TOOLS,
+                REDUX_DEVTOOLS,
             ]);
         } catch (e) {
             console.warn(e);

@@ -1,16 +1,19 @@
+import {Typography} from '@mui/material'
 import React, {useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import {shell} from 'electron';
 import {useTranslation} from 'react-i18next';
-import {Button, ButtonGroup, Menu, MenuItem} from '@material-ui/core';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import LinkedInIcon from '@material-ui/icons/LinkedIn';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import RssFeedIcon from '@material-ui/icons/RssFeed';
-import GitHubIcon from '@material-ui/icons/GitHub';
-import HelpIcon from '@material-ui/icons/HelpOutline';
+import Button from '@mui/material/Button';
+import ButtonGroup from '@mui/material/ButtonGroup';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import RssFeedIcon from '@mui/icons-material/RssFeed';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import HelpIcon from '@mui/icons-material/HelpOutline';
 import {LocalStore} from '../../util/LocalStore';
 import Logo from '../../assets/img/white-534x105.png';
 import {Language} from '../Options/types';
@@ -48,35 +51,28 @@ export const TopNav = () => {
         await i18n.changeLanguage('us' === lang ? 'en' : lang);
     };
 
-    const classes = makeStyles({
-        balance: {
-            color: '#fff',
-            fontWeight: 'bold',
-            verticalAlign: 'super',
-        },
-        language: {
-            display: 'inline-flex',
-            verticalAlign: 'super',
-        },
-        logo: {
-            maxWidth: '128px',
-        },
-        toolbar: {
-            justifyContent: 'space-between',
-        },
-    })();
-
     return <AppBar variant='outlined' position='static'>
-        <Toolbar variant='dense' className={classes.toolbar}>
+        <Toolbar variant='dense' sx={{
+            justifyContent: 'space-between',
+        }}>
             <a href='#!' onClick={() => shell.openExternal('https://www.seven.io/')}>
-                <img src={Logo} alt='' className={classes.logo}/>
+                <Typography component='img' src={Logo} alt='' sx={{
+                    maxWidth: '128px',
+                }}/>
             </a>
 
             <div>
-                {null === balance ? null : <span className={classes.balance}>
-                        {t('balance')}: {getNumberFormatter().format(balance)}</span>}
+                {null === balance ? null : <Typography component='span' sx={{
+                    color: '#fff',
+                    fontWeight: 'bold',
+                    verticalAlign: 'super',
+                }}>
+                        {t('balance')}: {getNumberFormatter().format(balance)}</Typography>}
 
-                <div className={classes.language}>
+                <Typography component='div' sx={{
+                    display: 'inline-flex',
+                    verticalAlign: 'super',
+                }}>
                     <Button
                         aria-controls='simple-menu'
                         aria-haspopup='true'
@@ -109,7 +105,7 @@ export const TopNav = () => {
                        />
                         </MenuItem>
                     </Menu>
-                </div>
+                </Typography>
 
                 <ButtonGroup color='primary' aria-label={t('socialsBtnGroup')}>
                     <ExternalButton url='https://www.facebook.com/sevencommunications7' size='small'>

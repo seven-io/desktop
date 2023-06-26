@@ -1,6 +1,5 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import {StandardTextFieldProps} from '@material-ui/core/TextField/TextField';
+import TextField, {StandardTextFieldProps} from '@mui/material/TextField';
 import {BaseInputProps} from '../types';
 
 export type TextInputProps<S> = StandardTextFieldProps & BaseInputProps<S>

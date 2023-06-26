@@ -1,15 +1,19 @@
+import {TableHead} from '@mui/material'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
 import React, {ReactElement, useEffect, useState} from 'react';
 import {ContactsAction} from 'sms77-client/dist/constants/byEndpoint/contacts/ContactsAction';
 import {Contact as SevenContact} from 'sms77-client';
 import {useDispatch} from 'react-redux';
-import Button from '@material-ui/core/Button';
+import Button from '@mui/material/Button';
 import {useTranslation} from 'react-i18next';
 import {LocalStore} from '../util/LocalStore';
 import {setBackdrop, setNav, setTo} from '../store/actions';
 import {notify} from '../util/notify';
 import {initClient} from '../util/initClient';
 import {cleanPhone} from '../util/cleanPhone';
-import {BaseVirtualizedTable} from './BaseVirtualizedTable';
 
 type Contact = Pick<SevenContact, 'ID' | 'Name' | 'Number'> & {
     action?: ReactElement
@@ -76,36 +80,30 @@ export const Contacts = () => {
             </Button>
         </div>
 
+        <Table>
+            <TableHead>
+                <TableRow>
+                    <TableCell>{t('id')}</TableCell>
+                    <TableCell>{t('number')}</TableCell>
+                    <TableCell>{t('nick')}</TableCell>
+                    <TableCell>{t('sms')}</TableCell>
+                </TableRow>
+            </TableHead>
+
+            <TableBody>
+                {contacts.map(contact => (
+                    <TableRow>
+                        <TableCell>{contact.ID}</TableCell>
+                        <TableCell>{contact.Number}</TableCell>
+                        <TableCell>{contact.Name}</TableCell>
+                        <TableCell>{contact.action}</TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
+
         {
-            contacts.length
-                ? <BaseVirtualizedTable
-                    columns={[
-                        {
-                            dataKey: 'ID',
-                            label: t('id'),
-                            numeric: true,
-                            width: 100,
-                        },
-                        {
-                            dataKey: 'Number',
-                            label: t('number'),
-                            numeric: true,
-                            width: 170,
-                        },
-                        {
-                            dataKey: 'Name',
-                            label: t('nick'),
-                            width: 170,
-                        },
-                        {
-                            dataKey: 'action',
-                            label: t('sms'),
-                            width: 170,
-                        },
-                    ]}
-                    entries={contacts}
-                />
-                : <p>{t('noEntries')}</p>
+            !contacts.length && <p>{t('noEntries')}</p>
         }
     </>;
 };

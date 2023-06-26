@@ -1,22 +1,25 @@
-import React from 'react';
-import {render} from 'react-dom';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import {ThemeProvider} from '@material-ui/core/styles';
+import {LocalizationProvider} from '@mui/x-date-pickers-pro'
+import React, {StrictMode} from 'react'
+import { createRoot } from 'react-dom/client';
+import CssBaseline from '@mui/material/CssBaseline'
+import {ThemeProvider} from '@mui/material'
 import {Provider} from 'react-redux';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers';
-import enLocale from 'date-fns/locale/en-US';
-import DateFnsUtils from '@date-io/date-fns';
 import './i18n';
 import {Layout} from './components/Layout/Layout';
 import theme from './theme';
 import {store} from './store';
+import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns'
 
-render(<Provider store={store}>
-    <ThemeProvider theme={theme}>
-        <CssBaseline/>
+const container = document.getElementById('app')!
+const root = createRoot(container)
+const children = <Provider store={store}>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <ThemeProvider theme={theme}>
+            <CssBaseline enableColorScheme/>
 
-        <MuiPickersUtilsProvider locale={enLocale} utils={DateFnsUtils}>
             <Layout/>
-        </MuiPickersUtilsProvider>
-    </ThemeProvider>
-</Provider>, document.getElementById('app'));
+        </ThemeProvider>
+    </LocalizationProvider>
+</Provider>
+
+root.render(children);

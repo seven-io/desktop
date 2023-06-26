@@ -1,13 +1,13 @@
+import {makeStyles, Typography, useTheme} from '@mui/material'
 import React, {ReactNode, SyntheticEvent, useEffect, useRef, useState} from 'react';
 import SevenClient, {SmsParams, VoiceParams} from 'sms77-client';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import ClearIcon from '@material-ui/icons/Clear';
-import Grid from '@material-ui/core/Grid';
-import SendIcon from '@material-ui/icons/Send';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import ClearIcon from '@mui/icons-material/Clear';
+import Grid from '@mui/material/Grid';
+import SendIcon from '@mui/icons-material/Send';
 import {To} from '../To';
 import {From} from '../From';
 import {LocalStore, localStoreDefaults} from '../../util/LocalStore';
@@ -39,17 +39,8 @@ export type MessageTranslations = {
 }
 
 export function Message<T>(p: MessageProps<T>) {
+    const theme = useTheme()
     const dispatch = useDispatch();
-    const classes = makeStyles(theme => ({
-        clear: {
-            color: 'red',
-        },
-        form: {
-            '& .MuiTextField-root': {
-                margin: theme.spacing(1),
-            },
-        },
-    }))();
     const [text, setText] = useState('');
     const [from, setFrom] = useState('');
     const to = useSelector((state: RootState) => state.to);
@@ -121,7 +112,11 @@ export function Message<T>(p: MessageProps<T>) {
     return <>
         <h1>{t(`${p.ns}:h1`)}</h1>
 
-        <form className={classes.form} onSubmit={handleSubmit}>
+        <Typography component='form' onSubmit={handleSubmit} sx={{
+            '& .MuiTextField-root': {
+                margin: theme.spacing(1),
+            }
+        }}>
             {expertMode
                 ? <Toolbar
                     emoji={p.emoji}
@@ -152,10 +147,10 @@ export function Message<T>(p: MessageProps<T>) {
             <Grid container spacing={3}>
                 <Grid item xs={4}>
                     <Button
-                        className={classes.clear}
                         endIcon={<ClearIcon/>}
                         fullWidth
                         onClick={handleClear}
+                        sx={{color: 'red'}}
                         variant='outlined'
                     >
                         {t('clear')}
@@ -174,7 +169,7 @@ export function Message<T>(p: MessageProps<T>) {
                     </Button>
                 </Grid>
             </Grid>
-        </form>
+        </Typography>
 
         {p.History}
     </>;

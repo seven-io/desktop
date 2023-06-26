@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import Chip from '@material-ui/core/Chip';
+import Chip from '@mui/material/Chip';
 
 export type BoolChipProps = {
     value: boolean

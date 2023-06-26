@@ -1,6 +1,6 @@
+import {SvgIconProps} from '@mui/material'
 import React from 'react';
-import IconButton from '@material-ui/core/IconButton';
-import {IconButtonProps, SvgIconProps} from '@material-ui/core';
+import IconButton, {IconButtonProps} from '@mui/material/IconButton';
 import {NavigationBaseProps, Operator} from '../../types';
 
 export type NavigationBaseButtonProps = NavigationBaseProps & {
