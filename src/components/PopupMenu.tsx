@@ -22,14 +22,15 @@ export const PopupMenu = ({children, identifier, buttonText}: PopupMenuProps) =>
 
             return <>
                 <Button
+                    {...bindTrigger(state as PopupState)}
                     aria-controls={menuId}
                     aria-haspopup='true'
-                    color='primary' {...bindTrigger(state as PopupState)}
+                    color='primary'
                     variant='contained'
                     style={{color: '#fff'}}
                 >{buttonText}</Button>
 
-                <Menu id={menuId} {...bindMenu(state as PopupState)}>
+                <Menu  {...bindMenu(state as PopupState)} id={menuId}>
                     {children}
                 </Menu>
             </>;

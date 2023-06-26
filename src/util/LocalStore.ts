@@ -36,13 +36,15 @@ export const localStoreDefaults: ILocalStore = {
     voices: [],
 };
 
-export const LocalStore = new (class AppStore extends ElectronStore<ILocalStore> {
+class AppStore extends ElectronStore<ILocalStore> {
     append<T extends ArrayOption>(key: ArrayOption, value: ArrayStorageVal<T>): void {
         const stored = this.get(key);
         const append = Array.isArray(value) ? value : [value];
 
         this.set(key, Array.isArray(stored) ? [...stored, ...append] : append);
     }
-})({
+}
+
+export const LocalStore = new AppStore({
     defaults: localStoreDefaults,
 });

@@ -23,7 +23,7 @@ const description = 'Send SMS, Text2Speech messages and more via seven.io.';
 module.exports = {
     hooks: {
         async packageAfterExtract() {
-            await cpy( // needed or logo wont be shown in production
+            await cpy( // needed or logo won't be shown in production
                 [path.resolve(__dirname, '.webpack/renderer/*.*')],
                 path.resolve(__dirname, '.webpack/renderer/main_window')
             );
@@ -91,7 +91,7 @@ module.exports = {
     packagerConfig: {
         appCategoryType: 'public.app-category.social-networking', // MacOSX only
         appCopyright: pkg.author,
-        icon: icons.png.replace('.png', ''), // omit file extension for auto detecting according to OS
+        icon: icons.png.replace('.png', ''), // omit file extension for auto-detection according to OS
     },
     plugins: [
         {
@@ -103,6 +103,9 @@ module.exports = {
                         html: './src/index.html',
                         js: './src/renderer.ts',
                         name: 'main_window',
+           /*             preload: {
+                            js: './src/preload.ts'
+                        }*/
                     },],
                 }
             },

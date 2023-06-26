@@ -8,4 +8,5 @@ common.module.rules.push({
 module.exports = {
     ...common,
     plugins: require('./webpack.plugins'),
+    target: 'electron-renderer'
 };
