@@ -1,7 +1,8 @@
-import {AnyObject} from 'sms77-client';
 import {MessageTranslations} from '../../components/Message/Message';
 
-export const voice: MessageTranslations & AnyObject = {
+export const voice: MessageTranslations & {
+    [k: string]: any
+} = {
     code: 'Code',
     cost: 'Kosten',
     h1: 'Voice senden',

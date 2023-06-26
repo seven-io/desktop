@@ -17,7 +17,7 @@ export const notify = async (message: string): Promise<boolean> => {
         }
     }
 
-    const event = new CustomEvent('sms77desktop', {
+    const event = new CustomEvent('sevendesktop', {
         detail: {
             action: 'NOTIFY',
             notification: {

@@ -18,7 +18,7 @@ const icons = {
     png: getIconPath('png'),
 };
 
-const description = 'Send SMS, Text2Speech messages and more via Sms77.io.';
+const description = 'Send SMS, Text2Speech messages and more via seven.io.';
 
 module.exports = {
     hooks: {
@@ -54,13 +54,13 @@ module.exports = {
                         'Office'
                     ],
                     description,
-                    genericName: 'sms77io Desktop Application',
-                    homepage: 'https://www.sms77.io/',
+                    genericName: 'seven Desktop Application',
+                    homepage: 'https://www.seven.io/',
                     icon: icons.png,
                     maintainer: pkg.author,
                     name: pkg.name,
-                    productDescription: 'Application to send SMS through the sms77io gateway.',
-                    productName: 'sms77io Desktop Application',
+                    productDescription: 'Application to send SMS through the seven gateway.',
+                    productName: 'seven Desktop Application',
                     section: 'mail',
                     version: pkg.version
                 }
@@ -70,7 +70,7 @@ module.exports = {
             name: '@electron-forge/maker-dmg',
             config: {
                 additionalDMGOptions: {
-                    // 'code-sign': {identifier: 'io.sms77.desktop'}, // TODO: add signing-identity
+                    // 'code-sign': {identifier: 'io.seven.desktop'}, // TODO: add signing-identity
                     'icon-size': 256,
                 },
                 icon: getIconPath('png', 256),
@@ -94,16 +94,8 @@ module.exports = {
         icon: icons.png.replace('.png', ''), // omit file extension for auto detecting according to OS
     },
     plugins: [
-        /* TODO: add back?
-              [
-                    '@electron-forge/plugin-electronegativity',
-                    {
-                        isSarif: true,
-                    },
-                ],*/
-        [
-            '@electron-forge/plugin-webpack',
-            {
+        {
+            config: {
                 mainConfig: './webpack.main.config.js',
                 renderer: {
                     config: './webpack.renderer.config.js',
@@ -113,8 +105,9 @@ module.exports = {
                         name: 'main_window',
                     },],
                 }
-            }
-        ]
+            },
+            name: '@electron-forge/plugin-webpack',
+        },
     ],
     publishers: [
         {
@@ -122,7 +115,7 @@ module.exports = {
                 prerelease: true,
                 repository: {
                     name: 'desktop',
-                    owner: 'sms77io',
+                    owner: 'seven-io',
                 },
             },
             name: '@electron-forge/publisher-github',

@@ -1,7 +1,7 @@
 {
-    "name": "sms77-desktop",
+    "name": "seven-desktop",
     "version": "1.2.0",
-    "description": "sms77io Desktop Application",
+    "description": "seven Desktop Application",
     "main": ".webpack/main",
     "scripts": {
         "dev": "npm run start",
@@ -17,7 +17,7 @@
         "hlr",
         "cnam"
     ],
-    "author": "sms77 e.K.",
+    "author": "seven communications GmbH & Co. KG",
     "license": "MIT",
     "config": {
         "forge": "./forge.config.js"

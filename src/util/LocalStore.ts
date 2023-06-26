@@ -27,7 +27,7 @@ export const localStoreDefaults: ILocalStore = {
     options: {
         apiKey: '',
         expertMode: false,
-        from: 'sms77io',
+        from: 'seven',
         language: 'us',
         signature: '',
         signaturePosition: 'append',

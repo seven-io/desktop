@@ -1,5 +1,5 @@
 import React, {ReactNode, SyntheticEvent, useEffect, useRef, useState} from 'react';
-import Sms77Client, {SmsParams, VoiceParams} from 'sms77-client';
+import SevenClient, {SmsParams, VoiceParams} from 'sms77-client';
 import {useTranslation} from 'react-i18next';
 import {useDispatch, useSelector} from 'react-redux';
 import TextField from '@material-ui/core/TextField';
@@ -23,7 +23,7 @@ export type CommonMessageProps = Pick<SmsParams, CommonMessagePropKeys>
 export type MessageDispatchProps<T> = T & CommonMessageProps
 
 export type DispatchProps<T> = {
-    client: Sms77Client
+    client: SevenClient
     options: SmsParams | VoiceParams
 }
 

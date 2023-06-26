@@ -68,7 +68,7 @@ export const TopNav = () => {
 
     return <AppBar variant='outlined' position='static'>
         <Toolbar variant='dense' className={classes.toolbar}>
-            <a href='#!' onClick={() => shell.openExternal('https://www.sms77.io/')}>
+            <a href='#!' onClick={() => shell.openExternal('https://www.seven.io/')}>
                 <img src={Logo} alt='' className={classes.logo}/>
             </a>
 
@@ -112,27 +112,27 @@ export const TopNav = () => {
                 </div>
 
                 <ButtonGroup color='primary' aria-label={t('socialsBtnGroup')}>
-                    <ExternalButton url='https://www.facebook.com/sms77.io/' size='small'>
+                    <ExternalButton url='https://www.facebook.com/sevencommunications7' size='small'>
                         <FacebookIcon/>
                     </ExternalButton>
 
-                    <ExternalButton url='https://www.linkedin.com/company/sms77/'>
+                    <ExternalButton url='https://www.linkedin.com/company/sevenio'>
                         <LinkedInIcon/>
                     </ExternalButton>
 
-                    <ExternalButton url='https://twitter.com/sms77io'>
+                    <ExternalButton url='https://twitter.com/sevenio7'>
                         <TwitterIcon/>
                     </ExternalButton>
 
-                    <ExternalButton url='https://www.sms77.io/de/feed/'>
+                    <ExternalButton url='https://www.seven.io/en/feed/'>
                         <RssFeedIcon/>
                     </ExternalButton>
 
-                    <ExternalButton url='https://github.com/sms77io'>
+                    <ExternalButton url='https://github.com/seven-io'>
                         <GitHubIcon/>
                     </ExternalButton>
 
-                    <ExternalButton url='https://www.sms77.io/en/company/contact/'>
+                    <ExternalButton url='https://www.seven.io/en/company/contact/'>
                         <HelpIcon/>
                     </ExternalButton>
                 </ButtonGroup>

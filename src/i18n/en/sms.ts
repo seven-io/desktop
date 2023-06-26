@@ -1,7 +1,8 @@
-import {AnyObject} from 'sms77-client';
 import {MessageTranslations} from '../../components/Message/Message';
 
-export const sms: MessageTranslations & AnyObject = {
+export const sms: MessageTranslations & {
+    [k: string]: any
+} = {
     delay: 'Delay',
     debug: 'Debug',
     flash: 'Flash',

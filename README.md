@@ -1,19 +1,19 @@
-![Sms77.io Logo](https://www.sms77.io/wp-content/uploads/2019/07/sms77-Logo-400x79.png "Sms77.io Logo")
+![](https://www.seven.io/wp-content/uploads/Logo.svg "seven Logo")
 
-# Official desktop application for the Sms77.io SMS gateway
+# Official desktop application for the seven.io SMS gateway
 
-Distributed for Linux, MacOS and Windows.
+Distributed for Linux, macOS and Windows.
 
 ## Installation
 
-Head to the [latest release](https://github.com/sms77io/desktop/releases/latest)
+Head to the [latest release](https://github.com/seven-io/desktop/releases/latest)
 and download the installer for your operating system.
 
 Linux (DEB):
-```sudo dpkg -i sms77-desktop-1.1.0-1.x86_64.deb```
+```sudo dpkg -i seven-desktop-1.1.0-1.x86_64.deb```
 
 Linux (RPM):
-```sudo rpm -i sms77-desktop-1.1.0-1.x86_64.rpm```
+```sudo rpm -i seven-desktop-1.1.0-1.x86_64.rpm```
 
 Windows/OSX:
 Follow the installer instructions to install the application on your disk.
@@ -35,19 +35,19 @@ running ```npm install``` and ```npm run make```. Make sure you have NodeJS inst
 ##### Screenshots
 
 SMS
-![Send SMS Screenshot](./screenshots/sms.png "Send SMS Screenshot")
+![Send SMS Screenshot](screenshots/sms.png "Send SMS Screenshot")
 
 Voice
-![Send Voice Screenshot](./screenshots/voice.png "Send Voice Screenshot")
+![Send Voice Screenshot](screenshots/voice.png "Send Voice Screenshot")
 
 Lookup Number
-![Lookup Number Screenshot](./screenshots/lookup.png "Lookup Number Screenshot")
+![Lookup Number Screenshot](screenshots/lookup.png "Lookup Number Screenshot")
 
 Options
-![App Options Screenshot](./screenshots/options.png "App Options Screenshot")
+![App Options Screenshot](screenshots/options.png "App Options Screenshot")
 
 Contacts
-![Contacts Screenshot](./screenshots/contacts.png "Contacts Screenshot")
+![Contacts Screenshot](screenshots/contacts.png "Contacts Screenshot")
 
 Pricing
-![Pricing Screenshot](./screenshots/pricing.png "Pricing Screenshot")
+![Pricing Screenshot](screenshots/pricing.png "Pricing Screenshot")

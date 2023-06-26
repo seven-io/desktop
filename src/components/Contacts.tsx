@@ -1,6 +1,6 @@
 import React, {ReactElement, useEffect, useState} from 'react';
 import {ContactsAction} from 'sms77-client/dist/constants/byEndpoint/contacts/ContactsAction';
-import {Contact as Sms77Contact} from 'sms77-client';
+import {Contact as SevenContact} from 'sms77-client';
 import {useDispatch} from 'react-redux';
 import Button from '@material-ui/core/Button';
 import {useTranslation} from 'react-i18next';
@@ -11,7 +11,7 @@ import {initClient} from '../util/initClient';
 import {cleanPhone} from '../util/cleanPhone';
 import {BaseVirtualizedTable} from './BaseVirtualizedTable';
 
-type Contact = Pick<Sms77Contact, 'ID' | 'Name' | 'Number'> & {
+type Contact = Pick<SevenContact, 'ID' | 'Name' | 'Number'> & {
     action?: ReactElement
 }
 
@@ -19,7 +19,7 @@ export const Contacts = () => {
     const {t} = useTranslation('contacts');
     const dispatch = useDispatch();
 
-    const cleanContacts = (contacts: Sms77Contact[]) => {
+    const cleanContacts = (contacts: SevenContact[]) => {
         return contacts
             .filter(c => '' !== c.Number)
             .map(c => ({
