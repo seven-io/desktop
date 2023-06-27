@@ -1,6 +1,6 @@
-import type { ModuleOptions } from 'webpack';
+import type {ModuleOptions} from 'webpack'
 
-export const rules: Required<ModuleOptions>['rules'] =  [
+export const rules: Required<ModuleOptions>['rules'] = [
     // Add support for native node modules
     {
         // We're specifying native_modules in the test because the asset relocator loader generates a
@@ -9,7 +9,7 @@ export const rules: Required<ModuleOptions>['rules'] =  [
         use: 'node-loader',
     },
     {
-        parser: { amd: false },
+        parser: {amd: false},
         test: /[/\\]node_modules[/\\].+\.(m?js|node)$/,
         use: {
             loader: '@vercel/webpack-asset-relocator-loader',
@@ -26,12 +26,16 @@ export const rules: Required<ModuleOptions>['rules'] =  [
             options: {
                 transpileOnly: true,
             },
-        }
+        },
     },
+    /*    {
+            test: /\.(woff|woff2|eot|ttf|otf|png|jpg|jpeg|webp|svg)$/,
+            use: [
+                'file-loader',
+            ],
+        },*/
     {
-        test: /\.(woff|woff2|eot|ttf|otf|png|jpg|jpeg|webp|svg)$/,
-        use: [
-            'file-loader',
-        ],
+        test: /\.(jpe?g|svg|png|gif|ico|eot|ttf|woff2?)(\?v=\d+\.\d+\.\d+)?$/i,
+        type: 'asset/resource',
     },
-];
+]

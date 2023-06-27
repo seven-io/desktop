@@ -1,22 +1,22 @@
-import {makeStyles, Typography, useTheme} from '@mui/material'
-import React, {ReactNode, SyntheticEvent, useEffect, useRef, useState} from 'react';
-import SevenClient, {SmsParams, VoiceParams} from 'sms77-client';
-import {useTranslation} from 'react-i18next';
-import {useDispatch, useSelector} from 'react-redux';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import ClearIcon from '@mui/icons-material/Clear';
-import Grid from '@mui/material/Grid';
-import SendIcon from '@mui/icons-material/Send';
-import {To} from '../To';
-import {From} from '../From';
-import {LocalStore, localStoreDefaults} from '../../util/LocalStore';
-import {getOpts, SendSmsProps} from '../../util/sendSms';
-import {addSnackbar, setBackdrop, setTo} from '../../store/actions';
-import {RootState} from '../../store/reducers';
-import {Toolbar, ToolbarProps} from './Toolbar';
-import {notify} from '../../util/notify';
-import {initClient} from '../../util/initClient';
+import ClearIcon from '@mui/icons-material/Clear'
+import SendIcon from '@mui/icons-material/Send'
+import {Typography, useTheme} from '@mui/material'
+import Button from '@mui/material/Button'
+import Grid from '@mui/material/Grid'
+import TextField from '@mui/material/TextField'
+import React, {ReactNode, SyntheticEvent, useEffect, useRef, useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import {useDispatch, useSelector} from 'react-redux'
+import SevenClient, {SmsParams, VoiceParams} from 'sms77-client'
+import {addSnackbar, setBackdrop, setTo} from '../../store/actions'
+import {RootState} from '../../store/reducers'
+import {initClient} from '../../util/initClient'
+import {LocalStore, localStoreDefaults} from '../../util/LocalStore'
+import {notify} from '../../util/notify'
+import {getOpts, SendSmsProps} from '../../util/sendSms'
+import {From} from '../From'
+import {To} from '../To'
+import {Toolbar, ToolbarProps} from './Toolbar'
 
 export type CommonMessagePropKeys = 'from' | 'text' | 'to' | 'json'
 export type CommonMessageProps = Pick<SmsParams, CommonMessagePropKeys>
@@ -40,83 +40,87 @@ export type MessageTranslations = {
 
 export function Message<T>(p: MessageProps<T>) {
     const theme = useTheme()
-    const dispatch = useDispatch();
-    const [text, setText] = useState('');
-    const [from, setFrom] = useState('');
-    const to = useSelector((state: RootState) => state.to);
-    const {t} = useTranslation(['message', p.ns]);
-    const $textarea = useRef();
-    const [expertMode, setExpertMode] =
-        useState<boolean>(LocalStore.get('options.expertMode'));
-
-    LocalStore.onDidChange('options', options => {
-        options && setExpertMode(options.expertMode);
-    });
+    const dispatch = useDispatch()
+    const [text, setText] = useState('')
+    const [from, setFrom] = useState('')
+    const to = useSelector((state: RootState) => state.to)
+    const {t} = useTranslation([
+        'message',
+        p.ns,
+    ])
+    const $textarea = useRef()
+    const [expertMode, setExpertMode] = useState<boolean>(LocalStore.get('options.expertMode'))
 
     useEffect(() => {
-        setDefaults();
-    }, []);
+        setDefaults()
+
+        LocalStore.onDidChange('options', options => {
+            options && setExpertMode(options.expertMode)
+        })
+    }, [])
 
     const handleClear = () => {
-        setText('');
+        setText('')
 
-        setDefaults();
-    };
+        setDefaults()
+    }
 
     const handleSubmit = async (e: SyntheticEvent): Promise<void> => {
-        e.preventDefault();
+        e.preventDefault()
 
-        dispatch(setBackdrop(true));
+        dispatch(setBackdrop(true))
 
-        const props: SendSmsProps = {text, to, from};
-        const errors = [];
+        const props: SendSmsProps = {text, to, from}
+        const errors = []
 
         if (!props.to.length) {
-            props.to = LocalStore.get('options.to');
+            props.to = LocalStore.get('options.to')
         }
 
         if (props.from && !props.from.length) {
-            props.from = LocalStore.get('options.from');
+            props.from = LocalStore.get('options.from')
         }
 
         if (errors.length) {
-            errors.unshift('Error(s) while validation:');
+            errors.unshift('Error(s) while validation:')
 
-            const notification = errors.join('\n');
-            await notify(notification);
-            dispatch(addSnackbar(notification));
+            const notification = errors.join('\n')
+            await notify(notification)
+            dispatch(addSnackbar(notification))
 
-            return;
+            return
         }
 
         dispatch(addSnackbar(await p.dispatchFn({
             client: initClient(),
             options: {...getOpts(props.text, props.to, props.from), json: true},
-        })));
+        })))
 
-        dispatch(setBackdrop(false));
-    };
+        dispatch(setBackdrop(false))
+    }
 
     const setDefaults = () => {
-        const signature = LocalStore.get('options.signature', '');
+        const signature = LocalStore.get('options.signature', '')
 
         if (signature) {
-            setText(signature);
+            setText(signature)
         }
 
-        setFrom(LocalStore.get('options.from', localStoreDefaults.options.from));
+        setFrom(LocalStore.get('options.from', localStoreDefaults.options.from))
 
-        setTo(LocalStore.get('options.to', localStoreDefaults.options.to));
-    };
+        setTo(LocalStore.get('options.to', localStoreDefaults.options.to))
+    }
 
     return <>
         <h1>{t(`${p.ns}:h1`)}</h1>
 
-        <Typography component='form' onSubmit={handleSubmit} sx={{
+        <Typography
+            component='form' onSubmit={handleSubmit} sx={{
             '& .MuiTextField-root': {
                 margin: theme.spacing(1),
-            }
-        }}>
+            },
+        }}
+        >
             {expertMode
                 ? <Toolbar
                     emoji={p.emoji}
@@ -127,9 +131,9 @@ export function Message<T>(p: MessageProps<T>) {
 
             <TextField
                 fullWidth
-                label={t('label')}
                 helperText={t('helperText')}
                 inputRef={$textarea}
+                label={t('label')}
                 multiline
                 onChange={ev => setText(ev.target.value)}
                 required
@@ -172,5 +176,5 @@ export function Message<T>(p: MessageProps<T>) {
         </Typography>
 
         {p.History}
-    </>;
+    </>
 }

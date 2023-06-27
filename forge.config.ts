@@ -6,37 +6,39 @@ import {MakerZIP} from '@electron-forge/maker-zip'
 import {WebpackPlugin} from '@electron-forge/plugin-webpack'
 import PublisherGithub from '@electron-forge/publisher-github'
 import {ForgeConfig} from '@electron-forge/shared-types'
-import {normalize, join, resolve} from 'node:path'
-import {existsSync} from 'node:fs'
 import {ok} from 'node:assert'
-const pkg = require('./package.json')
+import {existsSync} from 'node:fs'
+import {join, normalize, resolve} from 'node:path'
 import {mainConfig} from './webpack.main.config'
 import {rendererConfig} from './webpack.renderer.config'
+
+const pkg = require('./package.json')
+
 const cpy = require('cpy')
 
 const getIconPath = (format: 'ico' | 'png', size = 128) => {
     const iconPath = normalize(
-        join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`));
+        join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`))
 
-    ok(existsSync(iconPath));
+    ok(existsSync(iconPath))
 
-    return iconPath;
-};
+    return iconPath
+}
 
 const icons = {
     ico: getIconPath('ico'),
     png: getIconPath('png'),
-};
+}
 
-const description = 'Send SMS, Text2Speech messages and more via seven.io.';
+const description = 'Send SMS, Text2Speech messages and more via seven.io.'
 
 const config: ForgeConfig = {
     hooks: {
         async packageAfterExtract() {
-            await cpy.prototype( // needed or logo won't be shown in production
+            await cpy( // needed or logo won't be shown in production
                 [resolve(__dirname, '.webpack/renderer/*.*')],
-                resolve(__dirname, '.webpack/renderer/main_window')
-            );
+                resolve(__dirname, '.webpack/renderer/main_window'),
+            )
         },
     },
     makers: [
@@ -51,7 +53,7 @@ const config: ForgeConfig = {
             options: {
                 categories: [
                     'Utility',
-                    'Office'
+                    'Office',
                 ],
                 description,
                 genericName: 'seven Desktop Application',
@@ -62,8 +64,8 @@ const config: ForgeConfig = {
                 productDescription: 'Application to send SMS through the seven gateway.',
                 productName: 'seven Desktop Application',
                 section: 'mail',
-                version: pkg.version
-            }
+                version: pkg.version,
+            },
         }),
         new MakerDMG({
             additionalDMGOptions: {
@@ -90,23 +92,26 @@ const config: ForgeConfig = {
     },
     plugins: [
         new WebpackPlugin({
-            devServer: { liveReload: false },
+            devContentSecurityPolicy: 'connect-src \'self\' https://gateway.sms77.io \'unsafe-eval\'',
+            devServer: {liveReload: false},
             mainConfig,
             renderer: {
                 config: {
                     ...rendererConfig,
                     //plugins: [],
                 },
-                entryPoints: [{
-                    html: './src/index.html',
-                    js: './src/renderer.ts',
-                    name: 'main_window',
-                    preload: {
-                        //config: {},
-                        js: './src/preload.ts',
-                    }
-                },],
-            }
+                entryPoints: [
+                    {
+                        html: './src/index.html',
+                        js: './src/renderer.ts',
+                        name: 'main_window',
+                        /*                 preload: {
+                                             config: {},
+                                             js: './src/preload.ts',
+                                         },*/
+                    },
+                ],
+            },
         }),
     ],
     publishers: [
@@ -118,6 +123,6 @@ const config: ForgeConfig = {
             },
         }),
     ],
-};
+}
 
 export default config

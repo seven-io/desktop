@@ -1,21 +1,21 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
-import os from 'os';
-import electron from 'electron';
-import MenuItem from '@mui/material/MenuItem';
-import {PopupMenu} from '../PopupMenu';
-import {toMegaBytes} from '../../util/toMegaBytes';
+import MenuItem from '@mui/material/MenuItem'
+import {ipcRenderer} from 'electron'
+import os from 'os'
+import React from 'react'
+import {useTranslation} from 'react-i18next'
+import {toMegaBytes} from '../../util/toMegaBytes'
+import {PopupMenu} from '../PopupMenu'
 
 type MessageToolbarProps = {
     onClick: (label: string) => void
 }
 
 export const SystemUtils = ({onClick}: MessageToolbarProps) => {
-    const trans = useTranslation('message');
-    const t = (k: string) => trans.t(`toolbar.system.${k}`);
-    const userInfo = os.userInfo();
+    const trans = useTranslation('message')
+    const t = (k: string) => trans.t(`toolbar.system.${k}`)
+    const userInfo = os.userInfo()
 
-    const SYSTEM_PAIRS: { name: string, value: string | number }[] = [
+    const SYSTEM_PAIRS: { name: string, value: string | number | Promise<any> }[] = [
         {
             name: 'username',
             value: userInfo.username,
@@ -90,15 +90,17 @@ export const SystemUtils = ({onClick}: MessageToolbarProps) => {
         },
         {
             name: 'userDataDir',
-            value: electron.app.getPath('userData')
+            value: ipcRenderer.invoke('get-user-data-path'),
         },
-    ];
+    ]
 
     const children = SYSTEM_PAIRS.map((p, i) =>
-        <MenuItem key={i} onClick={() => onClick(p.value as string)}>
+        <MenuItem key={i} onClick={async () => onClick(await p.value as string)}>
             {t(p.name)}
-        </MenuItem>);
+        </MenuItem>)
 
-    return <PopupMenu buttonText={t('label')} children={children}
-                      identifier='system'/>;
-};
+    return <PopupMenu
+        buttonText={t('label')} children={children}
+        identifier='system'
+    />
+}

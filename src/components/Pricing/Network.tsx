@@ -1,14 +1,14 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {CountryNetwork} from 'sms77-client';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import Chip from '@mui/material/Chip';
-import Divider from '@mui/material/Divider';
-import {getNumberFormatter} from '../../util/numberFormatter';
+import Chip from '@mui/material/Chip'
+import Divider from '@mui/material/Divider'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableRow from '@mui/material/TableRow'
+import React from 'react'
+import {useTranslation} from 'react-i18next'
+import {CountryNetwork} from 'sms77-client'
+import {getNumberFormatter} from '../../util/numberFormatter'
 
 type NetworkProps = {
     index: number
@@ -17,7 +17,7 @@ type NetworkProps = {
 }
 
 export const Network = ({index, network, networks}: NetworkProps) => {
-    const {t} = useTranslation('pricing');
+    const {t} = useTranslation('pricing')
 
     return <TableContainer key={index} style={{marginBottom: '1em'}}>
         <Table size='small' aria-label={t('ariaLabels.network')}>
@@ -38,7 +38,7 @@ export const Network = ({index, network, networks}: NetworkProps) => {
                     </TableCell>
 
                     <TableCell align='right'>
-                        {network.mncs.join(',')}
+                        {(network.mncs || []).join(',')}
                     </TableCell>
                 </TableRow>
 
@@ -87,5 +87,5 @@ export const Network = ({index, network, networks}: NetworkProps) => {
         </Table>
 
         {index === networks.length - 1 ? null : <Divider/>}
-    </TableContainer>;
-};
+    </TableContainer>
+}

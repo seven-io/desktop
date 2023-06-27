@@ -2,7 +2,6 @@
     "compilerOptions": {
         "baseUrl": ".",
         "esModuleInterop": true,
-        "experimentalDecorators": true,
         "jsx": "react-jsx",
         "module": "CommonJS",
         "moduleResolution": "Node",

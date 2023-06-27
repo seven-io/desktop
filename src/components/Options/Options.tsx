@@ -2,14 +2,14 @@ import {Typography, useTheme} from '@mui/material'
 import React, {useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
-import {LocalStore} from '../../util/LocalStore'
 import {setTo} from '../../store/actions'
-import {ApiKey} from './ApiKey'
+import {LocalStore} from '../../util/LocalStore'
+import {BoolInput} from '../BoolInput'
 import {From} from '../From'
 import {To} from '../To'
+import {ApiKey} from './ApiKey'
 import {Signature} from './Signature'
 import {IOptions} from './types'
-import {BoolInput} from '../BoolInput'
 
 export const Options = () => {
     const theme = useTheme()
@@ -66,11 +66,11 @@ export const Options = () => {
                 value={state.to}
             />
 
-            <Signature onChange={handleChange} signature={state.signature}/>
+            <Signature onChange={handleChange} value={state.signature}/>
 
             <BoolInput<IOptions>
                 label={`${t('expertMode')} (${t('savedAutomatically')})`}
-                setState={(o) => handleChange({
+                setState={o => handleChange({
                     target: {
                         name: 'expertMode',
                         value: o.expertMode,

@@ -26,9 +26,19 @@
  * ```
  */
 
+import {init} from '@sentry/electron/renderer'
+import {init as reactInit} from '@sentry/react'
 
+//import fetch from 'electron-fetch'
+import './App'
+import './assets/scss/index.scss'
+import {SENTRY_DSN} from './util/constants'
 
-import './assets/scss/index.scss';
-import './App';
+//window.fetch = fetch as any
 
-
+init(
+    {
+        dsn: SENTRY_DSN,
+    },
+    reactInit,
+)

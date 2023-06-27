@@ -1,59 +1,59 @@
 import {useTheme} from '@mui/material'
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import Container from '@mui/material/Container';
-import CircularProgress from '@mui/material/CircularProgress';
-import Backdrop from '@mui/material/Backdrop';
-import {TopNav} from './TopNav';
-import {Snackbars} from './Snackbars';
-import {BottomNav} from './BottomNav';
-import {RootState} from '../../store/reducers';
-import {Options} from '../Options/Options';
-import {Sms} from '../Sms/Sms';
-import {Contacts} from '../Contacts';
-import {Pricings} from '../Pricing/Pricings';
-import {Lookup} from '../Lookup/Lookup';
-import {addSnackbar, setBackdrop, setNav} from '../../store/actions';
-import {Voice} from '../Voice/Voice';
-import {LocalStore} from '../../util/LocalStore';
-import {useTranslation} from 'react-i18next';
+import Backdrop from '@mui/material/Backdrop'
+import CircularProgress from '@mui/material/CircularProgress'
+import Container from '@mui/material/Container'
+import React, {useEffect, useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import {useDispatch, useSelector} from 'react-redux'
+import {addSnackbar, setBackdrop, setNav} from '../../store/actions'
+import {RootState} from '../../store/reducers'
+import {LocalStore} from '../../util/LocalStore'
+import {Contacts} from '../Contacts'
+import {Lookup} from '../Lookup/Lookup'
+import {Options} from '../Options/Options'
+import {Pricings} from '../Pricing/Pricings'
+import {Sms} from '../Sms/Sms'
+import {Voice} from '../Voice/Voice'
+import {BottomNav} from './BottomNav'
+import {Snackbars} from './Snackbars'
+import {TopNav} from './TopNav'
 
 export const Layout = () => {
-    console.log('Layout loaded...')
     const theme = useTheme()
-    const apiKey = LocalStore.get('options.apiKey', '');
-    const dispatch = useDispatch();
-    const {t} = useTranslation();
-    const [options, setOptions] = useState(LocalStore.get('options'));
-
-    LocalStore.onDidChange('options', options => {
-        options && setOptions(options);
-    });
+    const apiKey = LocalStore.get('options.apiKey', '')
+    const dispatch = useDispatch()
+    const {t} = useTranslation()
+    const [options, setOptions] = useState(LocalStore.get('options'))
 
     useEffect(() => {
+        LocalStore.onDidChange('options', options => {
+            options && setOptions(options)
+        })
+
         if ('' === apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})));
+            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})))
 
-            dispatch(setNav('options'));
+            dispatch(setNav('options'))
 
-            return;
+            return
         }
-    }, []);
+    }, [])
 
     const {backdrop, nav} = useSelector(({backdrop, nav}: RootState) => ({
         backdrop,
-        nav
-    }));
+        nav,
+    }))
 
     return <>
         <TopNav/>
 
-        <Backdrop open={backdrop}
-                  onClick={() => dispatch(setBackdrop(false))}
-        sx={{
-            color: '#fff',
-            zIndex: theme.zIndex.drawer + 1,
-        }}
+        <Backdrop
+            open={backdrop}
+            onClick={() => dispatch(setBackdrop(false))}
+            sx={{
+                color: '#fff',
+                zIndex: theme.zIndex.drawer + 1,
+            }}
         >
             <CircularProgress/>
         </Backdrop>
@@ -77,6 +77,6 @@ export const Layout = () => {
         </Container>
 
         <BottomNav/>
-    </>;
+    </>
 }
 

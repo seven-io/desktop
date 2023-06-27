@@ -1,15 +1,13 @@
-import React, {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import Grid from '@mui/material/Grid';
-import {
-    FOREIGN_ID_MAX_LENGTH,
-    LABEL_MAX_LENGTH
-} from 'sms77-client/dist/validators/request/sms';
-import {DateTimePicker} from '@mui/x-date-pickers-pro';
-import {TextInput} from '../TextInput';
-import {BoolInput} from '../BoolInput';
-import {SmsPartParams} from './Sms';
-import {LocalStore} from '../../util/LocalStore';
+import Grid from '@mui/material/Grid'
+import {DateTimePicker} from '@mui/x-date-pickers-pro'
+import {format} from 'date-fns'
+import React, {useEffect, useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import {FOREIGN_ID_MAX_LENGTH, LABEL_MAX_LENGTH} from 'sms77-client/dist/validators/request/sms'
+import {LocalStore} from '../../util/LocalStore'
+import {BoolInput} from '../BoolInput'
+import {TextInput} from '../TextInput'
+import {SmsPartParams} from './Sms'
 
 type SmsOptionsProps = {
     params: SmsPartParams
@@ -17,26 +15,26 @@ type SmsOptionsProps = {
 }
 
 export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
-    const {t} = useTranslation('sms');
+    const {t} = useTranslation('sms')
     const [expertMode, setExpertMode] =
-        useState<boolean>(LocalStore.get('options.expertMode'));
+        useState<boolean>(LocalStore.get('options.expertMode'))
 
     useEffect(() => {
         LocalStore.onDidChange('options', options => {
-            options && setExpertMode(options.expertMode);
-        });
-    }, []);
+            options && setExpertMode(options.expertMode)
+        })
+    }, [])
 
     return <>
-        {/*        <BoolInput<SmsPartParams>
+        {
+            expertMode ? <>
+                {/*        <BoolInput<SmsPartParams>
             label={t('unicode')}
             setState={setParams}
             state={params}
             stateKey='unicode'
         />*/}
 
-        {
-            expertMode ? <>
                 {expertMode ? <BoolInput<SmsPartParams>
                     label={t('debug')}
                     setState={setParams}
@@ -86,15 +84,20 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
             </Grid>
 
             <Grid item xs={6}>
-                <DateTimePicker
-                    disablePast={true}
-                    format='yyyy-MM-dd hh:ii'
+                <DateTimePicker<Date>
+                    slotProps={{textField: {fullWidth: true}}}
+                    //disablePast={true}
+                    //format='yyyy-MM-dd hh:ii'
                     //fullWidth
+                    minDateTime={new Date}
                     //InputLabelProps={{shrink: true}}
                     //inputVariant='outlined'
                     label={t('delay')}
-                    onChange={e => setParams({...params, delay: e!.toLocaleString()})}
-                    value={params.delay || null}
+                    onChange={date => setParams({
+                        ...params,
+                        delay: date ? format(date, 'MM/dd/yyyy HH:MM') : undefined,
+                    })}
+                    value={params.delay ? new Date(params.delay) : null}
                 />
             </Grid>
 
@@ -112,6 +115,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
 
                     <Grid item xs={2}>
                         <TextInput<SmsPartParams>
+                            inputProps={{min: 0}}
                             label={t('ttl')}
                             setState={setParams}
                             shrink={true}
@@ -133,5 +137,5 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                 </> : null
             }
         </Grid>
-    </>;
-};
+    </>
+}

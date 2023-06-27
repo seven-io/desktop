@@ -1,9 +1,9 @@
-import ElectronStore from 'electron-store';
-import {Contact} from 'sms77-client';
-import {LookupResponse} from '../components/Lookup/types';
-import {IOptions} from '../components/Options/types';
-import {SmsDump} from './sendSms';
-import {VoiceDump} from '../components/Voice/History';
+import ElectronStore from 'electron-store'
+import {Contact} from 'sms77-client'
+import {LookupResponse} from '../components/Lookup/types'
+import {IOptions} from '../components/Options/types'
+import {VoiceDump} from '../components/Voice/History'
+import {SmsDump} from './sendSms'
 
 export type ILocalStore = {
     balance: number | null
@@ -34,17 +34,20 @@ export const localStoreDefaults: ILocalStore = {
         to: '',
     },
     voices: [],
-};
+}
 
 class AppStore extends ElectronStore<ILocalStore> {
     append<T extends ArrayOption>(key: ArrayOption, value: ArrayStorageVal<T>): void {
-        const stored = this.get(key);
-        const append = Array.isArray(value) ? value : [value];
+        const stored = this.get(key)
+        const append = Array.isArray(value) ? value : [value]
 
-        this.set(key, Array.isArray(stored) ? [...stored, ...append] : append);
+        this.set(key, Array.isArray(stored) ? [
+            ...stored,
+            ...append,
+        ] : append)
     }
 }
 
 export const LocalStore = new AppStore({
     defaults: localStoreDefaults,
-});
+})

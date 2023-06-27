@@ -1,14 +1,16 @@
-import {LocalizationProvider} from '@mui/x-date-pickers-pro'
-import React, {StrictMode} from 'react'
-import { createRoot } from 'react-dom/client';
-import CssBaseline from '@mui/material/CssBaseline'
 import {ThemeProvider} from '@mui/material'
-import {Provider} from 'react-redux';
-import './i18n';
-import {Layout} from './components/Layout/Layout';
-import theme from './theme';
-import {store} from './store';
+import CssBaseline from '@mui/material/CssBaseline'
+import {LicenseInfo, LocalizationProvider} from '@mui/x-date-pickers-pro'
 import {AdapterDateFns} from '@mui/x-date-pickers/AdapterDateFns'
+import React from 'react'
+import {createRoot} from 'react-dom/client'
+import {Provider} from 'react-redux'
+import {Layout} from './components/Layout/Layout'
+import './i18n'
+import {store} from './store'
+import theme from './theme'
+
+LicenseInfo.setLicenseKey('c0c2b3a27d008be5e3ed217631b306b4Tz00NTA4MixFPTE2ODU4ODIyMjc0MDgsUz1wcm8sTE09c3Vic2NyaXB0aW9uLEtWPTI=')
 
 const container = document.getElementById('app')!
 const root = createRoot(container)
@@ -22,4 +24,4 @@ const children = <Provider store={store}>
     </LocalizationProvider>
 </Provider>
 
-root.render(children);
+root.render(children)

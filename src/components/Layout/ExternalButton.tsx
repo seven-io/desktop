@@ -1,6 +1,6 @@
-import React from 'react';
-import {shell} from 'electron';
 import Button, {ButtonProps} from '@mui/material/Button'
+import {shell} from 'electron'
+import React from 'react'
 
 type ExternalButtonProps = ButtonProps & {
     url: string
@@ -18,8 +18,7 @@ export const ExternalButton = ({
             color: '#fff',
         }}
         {...props}
-
     >
         {children}
-    </Button>;
-};
+    </Button>
+}
