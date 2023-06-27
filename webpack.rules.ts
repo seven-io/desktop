@@ -28,12 +28,6 @@ export const rules: Required<ModuleOptions>['rules'] = [
             },
         },
     },
-    /*    {
-            test: /\.(woff|woff2|eot|ttf|otf|png|jpg|jpeg|webp|svg)$/,
-            use: [
-                'file-loader',
-            ],
-        },*/
     {
         test: /\.(jpe?g|svg|png|gif|ico|eot|ttf|woff2?)(\?v=\d+\.\d+\.\d+)?$/i,
         type: 'asset/resource',
