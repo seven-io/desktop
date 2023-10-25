@@ -3,9 +3,8 @@ import IconButton from '@mui/material/IconButton'
 import Snackbar from '@mui/material/Snackbar'
 import {useTranslation} from 'react-i18next'
 import {useDispatch, useSelector} from 'react-redux'
-
 import {removeSnackbar} from '../../store/actions'
-import {RootState} from '../../store/reducers'
+import type {RootState} from '../../store/reducers'
 
 export const Snackbars = () => {
     const {t} = useTranslation()

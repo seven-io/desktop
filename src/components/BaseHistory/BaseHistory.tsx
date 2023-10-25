@@ -2,7 +2,7 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import {useEffect, useState} from 'react'
-import {ILocalStore, LocalStore} from '../../util/LocalStore'
+import {type ILocalStore, LocalStore} from '../../util/LocalStore'
 import {usePrevious} from '../../util/usePrevious'
 import {Navigation} from './Navigation'
 

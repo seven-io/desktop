@@ -1,10 +1,10 @@
-import {VoiceJsonResponse, VoiceParams} from '@seven.io/api'
-import {
+import type {VoiceJsonResponse, VoiceParams} from '@seven.io/api'
+import type {
     CommonMessagePropKeys,
     DispatchProps,
     MessageDispatchProps,
 } from '../components/Message/Message'
-import {VoiceDump} from '../components/Voice/History'
+import type {VoiceDump} from '../components/Voice/History'
 import {LocalStore} from './LocalStore'
 import {notify} from './notify'
 

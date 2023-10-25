@@ -1,4 +1,4 @@
-import {CNAMApiJsonResponse, Format, HLR, MNPApiJsonResponse} from '@seven.io/api'
+import type {CNAMApiJsonResponse, Format, HLR, MNPApiJsonResponse} from '@seven.io/api'
 
 export type LookupResponse =
     Format

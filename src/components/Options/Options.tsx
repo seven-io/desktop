@@ -1,4 +1,5 @@
-import {Typography, useTheme} from '@mui/material'
+import {useTheme} from '@mui/material'
+import Typography from '@mui/material/Typography'
 import {useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
@@ -9,7 +10,7 @@ import {From} from '../From'
 import {To} from '../To'
 import {ApiKey} from './ApiKey'
 import {Signature} from './Signature'
-import {IOptions} from './types'
+import type {IOptions} from './types'
 
 export const Options = () => {
     const theme = useTheme()

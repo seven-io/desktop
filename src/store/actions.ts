@@ -1,5 +1,5 @@
-import {Route} from './reducers/nav';
-import {IOptions} from '../components/Options/types';
+import type {Route} from './reducers/nav';
+import type {IOptions} from '../components/Options/types';
 
 export type StoreActionType =
     'ADD_SNACKBAR' |

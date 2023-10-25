@@ -1,6 +1,6 @@
 import {LocalStore} from '../../util/LocalStore';
-import {IOptions} from '../../components/Options/types';
-import {SetOptionsAction} from '../actions';
+import type {IOptions} from '../../components/Options/types';
+import type {SetOptionsAction} from '../actions';
 
 export default (state: IOptions = LocalStore.get('options'), action: SetOptionsAction) => {
     switch (action.type) {

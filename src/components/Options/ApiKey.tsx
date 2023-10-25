@@ -3,12 +3,12 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Button from '@mui/material/Button'
 import IconButton from '@mui/material/IconButton'
 import InputAdornment from '@mui/material/InputAdornment'
-import TextField, {TextFieldProps} from '@mui/material/TextField'
-import {BaseSyntheticEvent, useEffect, useState} from 'react'
+import TextField, {type TextFieldProps} from '@mui/material/TextField'
+import {type BaseSyntheticEvent, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {initClient} from '../../util/initClient'
 import {LocalStore} from '../../util/LocalStore'
-import {IOptions} from './types'
+import type {IOptions} from './types'
 
 export type ApiKeyProps = Omit<TextFieldProps, 'onChange'> & {
     onChange: (apiKey: string) => void

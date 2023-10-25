@@ -1,9 +1,9 @@
-import {VoiceParams} from '@seven.io/api'
+import type {VoiceParams} from '@seven.io/api'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {sendVoice} from '../../util/sendVoice'
 import {BoolInput} from '../BoolInput'
-import {CommonMessagePropKeys, Message} from '../Message/Message'
+import {type CommonMessagePropKeys, Message} from '../Message/Message'
 import {VoiceHistory} from './History'
 
 type PartParams = Omit<VoiceParams, CommonMessagePropKeys>

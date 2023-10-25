@@ -1,6 +1,6 @@
 import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import {NavigationBaseProps, Operator} from '../../types'
+import type {NavigationBaseProps, Operator} from '../../types'
 import {NavigationBaseButton} from './NavigationBaseButton'
 
 export type NavigationProps = NavigationBaseProps & {

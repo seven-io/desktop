@@ -5,7 +5,7 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
-import {CountryNetwork} from '@seven.io/api'
+import type {CountryNetwork} from '@seven.io/api'
 import {useTranslation} from 'react-i18next'
 import {getNumberFormatter} from '../../util/numberFormatter'
 

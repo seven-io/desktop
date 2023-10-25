@@ -1,9 +1,9 @@
-import {Contact} from '@seven.io/api'
+import type {Contact} from '@seven.io/api'
 import ElectronStore from 'electron-store'
-import {LookupResponse} from '../components/Lookup/types'
-import {IOptions} from '../components/Options/types'
-import {VoiceDump} from '../components/Voice/History'
-import {SmsDump} from './sendSms'
+import type {LookupResponse} from '../components/Lookup/types'
+import type {IOptions} from '../components/Options/types'
+import type {VoiceDump} from '../components/Voice/History'
+import type {SmsDump} from './sendSms'
 
 export type ILocalStore = {
     balance: number | null

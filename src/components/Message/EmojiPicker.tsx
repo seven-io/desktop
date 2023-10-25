@@ -1,5 +1,5 @@
 import MenuItem from '@mui/material/MenuItem'
-import Picker, {PickerProps} from 'emoji-picker-react'
+import Picker, {type PickerProps} from 'emoji-picker-react'
 import {useTranslation} from 'react-i18next'
 import {PopupMenu} from '../PopupMenu'
 

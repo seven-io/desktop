@@ -1,4 +1,4 @@
-import {SignaturePosition} from './Signature';
+import type {SignaturePosition} from './Signature'
 
 export type Language = 'de' | 'us'
 

@@ -1,6 +1,6 @@
-import {FormControlLabel} from '@mui/material'
-import Switch, {SwitchProps} from '@mui/material/Switch'
-import {BaseInputProps} from '../types'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import Switch, {type SwitchProps} from '@mui/material/Switch'
+import type {BaseInputProps} from '../types'
 
 export type BoolInputProps<S> = SwitchProps & BaseInputProps<S>
 

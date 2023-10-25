@@ -1,7 +1,7 @@
-import {SmsParams} from '@seven.io/api'
+import type {SmsParams} from '@seven.io/api'
 import {useState} from 'react'
 import {sendSms} from '../../util/sendSms'
-import {CommonMessagePropKeys, Message} from '../Message/Message'
+import {type CommonMessagePropKeys, Message} from '../Message/Message'
 import {History} from './History'
 import {SmsOptions} from './SmsOptions'
 

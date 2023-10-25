@@ -3,9 +3,9 @@ import TableBody from '@mui/material//TableBody'
 import TableCell from '@mui/material//TableCell'
 import TableRow from '@mui/material//TableRow'
 import TableContainer from '@mui/material/TableContainer'
-import {CountryPricing} from '@seven.io/api'
+import type {CountryPricing} from '@seven.io/api'
 import {useTranslation} from 'react-i18next'
-import {KeyValue} from '../../types'
+import type {KeyValue} from '../../types'
 import {CountryNetworks} from './CountryNetworks'
 
 export type PricingProps = {

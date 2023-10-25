@@ -6,15 +6,14 @@ import SettingsIcon from '@mui/icons-material/Settings'
 import SmsIcon from '@mui/icons-material/Sms'
 import BottomNavigation from '@mui/material/BottomNavigation'
 import BottomNavigationAction, {
-    BottomNavigationActionProps,
+    type BottomNavigationActionProps,
 } from '@mui/material/BottomNavigationAction'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch, useSelector} from 'react-redux'
-
 import {setNav} from '../../store/actions'
-import {RootState} from '../../store/reducers'
-import {Route} from '../../store/reducers/nav'
+import type {RootState} from '../../store/reducers'
+import type {Route} from '../../store/reducers/nav'
 import {LocalStore} from '../../util/LocalStore'
 
 export const BottomNav = () => {

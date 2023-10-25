@@ -1,5 +1,5 @@
-import {SmsJsonResponse, SmsParams} from '@seven.io/api'
-import {
+import type {SmsJsonResponse, SmsParams} from '@seven.io/api'
+import type {
     CommonMessagePropKeys,
     CommonMessageProps,
     DispatchProps,

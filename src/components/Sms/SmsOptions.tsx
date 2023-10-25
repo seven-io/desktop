@@ -7,7 +7,7 @@ import {useTranslation} from 'react-i18next'
 import {LocalStore} from '../../util/LocalStore'
 import {BoolInput} from '../BoolInput'
 import {TextInput} from '../TextInput'
-import {SmsPartParams} from './Sms'
+import type {SmsPartParams} from './Sms'
 
 type SmsOptionsProps = {
     params: SmsPartParams

@@ -1,5 +1,5 @@
-import TextField, {StandardTextFieldProps} from '@mui/material/TextField'
-import {BaseInputProps} from '../types'
+import TextField, {type StandardTextFieldProps} from '@mui/material/TextField'
+import type {BaseInputProps} from '../types'
 
 export type TextInputProps<S> = StandardTextFieldProps & BaseInputProps<S>
 

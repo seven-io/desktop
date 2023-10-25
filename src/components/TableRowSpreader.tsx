@@ -1,6 +1,6 @@
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import {HLR} from '@seven.io/api'
+import type {HLR} from '@seven.io/api'
 import {useTranslation} from 'react-i18next'
 import {toString} from '../util/toString'
 import {BoolChip} from './BoolChip'
