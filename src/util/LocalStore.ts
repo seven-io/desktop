@@ -1,5 +1,5 @@
+import {Contact} from '@seven.io/api'
 import ElectronStore from 'electron-store'
-import {Contact} from 'sms77-client'
 import {LookupResponse} from '../components/Lookup/types'
 import {IOptions} from '../components/Options/types'
 import {VoiceDump} from '../components/Voice/History'

@@ -1,10 +1,10 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {VoiceJsonResponse} from 'sms77-client';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import {BaseHistory} from '../BaseHistory/BaseHistory';
-import {SendSmsProps} from '../../util/sendSms';
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import {VoiceJsonResponse} from '@seven.io/api'
+import React from 'react'
+import {useTranslation} from 'react-i18next'
+import {SendSmsProps} from '../../util/sendSms'
+import {BaseHistory} from '../BaseHistory/BaseHistory'
 
 export type VoiceDump = {
     notification: string,
@@ -13,7 +13,10 @@ export type VoiceDump = {
 }
 
 export const VoiceHistory = () => {
-    const {t} = useTranslation(['history', 'voice']);
+    const {t} = useTranslation([
+        'history',
+        'voice',
+    ])
 
     const rowHandler = (row: VoiceDump, i: number) => {
         return <React.Fragment key={i}>
@@ -76,11 +79,11 @@ export const VoiceHistory = () => {
                     {row.response.messages[0].id}
                 </TableCell>
             </TableRow>
-        </React.Fragment>;
-    };
+        </React.Fragment>
+    }
 
     return <BaseHistory<VoiceDump>
         rowHandler={rowHandler}
         storeKey={'voices'}
-    />;
-};
+    />
+}

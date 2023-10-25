@@ -1,6 +1,6 @@
-import React from 'react';
-import {CountryPricing} from 'sms77-client';
-import {Network} from './Network';
+import {CountryPricing} from '@seven.io/api'
+import React from 'react'
+import {Network} from './Network'
 
 export type CountryNetworksProps = {
     networks: CountryPricing['networks']
@@ -16,5 +16,5 @@ export const CountryNetworks = ({networks}: CountryNetworksProps) => {
                 networks={networks}
             />)
         }
-    </>;
-};
+    </>
+}

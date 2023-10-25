@@ -1,8 +1,8 @@
-import {PopupState, usePopupState} from 'material-ui-popup-state/hooks'
-import React, {PropsWithChildren} from 'react';
-import PopupStateComp, {bindMenu, bindTrigger} from 'material-ui-popup-state';
-import Menu from '@mui/material/Menu';
-import Button from '@mui/material/Button';
+import Button from '@mui/material/Button'
+import Menu from '@mui/material/Menu'
+import PopupStateComp, {bindMenu, bindTrigger} from 'material-ui-popup-state'
+import {usePopupState} from 'material-ui-popup-state/hooks'
+import React, {PropsWithChildren} from 'react'
 
 export type MessageToolbarBaseProps = {
     buttonText: string
@@ -12,13 +12,18 @@ export type MessageToolbarBaseProps = {
 export type PopupMenuProps = PropsWithChildren<MessageToolbarBaseProps>
 
 export const PopupMenu = ({children, identifier, buttonText}: PopupMenuProps) => {
-    const popupId = `${identifier}-popup`;
-    const menuId = `${popupId}-menu`;
+    const popupId = `${identifier}-popup`
+    const menuId = `${popupId}-menu`
     const state = usePopupState({popupId, variant: 'popover'})
 
-    return <PopupStateComp popupId={popupId} variant='popover'>
+    return <PopupStateComp
+        disableAutoFocus={true}
+        parentPopupState={null}
+        popupId={popupId}
+        variant='popover'
+    >
         {pS => {
-            Object.assign(state, pS);
+            Object.assign(state, pS)
 
             return <>
                 <Button
@@ -33,7 +38,7 @@ export const PopupMenu = ({children, identifier, buttonText}: PopupMenuProps) =>
                 <Menu  {...bindMenu(state)} id={menuId}>
                     {children}
                 </Menu>
-            </>;
+            </>
         }}
-    </PopupStateComp>;
-};
+    </PopupStateComp>
+}

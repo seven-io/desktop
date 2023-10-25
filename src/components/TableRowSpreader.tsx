@@ -1,11 +1,11 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {HLR} from 'sms77-client';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import {toString} from '../util/toString';
-import {BoolChip} from './BoolChip';
-import {CarrierTable} from './Lookup/CarrierTable';
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import {HLR} from '@seven.io/api'
+import React from 'react'
+import {useTranslation} from 'react-i18next'
+import {toString} from '../util/toString'
+import {BoolChip} from './BoolChip'
+import {CarrierTable} from './Lookup/CarrierTable'
 
 export type TableRowSpreader = {
     nsKey: string
@@ -13,10 +13,13 @@ export type TableRowSpreader = {
     transEditor?: (k: string, v: any) => string
 }
 
-const carrierKeys: (keyof HLR)[] = ['current_carrier', 'original_carrier'];
+const carrierKeys: (keyof HLR)[] = [
+    'current_carrier',
+    'original_carrier',
+]
 
 export const TableRowSpreader = ({nsKey, pairs, transEditor}: TableRowSpreader) => {
-    const {t} = useTranslation(nsKey);
+    const {t} = useTranslation(nsKey)
 
     return <>
         {
@@ -35,5 +38,5 @@ export const TableRowSpreader = ({nsKey, pairs, transEditor}: TableRowSpreader) 
                     </TableCell>
                 </TableRow>)
         }
-    </>;
-};
+    </>
+}

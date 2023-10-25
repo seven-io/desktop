@@ -14,7 +14,7 @@ if (require('electron-squirrel-startup')) { // eslint-disable-line global-requir
     app.quit()
 }
 
-ipcMain.handle('get-user-data-path', async event => {
+ipcMain.handle('get-user-data-path', async _event => {
     return electron.app.getPath('userData')
 })
 

@@ -1,16 +1,16 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
-import {SmsMessage} from 'sms77-client';
-import TableRow from '@mui/material/TableRow';
-import TableCell from '@mui/material/TableCell';
-import Tooltip from '@mui/material/Tooltip';
-import {getNumberFormatter} from '../../util/numberFormatter';
-import {BaseHistory} from '../BaseHistory/BaseHistory';
-import {BoolChip} from '../BoolChip';
-import {SmsDump} from '../../util/sendSms';
+import TableCell from '@mui/material/TableCell'
+import TableRow from '@mui/material/TableRow'
+import Tooltip from '@mui/material/Tooltip'
+import {SmsMessage} from '@seven.io/api'
+import React from 'react'
+import {useTranslation} from 'react-i18next'
+import {getNumberFormatter} from '../../util/numberFormatter'
+import {SmsDump} from '../../util/sendSms'
+import {BaseHistory} from '../BaseHistory/BaseHistory'
+import {BoolChip} from '../BoolChip'
 
 export const History = () => {
-    const {t} = useTranslation('history');
+    const {t} = useTranslation('history')
 
     const rowHandler = (row: SmsMessage, i: number) => {
         return <React.Fragment key={i}>
@@ -109,12 +109,12 @@ export const History = () => {
                     {row.id}
                 </TableCell>
             </TableRow>
-        </React.Fragment>;
-    };
+        </React.Fragment>
+    }
 
     return <BaseHistory<SmsDump>
         path='res.messages'
         rowHandler={rowHandler}
         storeKey={'history'}
-    />;
-};
+    />
+}

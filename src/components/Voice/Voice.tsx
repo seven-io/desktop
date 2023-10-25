@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import {VoiceParams} from 'sms77-client';
-import {VoiceHistory} from './History';
-import {CommonMessagePropKeys, Message} from '../Message/Message';
-import {sendVoice} from '../../util/sendVoice';
-import {BoolInput} from '../BoolInput';
+import {VoiceParams} from '@seven.io/api'
+import React, {useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import {sendVoice} from '../../util/sendVoice'
+import {BoolInput} from '../BoolInput'
+import {CommonMessagePropKeys, Message} from '../Message/Message'
+import {VoiceHistory} from './History'
 
 type PartParams = Omit<VoiceParams, CommonMessagePropKeys>
 
 export const Voice = () => {
-    const {t} = useTranslation('voice');
-    const [params, setParams] = useState<PartParams>({});
+    const {t} = useTranslation('voice')
+    const [params, setParams] = useState<PartParams>({})
 
     return <Message<PartParams>
         dispatchFn={sendVoice}
@@ -24,5 +24,5 @@ export const Voice = () => {
         </>}
         History={<VoiceHistory/>}
         ns='voice'
-    />;
-};
+    />
+}

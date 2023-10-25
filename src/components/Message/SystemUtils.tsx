@@ -30,7 +30,7 @@ export const SystemUtils = ({onClick}: MessageToolbarProps) => {
         },
         {
             name: 'shell',
-            value: userInfo.shell,
+            value: userInfo.shell || '',
         },
         {
             name: 'networkInterfaces',

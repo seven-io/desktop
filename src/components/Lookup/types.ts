@@ -1,3 +1,7 @@
-import {CNAMApiJsonResponse, Format, HLR, MNPApiJsonResponse} from 'sms77-client';
+import {CNAMApiJsonResponse, Format, HLR, MNPApiJsonResponse} from '@seven.io/api'
 
-export type LookupResponse = Format | HLR & { success?: never } | CNAMApiJsonResponse | MNPApiJsonResponse;
+export type LookupResponse =
+    Format
+    | HLR & { success?: never }
+    | CNAMApiJsonResponse
+    | MNPApiJsonResponse;

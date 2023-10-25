@@ -23,7 +23,7 @@ export const Layout = () => {
     const apiKey = LocalStore.get('options.apiKey', '')
     const dispatch = useDispatch()
     const {t} = useTranslation()
-    const [options, setOptions] = useState(LocalStore.get('options'))
+    const [_options, setOptions] = useState(LocalStore.get('options'))
 
     useEffect(() => {
         LocalStore.onDidChange('options', options => {

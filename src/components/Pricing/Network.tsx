@@ -5,9 +5,9 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
+import {CountryNetwork} from '@seven.io/api'
 import React from 'react'
 import {useTranslation} from 'react-i18next'
-import {CountryNetwork} from 'sms77-client'
 import {getNumberFormatter} from '../../util/numberFormatter'
 
 type NetworkProps = {
