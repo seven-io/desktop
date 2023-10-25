@@ -1,5 +1,5 @@
 import {Typography, useTheme} from '@mui/material'
-import React, {useEffect, useRef, useState} from 'react'
+import {useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
 import {setTo} from '../../store/actions'

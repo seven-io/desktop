@@ -1,7 +1,6 @@
 import MenuItem from '@mui/material/MenuItem'
 import {ipcRenderer} from 'electron'
 import os from 'os'
-import React from 'react'
 import {useTranslation} from 'react-i18next'
 import {toMegaBytes} from '../../util/toMegaBytes'
 import {PopupMenu} from '../PopupMenu'

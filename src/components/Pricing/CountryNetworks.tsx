@@ -1,5 +1,4 @@
 import {CountryPricing} from '@seven.io/api'
-import React from 'react'
 import {Network} from './Network'
 
 export type CountryNetworksProps = {

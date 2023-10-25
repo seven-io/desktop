@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import TableContainer from '@mui/material/TableContainer';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import {ILocalStore, LocalStore} from '../../util/LocalStore';
-import {usePrevious} from '../../util/usePrevious';
-import {Navigation} from './Navigation';
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableContainer from '@mui/material/TableContainer'
+import {useEffect, useState} from 'react'
+import {ILocalStore, LocalStore} from '../../util/LocalStore'
+import {usePrevious} from '../../util/usePrevious'
+import {Navigation} from './Navigation'
 
 export type BaseHistoryProps = {
     onNavigation?: (isCurrent: boolean) => void
@@ -17,44 +17,44 @@ export function BaseHistory<T>({
                                    onNavigation,
                                    path,
                                    rowHandler,
-                                   storeKey
+                                   storeKey,
                                }: BaseHistoryProps) {
-    const list = LocalStore.get(storeKey) as T[];
-    const previousList = usePrevious<T[]>(list);
+    const list = LocalStore.get(storeKey) as T[]
+    const previousList = usePrevious<T[]>(list)
     const getLastIndex = () => {
-        return list.length - 1;
-    };
-    const [index, setIndex] = useState(getLastIndex());
-    const entry = list[index];
+        return list.length - 1
+    }
+    const [index, setIndex] = useState(getLastIndex())
+    const entry = list[index]
 
     useEffect(() => {
         if (previousList && previousList.length !== list.length) {
-            setIndex(getLastIndex());
+            setIndex(getLastIndex())
         }
-    }, [list]);
+    }, [list])
 
     const handleOnNavigation = (n: number) => {
-        setIndex(n);
+        setIndex(n)
 
-        const isCurrent = n + 1 === list.length;
+        const isCurrent = n + 1 === list.length
 
-        onNavigation && onNavigation(isCurrent);
-    };
+        onNavigation && onNavigation(isCurrent)
+    }
 
     const getRealEntry = (): any[] => {
         if (!path) {
-            return [entry].flat();
+            return [entry].flat()
         }
 
-        let current: any = entry;
-        const objects = path.split('.') as (keyof T)[];
+        let current: any = entry
+        const objects = path.split('.') as (keyof T)[]
 
         for (const o of objects) {
-            current = current[o];
+            current = current[o]
         }
 
-        return current as any[];
-    };
+        return current as any[]
+    }
 
     return <>
         {entry && <Navigation
@@ -70,5 +70,5 @@ export function BaseHistory<T>({
                 </TableBody>
             </Table>
         </TableContainer>
-    </>;
+    </>
 }

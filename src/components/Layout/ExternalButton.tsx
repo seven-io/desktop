@@ -1,6 +1,5 @@
 import Button, {ButtonProps} from '@mui/material/Button'
 import {shell} from 'electron'
-import React from 'react'
 
 type ExternalButtonProps = ButtonProps & {
     url: string

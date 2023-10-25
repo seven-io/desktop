@@ -1,7 +1,6 @@
 import {FormControlLabel} from '@mui/material'
-import React from 'react';
-import Switch, {SwitchProps} from '@mui/material/Switch';
-import {BaseInputProps} from '../types';
+import Switch, {SwitchProps} from '@mui/material/Switch'
+import {BaseInputProps} from '../types'
 
 export type BoolInputProps<S> = SwitchProps & BaseInputProps<S>
 
@@ -21,5 +20,5 @@ export function BoolInput<S>({
             {...props}
         />}
         label={label}
-    />;
+    />
 }

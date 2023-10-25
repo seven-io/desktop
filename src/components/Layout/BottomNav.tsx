@@ -1,61 +1,63 @@
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {useTranslation} from 'react-i18next';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction, {BottomNavigationActionProps} from '@mui/material/BottomNavigationAction';
-import SettingsIcon from '@mui/icons-material/Settings';
-import SmsIcon from '@mui/icons-material/Sms';
-import ContactsIcon from '@mui/icons-material/Contacts';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
-import PolicyIcon from '@mui/icons-material/Policy';
-import VoiceIcon from '@mui/icons-material/PermPhoneMsg';
+import ContactsIcon from '@mui/icons-material/Contacts'
+import LocalAtmIcon from '@mui/icons-material/LocalAtm'
+import VoiceIcon from '@mui/icons-material/PermPhoneMsg'
+import PolicyIcon from '@mui/icons-material/Policy'
+import SettingsIcon from '@mui/icons-material/Settings'
+import SmsIcon from '@mui/icons-material/Sms'
+import BottomNavigation from '@mui/material/BottomNavigation'
+import BottomNavigationAction, {
+    BottomNavigationActionProps,
+} from '@mui/material/BottomNavigationAction'
+import {useEffect, useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import {useDispatch, useSelector} from 'react-redux'
 
-import {setNav} from '../../store/actions';
-import {Route} from '../../store/reducers/nav';
-import {RootState} from '../../store/reducers';
-import {LocalStore} from '../../util/LocalStore';
+import {setNav} from '../../store/actions'
+import {RootState} from '../../store/reducers'
+import {Route} from '../../store/reducers/nav'
+import {LocalStore} from '../../util/LocalStore'
 
 export const BottomNav = () => {
-    const navId = useSelector((state: RootState) => state.nav);
-    const {t} = useTranslation();
-    const dispatch = useDispatch();
+    const navId = useSelector((state: RootState) => state.nav)
+    const {t} = useTranslation()
+    const dispatch = useDispatch()
     const [actions, setActions] = useState<BottomNavigationActionProps[]>([
         {value: 'sms', icon: <SmsIcon/>},
         {value: 'voice', icon: <VoiceIcon/>},
         {value: 'lookup', icon: <PolicyIcon/>},
         {value: 'options', icon: <SettingsIcon/>},
         {value: 'contacts', icon: <ContactsIcon/>},
-    ]);
+    ])
 
     const getActionIndexByValue = (value: string): number => {
-        return actions.findIndex(a => value === a.value);
-    };
+        return actions.findIndex(a => value === a.value)
+    }
 
     const [expertMode, setExpertMode] =
-        useState<boolean>(LocalStore.get('options.expertMode'));
+        useState<boolean>(LocalStore.get('options.expertMode'))
 
     useEffect(() => {
-        const pricingIndex = getActionIndexByValue('pricing');
-        const hasPricingRoute = -1 !== pricingIndex;
-        const _actions = [...actions];
+        const pricingIndex = getActionIndexByValue('pricing')
+        const hasPricingRoute = -1 !== pricingIndex
+        const _actions = [...actions]
 
         if (expertMode) {
             if (!hasPricingRoute) {
                 _actions.push({
                     value: 'pricing',
-                    icon: <LocalAtmIcon/>
-                });
+                    icon: <LocalAtmIcon/>,
+                })
             }
         } else {
-            hasPricingRoute && _actions.splice(pricingIndex!, 1);
+            hasPricingRoute && _actions.splice(pricingIndex!, 1)
         }
 
-        setActions(_actions);
-    }, [expertMode]);
+        setActions(_actions)
+    }, [expertMode])
 
     LocalStore.onDidChange('options', options => {
-        options && expertMode !== options.expertMode && setExpertMode(options.expertMode);
-    });
+        options && expertMode !== options.expertMode && setExpertMode(options.expertMode)
+    })
 
     return <BottomNavigation
         onChange={(e: any, newNavId: Route) => dispatch(setNav(newNavId))}
@@ -74,5 +76,5 @@ export const BottomNav = () => {
             label={t(a.value)}
             value={a.value}
         />)}
-    </BottomNavigation>;
-};
+    </BottomNavigation>
+}

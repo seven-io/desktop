@@ -1,5 +1,4 @@
 import ButtonGroup from '@mui/material/ButtonGroup'
-import React from 'react'
 import {useTranslation} from 'react-i18next'
 import {DateTimeUtils} from './DateTimeUtils'
 import {EmojiPicker} from './EmojiPicker'

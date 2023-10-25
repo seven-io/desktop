@@ -1,15 +1,14 @@
-import React from 'react';
-import {useTranslation} from 'react-i18next';
-import MenuItem from '@mui/material/MenuItem';
-import {PopupMenu} from '../PopupMenu';
+import MenuItem from '@mui/material/MenuItem'
+import {useTranslation} from 'react-i18next'
+import {PopupMenu} from '../PopupMenu'
 
 export type MessageToolbarProps = {
     onClick: (label: string) => void
 }
 
 export const DateTimeUtils = ({onClick}: MessageToolbarProps) => {
-    const trans = useTranslation('message');
-    const t = (k: string) => trans.t(`toolbar.${k}`);
+    const trans = useTranslation('message')
+    const t = (k: string) => trans.t(`toolbar.${k}`)
 
     return <PopupMenu
         buttonText={`${t('date')}/${t('time')}`}
@@ -28,12 +27,14 @@ export const DateTimeUtils = ({onClick}: MessageToolbarProps) => {
         </MenuItem>
 
         <MenuItem
-            onClick={() => onClick(new Date().toLocaleDateString())}>
+            onClick={() => onClick(new Date().toLocaleDateString())}
+        >
             {t('locale')} {t('date')}
         </MenuItem>
 
         <MenuItem
-            onClick={() => onClick(new Date().toLocaleTimeString())}>
+            onClick={() => onClick(new Date().toLocaleTimeString())}
+        >
             {t('locale')} {t('time')}
         </MenuItem>
 
@@ -52,5 +53,5 @@ export const DateTimeUtils = ({onClick}: MessageToolbarProps) => {
         <MenuItem onClick={() => onClick(new Date().toUTCString())}>
             UTC {t('date')}
         </MenuItem>
-    </PopupMenu>;
-};
+    </PopupMenu>
+}

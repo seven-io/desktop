@@ -1,9 +1,9 @@
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import {VoiceJsonResponse} from '@seven.io/api'
-import React from 'react'
+import type {VoiceJsonResponse} from '@seven.io/api'
+import {Fragment} from 'react'
 import {useTranslation} from 'react-i18next'
-import {SendSmsProps} from '../../util/sendSms'
+import type {SendSmsProps} from '../../util/sendSms'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 
 export type VoiceDump = {
@@ -19,7 +19,7 @@ export const VoiceHistory = () => {
     ])
 
     const rowHandler = (row: VoiceDump, i: number) => {
-        return <React.Fragment key={i}>
+        return <Fragment key={i}>
             <TableRow>
                 <TableCell component='th' scope='row'>
                     {t('to')}
@@ -79,7 +79,7 @@ export const VoiceHistory = () => {
                     {row.response.messages[0].id}
                 </TableCell>
             </TableRow>
-        </React.Fragment>
+        </Fragment>
     }
 
     return <BaseHistory<VoiceDump>

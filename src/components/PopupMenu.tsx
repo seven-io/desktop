@@ -2,7 +2,7 @@ import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import PopupStateComp, {bindMenu, bindTrigger} from 'material-ui-popup-state'
 import {usePopupState} from 'material-ui-popup-state/hooks'
-import React, {PropsWithChildren} from 'react'
+import {PropsWithChildren} from 'react'
 
 export type MessageToolbarBaseProps = {
     buttonText: string

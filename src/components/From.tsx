@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {useTranslation} from 'react-i18next';
-import TextField, {TextFieldProps} from '@mui/material/TextField';
+import TextField, {TextFieldProps} from '@mui/material/TextField'
+import {useEffect, useState} from 'react'
+import {useTranslation} from 'react-i18next'
 
 export type FromProps = Omit<TextFieldProps, 'onChange'> & {
     onChange: (from: string) => void
@@ -8,10 +8,10 @@ export type FromProps = Omit<TextFieldProps, 'onChange'> & {
 }
 
 export const From = ({onChange, value, ...props}: FromProps) => {
-    const [from, setFrom] = useState('');
-    const {t} = useTranslation();
+    const [from, setFrom] = useState('')
+    const {t} = useTranslation()
 
-    useEffect(() => setFrom(value), [value]);
+    useEffect(() => setFrom(value), [value])
 
     return <TextField
         fullWidth
@@ -21,5 +21,5 @@ export const From = ({onChange, value, ...props}: FromProps) => {
         value={from}
         variant='outlined'
         {...props}
-    />;
-};
+    />
+}

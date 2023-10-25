@@ -1,5 +1,5 @@
 import {VoiceParams} from '@seven.io/api'
-import React, {useState} from 'react'
+import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {sendVoice} from '../../util/sendVoice'
 import {BoolInput} from '../BoolInput'

@@ -8,9 +8,9 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
-import {LookupParams} from '@seven.io/api'
+import type {LookupParams} from '@seven.io/api'
 import {LookupType} from '@seven.io/api/dist/constants/byEndpoint/lookup/LookupType'
-import React, {SyntheticEvent} from 'react'
+import {Fragment, type SyntheticEvent, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
 import {addSnackbar, setBackdrop} from '../../store/actions'
@@ -19,16 +19,15 @@ import {LocalStore} from '../../util/LocalStore'
 import {toString} from '../../util/toString'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 import {TableRowSpreader} from '../TableRowSpreader'
-import {LookupResponse} from './types'
+import type {LookupResponse} from './types'
 
 export const Lookup = () => {
     const theme = useTheme()
     const dispatch = useDispatch()
     const {t} = useTranslation('lookup')
-    const [type, setType] = React.useState<LookupType>(LookupType.Format)
-    const [number, setNumber] = React.useState('')
-    const [historyTransKey, setHistoryTransKey] =
-        React.useState<'response' | 'history'>('response')
+    const [type, setType] = useState<LookupType>(LookupType.Format)
+    const [number, setNumber] = useState('')
+    const [historyTransKey, setHistoryTransKey] = useState<'response' | 'history'>('response')
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
 
@@ -120,9 +119,9 @@ export const Lookup = () => {
         <BaseHistory<LookupResponse>
             onNavigation={
                 isCurrent => setHistoryTransKey(isCurrent ? 'response' : 'history')}
-            rowHandler={(row: LookupResponse, i: number) => <React.Fragment key={i}>
+            rowHandler={(row: LookupResponse, i: number) => <Fragment key={i}>
                 <TableRowSpreader nsKey={'lookup'} pairs={Object.entries(row)}/>
-            </React.Fragment>}
+            </Fragment>}
             storeKey={'lookups'}
         />
     </>

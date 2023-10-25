@@ -12,7 +12,7 @@ import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
 import {shell} from 'electron'
-import React, {useEffect, useState} from 'react'
+import {type MouseEvent, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import Logo from '../../assets/img/white-534x105.png'
 import i18n from '../../i18n'
@@ -37,7 +37,7 @@ export const TopNav = () => {
         })
     }, [])
 
-    const handleClickLanguage = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const handleClickLanguage = (event: MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget)
     }
 

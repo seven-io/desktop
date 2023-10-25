@@ -1,6 +1,5 @@
-import React from 'react';
-import TextField, {StandardTextFieldProps} from '@mui/material/TextField';
-import {BaseInputProps} from '../types';
+import TextField, {StandardTextFieldProps} from '@mui/material/TextField'
+import {BaseInputProps} from '../types'
 
 export type TextInputProps<S> = StandardTextFieldProps & BaseInputProps<S>
 
@@ -18,5 +17,5 @@ export function TextInput<S>({
         value={state[stateKey] || ''}
         variant='outlined'
         {...props}
-    />;
+    />
 }
