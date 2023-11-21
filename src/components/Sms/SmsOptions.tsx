@@ -36,13 +36,6 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
         />*/}
 
                 {expertMode ? <BoolInput<SmsPartParams>
-                    label={t('debug')}
-                    setState={setParams}
-                    state={params}
-                    stateKey='debug'
-                /> : null}
-
-                {expertMode ? <BoolInput<SmsPartParams>
                     label={t('noReload')}
                     setState={setParams}
                     state={params}
