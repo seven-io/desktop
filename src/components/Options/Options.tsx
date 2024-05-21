@@ -59,6 +59,7 @@ export const Options = () => {
 
             <To
                 helperText={t('savedAutomatically')}
+                msgType='sms'
                 onChange={to => {
                     handleChange({target: {name: 'to', value: to}})
 

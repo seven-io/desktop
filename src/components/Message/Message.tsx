@@ -33,7 +33,10 @@ export type MessageProps<T> = Pick<ToolbarProps, 'emoji'> & {
     FormAddons?: ReactNode
     History: ReactNode
     ns: string
+    type: MessageType
 }
+
+export type MessageType = 'sms' | 'voice'
 
 export type MessageTranslations = {
     h1: string
@@ -143,7 +146,10 @@ export function Message<T>(p: MessageProps<T>) {
                 variant='outlined'
             />
 
-            <To onChange={to => dispatch(setTo(to))} value={to}/>
+            <To msgType={p.type} onChange={to => {
+                console.log('to changed', to)
+                dispatch(setTo(to))
+            }} value={to}/>
 
             <From onChange={setFrom} value={from}/>
 

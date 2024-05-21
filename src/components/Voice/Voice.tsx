@@ -5,16 +5,17 @@ import {sendVoice} from '../../util/sendVoice'
 import {type CommonMessagePropKeys, Message} from '../Message/Message'
 import {VoiceHistory} from './History'
 
-type PartParams = Omit<VoiceParams, CommonMessagePropKeys>
+export type VoicePartParams = Omit<VoiceParams, CommonMessagePropKeys>
 
 export const Voice = () => {
     const {t} = useTranslation('voice')
-    const [params, setParams] = useState<PartParams>({})
+    const [params, setParams] = useState<VoicePartParams>({})
 
-    return <Message<PartParams>
+    return <Message<VoicePartParams>
         dispatchFn={sendVoice}
         FormAddons={<></>}
         History={<VoiceHistory/>}
         ns='voice'
+        type='voice'
     />
 }

@@ -1,10 +1,10 @@
-import {sms} from './sms';
-import {history} from './history';
-import {contacts} from './contacts';
-import {message} from './message';
-import {pricing} from './pricing';
-import {lookup} from './lookup';
-import {voice} from './voice';
+import {sms} from './sms'
+import {history} from './history'
+import {contacts} from './contacts'
+import {message} from './message'
+import {pricing} from './pricing'
+import {lookup} from './lookup'
+import {voice} from './voice'
 
 export default {
     contacts,
@@ -26,7 +26,7 @@ export default {
         lookup: 'Lookup',
         mailUs: 'Feel free to contact us <a href="mailto: support@seven.io">via email</a>.',
         ok: 'OK',
-        onePlusRecipient: 'Recipient(s) separated by comma',
+        recipients: 'Recipients',
         options: 'Options',
         pleaseSetApiKey: 'Please set your API key from seven.io.',
         pricing: 'Pricing',
@@ -40,4 +40,4 @@ export default {
         toggleApiKeyVisibility: 'Toggle API key visibility',
         voice: 'Voice',
     },
-};
+}

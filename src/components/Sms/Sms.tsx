@@ -12,9 +12,10 @@ export const Sms = () => {
 
     return <Message<SmsPartParams>
         dispatchFn={p => sendSms({...p, options: {...p.options, ...params}})}
+        emoji={true}
         FormAddons={<SmsOptions params={params} setParams={setParams}/>}
         History={<History/>}
         ns='sms'
-        emoji={true}
+        type='sms'
     />
 }
