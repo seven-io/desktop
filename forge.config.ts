@@ -10,6 +10,8 @@ import {join, normalize, resolve} from 'node:path'
 import pkg from './package.json'
 import type {ForgeConfig} from '@electron-forge/shared-types'
 import VitePlugin from '@electron-forge/plugin-vite'
+import FusesPlugin from '@electron-forge/plugin-fuses'
+import {FuseVersion} from '@electron/fuses'
 //import {AutoUnpackNativesPlugin} from '@electron-forge/plugin-auto-unpack-natives'
 
 const icons = {
@@ -82,47 +84,29 @@ export default {
     plugins: [
         //new AutoUnpackNativesPlugin({}),
         new VitePlugin({
+            //  devContentSecurityPolicy: 'connect-src \'self\' https://gateway.sms77.io \'unsafe-eval\'',
             // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
             // If you are familiar with Vite configuration, it will look really familiar.
             build: [
                 {
-                    // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
-                    entry: 'src/main.ts',
                     config: 'vite.main.config.ts',
+                    entry: 'src/main.ts', // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
                 },
                 {
-                    entry: 'src/preload.ts',
                     config: 'vite.preload.config.ts',
+                    entry: 'src/preload.ts',
                 },
             ],
             renderer: [
                 {
-                    name: 'main_window',
                     config: 'vite.renderer.config.ts',
+                    name: 'main_window',
                 },
             ],
         }),
-        /*        new WebpackPlugin({
-                    devContentSecurityPolicy: 'connect-src \'self\' https://gateway.sms77.io \'unsafe-eval\'',
-                    //devServer: {liveReload: false},
-                    mainConfig,
-                    renderer: {
-                        config: rendererConfig,
-                        entryPoints: [
-                            {
-                                html: './src/index.html',
-                                js: './src/renderer.ts',
-                                name: 'main_window',
-                                preload: {
-                                    js: './src/preload.ts',
-                                },
-                            },
-                        ],
-                    },
-                }),*/
-        /*        new FusesPlugin({
-                    version: FuseVersion.V1,
-                }),*/
+        new FusesPlugin({
+            version: FuseVersion.V1,
+        }),
     ],
     publishers: [
         new PublisherGithub({
@@ -136,8 +120,7 @@ export default {
 } satisfies ForgeConfig
 
 function getIconPath(format: 'ico' | 'png', size = 128): string {
-    const iconPath = normalize(
-        join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`))
+    const iconPath = normalize(join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`))
 
     ok(existsSync(iconPath))
 

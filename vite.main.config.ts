@@ -3,7 +3,6 @@ import {defineConfig, mergeConfig} from 'vite'
 import {external, getBuildConfig, getBuildDefine, pluginHotRestart} from './vite.base.config'
 
 export default defineConfig(env => { // https://vitejs.dev/config
-    // @ts-ignore
     const forgeEnv = env as ConfigEnv<'build'>
     const {forgeConfigSelf} = forgeEnv
     const define = getBuildDefine(forgeEnv)
@@ -21,8 +20,7 @@ export default defineConfig(env => { // https://vitejs.dev/config
         plugins: [pluginHotRestart('restart')],
         define,
         resolve: {
-            // Load the Node.js entry.
-            mainFields: ['module', 'jsnext:main', 'jsnext'],
+            mainFields: ['module', 'jsnext:main', 'jsnext'], // Load the Node.js entry.
         },
     }
 

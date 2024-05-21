@@ -2,7 +2,10 @@ import {init} from '@sentry/electron/main'
 import electron, {app, BrowserWindow, ipcMain} from 'electron'
 import {IS_DEV, SENTRY_DSN} from './util/constants'
 import path from 'node:path'
+//import * as url from 'node:url'
 //import installExtension, {REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer'
+
+//const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
 
 init({dsn: SENTRY_DSN})
 

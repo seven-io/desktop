@@ -3,25 +3,27 @@ import type {AddressInfo} from 'node:net'
 import type {ConfigEnv, Plugin, UserConfig} from 'vite'
 import pkg from './package.json'
 
-export const builtins = ['electron', ...builtinModules.map((m) => [m, `node:${m}`]).flat()]
+export const builtins = [
+    'electron',
+    ...builtinModules.map(m => [m, `node:${m}`]).flat()
+]
 
-export const external = [...builtins, ...Object.keys('dependencies' in pkg ? (pkg.dependencies as Record<string, unknown>) : {})]
+export const external = [
+    ...builtins,
+    ...Object.keys('dependencies' in pkg ? (pkg.dependencies as Record<string, unknown>) : {})
+]
 
-export function getBuildConfig(env: ConfigEnv<'build'>): UserConfig {
-    const {root, mode, command} = env
-
+export function getBuildConfig({root, mode, command}: ConfigEnv<'build'>): UserConfig {
     return {
-        root,
-        mode,
         build: {
-            // Prevent multiple builds from interfering with each other.
-            emptyOutDir: false,
-            // 🚧 Multiple builds may conflict.
-            outDir: '.vite/build',
-            watch: command === 'serve' ? {} : null,
+            emptyOutDir: false, // Prevent multiple builds from interfering with each other.
             minify: command === 'build',
+            outDir: '.vite/build', // 🚧 Multiple builds may conflict.
+            watch: command === 'serve' ? {} : null,
         },
         clearScreen: false,
+        mode,
+        root,
     }
 }
 
@@ -39,15 +41,15 @@ export function getDefineKeys(names: string[]) {
     }, define)
 }
 
-export function getBuildDefine(env: ConfigEnv<'build'>) {
-    const {command, forgeConfig} = env
+export function getBuildDefine({command, forgeConfig}: ConfigEnv<'build'>) {
     const names = forgeConfig.renderer.filter(({name}) => name != null).map(({name}) => name!)
-    const defineKeys = getDefineKeys(names)
 
-    return Object.entries(defineKeys).reduce((acc, [name, keys]) => {
+    return Object.entries(getDefineKeys(names)).reduce((acc, [name, keys]) => {
         const {VITE_DEV_SERVER_URL, VITE_NAME} = keys
         const def = {
-            [VITE_DEV_SERVER_URL]: command === 'serve' ? JSON.stringify(process.env[VITE_DEV_SERVER_URL]) : undefined,
+            [VITE_DEV_SERVER_URL]: command === 'serve'
+                ? JSON.stringify(process.env[VITE_DEV_SERVER_URL])
+                : undefined,
             [VITE_NAME]: JSON.stringify(name),
         }
         return {...acc, ...def}
@@ -58,29 +60,26 @@ export function pluginExposeRenderer(name: string): Plugin {
     const {VITE_DEV_SERVER_URL} = getDefineKeys([name])[name]
 
     return {
-        name: '@electron-forge/plugin-vite:expose-renderer',
         configureServer(server) {
             process.viteDevServers ??= {}
-            // Expose server for preload scripts hot reload.
-            process.viteDevServers[name] = server
+            process.viteDevServers[name] = server  // Expose server for preload scripts hot reload.
 
             server.httpServer?.once('listening', () => {
                 const addressInfo = server.httpServer!.address() as AddressInfo
-                // Expose env constant for main process use.
-                process.env[VITE_DEV_SERVER_URL] = `http://localhost:${addressInfo?.port}`
+                process.env[VITE_DEV_SERVER_URL] = `http://localhost:${addressInfo?.port}` // Expose env constant for main process use.
             })
         },
+        name: '@electron-forge/plugin-vite:expose-renderer',
     }
 }
 
 export function pluginHotRestart(command: 'reload' | 'restart'): Plugin {
+    // noinspection JSUnusedGlobalSymbols
     return {
-        name: '@electron-forge/plugin-vite:hot-restart',
         closeBundle() {
             if (command === 'reload') {
                 for (const server of Object.values(process.viteDevServers)) {
-                    // Preload scripts hot reload.
-                    server.ws.send({type: 'full-reload'})
+                    server.ws.send({type: 'full-reload'}) // Preload scripts hot reload.
                 }
             } else {
                 // Main process hot restart.
@@ -88,5 +87,6 @@ export function pluginHotRestart(command: 'reload' | 'restart'): Plugin {
                 process.stdin.emit('data', 'rs')
             }
         },
+        name: '@electron-forge/plugin-vite:hot-restart',
     }
 }
