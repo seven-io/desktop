@@ -30,12 +30,12 @@ import {init} from '@sentry/electron/renderer'
 import {init as reactInit} from '@sentry/react'
 
 import './App'
-import './assets/scss/index.scss'
+import './assets/styles/index.css'
 import {SENTRY_DSN} from './util/constants'
 
 init(
     {
-        dsn: SENTRY_DSN,
+        dsn: SENTRY_DSN
     },
     reactInit,
 )

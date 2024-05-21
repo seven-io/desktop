@@ -51,7 +51,7 @@ export const TopNav = () => {
         await i18n.changeLanguage('us' === lang ? 'en' : lang)
     }
 
-    return <AppBar position='static' variant='outlined'>
+    return <AppBar position='static'>
         <Toolbar
             sx={{
                 alignItems: 'center',

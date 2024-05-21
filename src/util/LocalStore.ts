@@ -1,5 +1,6 @@
 import type {Contact} from '@seven.io/api'
 import ElectronStore from 'electron-store'
+import Conf from 'conf/dist/source/index.d'
 import type {LookupResponse} from '../components/Lookup/types'
 import type {IOptions} from '../components/Options/types'
 import type {VoiceDump} from '../components/Voice/History'
@@ -37,7 +38,11 @@ export const localStoreDefaults: ILocalStore = {
 }
 
 class AppStore extends ElectronStore<ILocalStore> {
-    append<T extends ArrayOption>(key: ArrayOption, value: ArrayStorageVal<T>): void {
+    public append<T extends ArrayOption>(
+        this: Conf,
+        key: ArrayOption,
+        value: ArrayStorageVal<T>
+    ): void {
         const stored = this.get(key)
         const append = Array.isArray(value) ? value : [value]
 

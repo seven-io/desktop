@@ -32,3 +32,9 @@ running ```npm install``` and ```npm run make```. Make sure you have NodeJS inst
 - Lookup history
 - Retrieve pricing
 - Read contacts
+
+### Support
+
+Need help? Feel free to [contact us](https://www.seven.io/en/company/contact/).
+
+[![MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE)

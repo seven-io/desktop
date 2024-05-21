@@ -1,29 +1,16 @@
-import {MakerDeb} from '@electron-forge/maker-deb'
+import MakerDeb from '@electron-forge/maker-deb'
 import MakerDMG from '@electron-forge/maker-dmg'
-import {MakerRpm} from '@electron-forge/maker-rpm'
-import {MakerSquirrel} from '@electron-forge/maker-squirrel'
-import {MakerZIP} from '@electron-forge/maker-zip'
-import {WebpackPlugin} from '@electron-forge/plugin-webpack'
+import MakerRpm from '@electron-forge/maker-rpm'
+import MakerSquirrel from '@electron-forge/maker-squirrel'
+import MakerZIP from '@electron-forge/maker-zip'
 import PublisherGithub from '@electron-forge/publisher-github'
-import type {ForgeConfig} from '@electron-forge/shared-types'
 import {ok} from 'node:assert'
-import {existsSync} from 'node:fs'
+import {cpSync, existsSync} from 'node:fs'
 import {join, normalize, resolve} from 'node:path'
-import {mainConfig} from './webpack.main.config'
-import {rendererConfig} from './webpack.renderer.config'
-
-const pkg = require('./package.json')
-
-const cpy = require('cpy')
-
-const getIconPath = (format: 'ico' | 'png', size = 128) => {
-    const iconPath = normalize(
-        join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`))
-
-    ok(existsSync(iconPath))
-
-    return iconPath
-}
+import pkg from './package.json'
+import type {ForgeConfig} from '@electron-forge/shared-types'
+import VitePlugin from '@electron-forge/plugin-vite'
+//import {AutoUnpackNativesPlugin} from '@electron-forge/plugin-auto-unpack-natives'
 
 const icons = {
     ico: getIconPath('ico'),
@@ -32,13 +19,14 @@ const icons = {
 
 const description = 'Send SMS, Text2Speech messages and more via seven.io.'
 
-const config: ForgeConfig = {
+// noinspection JSUnusedGlobalSymbols
+export default {
     hooks: {
-        async packageAfterExtract() {
-            await cpy( // needed or logo won't be shown in production
-                [resolve(__dirname, '.webpack/renderer/*.*')],
-                resolve(__dirname, '.webpack/renderer/main_window'),
-            )
+        async packageAfterExtract() { // needed or logo won't be shown in production
+            return // TODO
+            const source = resolve(__dirname, '.webpack/renderer/*.*')
+            const destination = resolve(__dirname, '.webpack/renderer/main_window')
+            cpSync(source, destination, {recursive: true})
         },
     },
     makers: [
@@ -88,31 +76,53 @@ const config: ForgeConfig = {
     packagerConfig: {
         appCategoryType: 'public.app-category.social-networking', // MacOSX only
         appCopyright: pkg.author,
+        //asar: true,
         icon: icons.png.replace('.png', ''), // omit file extension for auto-detection according to OS
     },
     plugins: [
-        new WebpackPlugin({
-            devContentSecurityPolicy: 'connect-src \'self\' https://gateway.sms77.io \'unsafe-eval\'',
-            devServer: {liveReload: false},
-            mainConfig,
-            renderer: {
-                config: {
-                    ...rendererConfig,
-                    //plugins: [],
+        //new AutoUnpackNativesPlugin({}),
+        new VitePlugin({
+            // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
+            // If you are familiar with Vite configuration, it will look really familiar.
+            build: [
+                {
+                    // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
+                    entry: 'src/main.ts',
+                    config: 'vite.main.config.ts',
                 },
-                entryPoints: [
-                    {
-                        html: './src/index.html',
-                        js: './src/renderer.ts',
-                        name: 'main_window',
-                        /*                 preload: {
-                                             config: {},
-                                             js: './src/preload.ts',
-                                         },*/
-                    },
-                ],
-            },
+                {
+                    entry: 'src/preload.ts',
+                    config: 'vite.preload.config.ts',
+                },
+            ],
+            renderer: [
+                {
+                    name: 'main_window',
+                    config: 'vite.renderer.config.ts',
+                },
+            ],
         }),
+        /*        new WebpackPlugin({
+                    devContentSecurityPolicy: 'connect-src \'self\' https://gateway.sms77.io \'unsafe-eval\'',
+                    //devServer: {liveReload: false},
+                    mainConfig,
+                    renderer: {
+                        config: rendererConfig,
+                        entryPoints: [
+                            {
+                                html: './src/index.html',
+                                js: './src/renderer.ts',
+                                name: 'main_window',
+                                preload: {
+                                    js: './src/preload.ts',
+                                },
+                            },
+                        ],
+                    },
+                }),*/
+        /*        new FusesPlugin({
+                    version: FuseVersion.V1,
+                }),*/
     ],
     publishers: [
         new PublisherGithub({
@@ -123,6 +133,13 @@ const config: ForgeConfig = {
             },
         }),
     ],
-}
+} satisfies ForgeConfig
 
-export default config
+function getIconPath(format: 'ico' | 'png', size = 128): string {
+    const iconPath = normalize(
+        join(__dirname, 'src', 'assets', 'img', `${size}x${size}.${format}`))
+
+    ok(existsSync(iconPath))
+
+    return iconPath
+}
