@@ -20,7 +20,7 @@ const identifier: keyof IOptions = 'apiKey'
 export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
     const [apiKey, setApiKey] = useState('')
     const [error, setError] = useState(false)
-    const [show, setShow] = useState('' === value)
+    const [show, setShow] = useState(false)
     const {t} = useTranslation()
 
     useEffect(() => setApiKey(value), [value])
