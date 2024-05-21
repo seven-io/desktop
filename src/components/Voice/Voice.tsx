@@ -2,7 +2,6 @@ import type {VoiceParams} from '@seven.io/api'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {sendVoice} from '../../util/sendVoice'
-import {BoolInput} from '../BoolInput'
 import {type CommonMessagePropKeys, Message} from '../Message/Message'
 import {VoiceHistory} from './History'
 
@@ -14,14 +13,7 @@ export const Voice = () => {
 
     return <Message<PartParams>
         dispatchFn={sendVoice}
-        FormAddons={<>
-            <BoolInput<PartParams>
-                label={t('xml')}
-                setState={setParams}
-                state={params}
-                stateKey='xml'
-            />
-        </>}
+        FormAddons={<></>}
         History={<VoiceHistory/>}
         ns='voice'
     />

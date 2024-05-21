@@ -1,4 +1,4 @@
-import {MessageTranslations} from '../../components/Message/Message';
+import {MessageTranslations} from '../../components/Message/Message'
 
 export const voice: MessageTranslations & {
     [k: string]: any
@@ -6,5 +6,4 @@ export const voice: MessageTranslations & {
     code: 'Code',
     cost: 'Cost',
     h1: 'Send Voice',
-    xml: 'XML',
-};
+}
