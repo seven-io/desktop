@@ -12,6 +12,5 @@ export const sms: MessageTranslations & {
     performanceTracking: 'Performance Tracking',
     ttl: 'Time to Live',
     udh: 'User Data Header',
-    unicode: 'Unicode',
-    utf8: 'UTF-8',
+    unicode: 'Unicode'
 }

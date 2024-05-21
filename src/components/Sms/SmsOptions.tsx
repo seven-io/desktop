@@ -41,13 +41,6 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                     state={params}
                     stateKey='no_reload'
                 /> : null}
-
-                {expertMode ? <BoolInput<SmsPartParams>
-                    label={t('utf8')}
-                    setState={setParams}
-                    state={params}
-                    stateKey='utf8'
-                /> : null}
             </> : null
         }
 
