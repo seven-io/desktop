@@ -10,20 +10,19 @@ export const Snackbars = () => {
     const {t} = useTranslation()
     const dispatch = useDispatch()
     const handleClose = (i: number) => dispatch(removeSnackbar(i))
+    const {snackbars} = useSelector((s: RootState) => s)
 
-    return useSelector((s: RootState) => s.snackbars).map((msg: string, i: number) => {
-        const Action = () => <IconButton
-            aria-label={t('close')}
-            color='inherit'
-            onClick={() => handleClose(i)}
-            size='small'
-        >
-            <CloseIcon fontSize='small'/>
-        </IconButton>
-
+    return snackbars.map((msg: string, i: number) => {
         return <Snackbar
-            action={<Action/>}
-            anchorOrigin={{vertical: 'bottom', horizontal: 'left'}}
+            action={<IconButton
+                aria-label={t('close')}
+                color='inherit'
+                onClick={() => handleClose(i)}
+                size='small'
+            >
+                <CloseIcon fontSize='small'/>
+            </IconButton>}
+            anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
             autoHideDuration={6000}
             key={i}
             onClose={() => handleClose(i)}

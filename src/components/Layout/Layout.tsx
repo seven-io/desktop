@@ -20,29 +20,36 @@ import {TopNav} from './TopNav'
 
 export const Layout = () => {
     const theme = useTheme()
-    const apiKey = LocalStore.get('options.apiKey', '')
-    const dispatch = useDispatch()
     const {t} = useTranslation()
-    const [_options, setOptions] = useState(LocalStore.get('options'))
+    const dispatch = useDispatch()
+    const {backdrop, nav} = useSelector(({backdrop, nav}: RootState) => ({
+        backdrop,
+        nav,
+    }))
+    const [options, setOptions] = useState(LocalStore.get('options'))
+    const {apiKey} = options
+    //const apiKey = LocalStore.get('options.apiKey', '')
 
     useEffect(() => {
-        LocalStore.onDidChange('options', options => {
-            options && setOptions(options)
+        LocalStore.onDidChange('options', opts => {
+            opts && setOptions(opts)
         })
 
         if ('' === apiKey) {
             dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})))
 
             dispatch(setNav('options'))
-
-            return
         }
     }, [])
 
-    const {backdrop, nav} = useSelector(({backdrop, nav}: RootState) => ({
-        backdrop,
-        nav,
-    }))
+    /*    useEffect(() => {
+            if ('' === apiKey) {
+                dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})))
+
+                dispatch(setNav('options'))
+            }
+        }, [apiKey])*/
+
 
     return <>
         <TopNav/>

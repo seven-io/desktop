@@ -1,16 +1,17 @@
-export default (state: any = [], action: any) => {
+export default (state: string[] = [], action: { type: string } & any) => {
     switch (action.type) {
         case 'ADD_SNACKBAR':
             return [
                 ...state,
                 action.message,
-            ];
+            ]
 
         case 'REMOVE_SNACKBAR':
-            state.splice(action.index, 1);
+            const newState = [...state]
+            newState.splice(action.index, 1)
 
-            return [...state];
+            return newState
         default:
-            return state;
+            return state
     }
 };
