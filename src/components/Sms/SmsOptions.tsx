@@ -16,8 +16,7 @@ type SmsOptionsProps = {
 
 export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
     const {t} = useTranslation('sms')
-    const [expertMode, setExpertMode] =
-        useState<boolean>(LocalStore.get('options.expertMode'))
+    const [expertMode, setExpertMode] = useState<boolean>(LocalStore.get('options.expertMode'))
 
     useEffect(() => {
         LocalStore.onDidChange('options', options => {
@@ -26,13 +25,6 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
     }, [])
 
     return <>
-        {expertMode ? <BoolInput<SmsPartParams>
-            label={t('noReload')}
-            setState={setParams}
-            state={params}
-            stateKey='no_reload'
-        /> : null}
-
         <BoolInput<SmsPartParams>
             label={t('flash')}
             setState={setParams}

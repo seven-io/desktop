@@ -8,7 +8,6 @@ export const sms: MessageTranslations & {
     foreignId: 'Foreign ID',
     h1: 'Send SMS',
     label: 'Label',
-    noReload: 'No Reload',
     performanceTracking: 'Performance Tracking',
     ttl: 'Time to Live',
     udh: 'User Data Header',
