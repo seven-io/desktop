@@ -12,18 +12,19 @@ import type {LookupParams} from '@seven.io/api'
 import {LookupType} from '@seven.io/api/dist/constants/byEndpoint/lookup/LookupType'
 import {Fragment, type SyntheticEvent, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {useDispatch} from 'react-redux'
-import {addSnackbar, setBackdrop} from '../../store/actions'
 import {initClient} from '../../util/initClient'
 import {LocalStore} from '../../util/LocalStore'
 import {toString} from '../../util/toString'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 import {TableRowSpreader} from '../TableRowSpreader'
 import type {LookupResponse} from './types'
+import {SET_BACKDROP} from '../../store/features/backdrop'
+import {ADD_SNACKBAR} from '../../store/features/snackbars'
+import {useAppDispatch} from '../../store'
 
 export const Lookup = () => {
     const theme = useTheme()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const {t} = useTranslation('lookup')
     const [type, setType] = useState<LookupType>(LookupType.Format)
     const [number, setNumber] = useState('')
@@ -31,21 +32,19 @@ export const Lookup = () => {
     const handleSubmit = async (e: SyntheticEvent) => {
         e.preventDefault()
 
-        dispatch(setBackdrop(true))
+        dispatch(SET_BACKDROP(true))
         const lookupParams: LookupParams = {
             json: true,
             number,
             type,
         }
         const res = await initClient().lookup(lookupParams) as LookupResponse
-        dispatch(setBackdrop(false))
+        dispatch(SET_BACKDROP(false))
         setHistoryTransKey('response')
 
         LocalStore.append('lookups', res)
 
-        dispatch(addSnackbar(
-            getPairs(res).map(([k, v]) => `${t(k)}: ${toString(v)}`)
-                .join(' ● ')))
+        dispatch(ADD_SNACKBAR(getPairs(res).map(([k, v]) => `${t(k)}: ${toString(v)}`).join(' ● ')))
     }
 
     const getPairs = (res: LookupResponse) => {

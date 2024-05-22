@@ -11,11 +11,11 @@ import type {CountryPricing, PricingResponseJson} from '@seven.io/api'
 import {type ChangeEvent, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
-import {setBackdrop} from '../../store/actions'
 import {initClient} from '../../util/initClient'
 import {LocalStore} from '../../util/LocalStore'
 import {CountryFlag} from '../CountryFlag'
 import {Pricing} from './Pricing'
+import {SET_BACKDROP} from '../../store/features/backdrop'
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing')
@@ -33,12 +33,12 @@ export const Pricings = () => {
     }, [])
 
     const getAndStore = async () => {
-        dispatch(setBackdrop(true))
+        dispatch(SET_BACKDROP(true))
 
         const pricing = await initClient()
             .pricing({format: 'json'}) as PricingResponseJson
 
-        dispatch(setBackdrop(false))
+        dispatch(SET_BACKDROP(false))
 
         LocalStore.set('pricing', pricing)
 

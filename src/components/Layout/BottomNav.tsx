@@ -10,9 +10,8 @@ import BottomNavigationAction, {
 } from '@mui/material/BottomNavigationAction'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {setNav} from '../../store/actions'
 import {useAppDispatch, useAppSelector} from '../../store'
-import type {Route} from '../../store/reducers/nav'
+import {Route, SET_NAV} from '../../store/features/nav'
 import {LocalStore} from '../../util/LocalStore'
 
 export const BottomNav = () => {
@@ -58,7 +57,7 @@ export const BottomNav = () => {
     })
 
     return <BottomNavigation
-        onChange={(e: any, newNavId: Route) => dispatch(setNav(newNavId))}
+        onChange={(e: any, newNavId: Route) => dispatch(SET_NAV(newNavId))}
         showLabels
         value={navId}
         sx={{

@@ -4,7 +4,6 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {addSnackbar, setBackdrop, setNav} from '../../store/actions'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {LocalStore} from '../../util/LocalStore'
 import {Contacts} from '../Contacts'
@@ -16,15 +15,16 @@ import {Voice} from '../Voice/Voice'
 import {BottomNav} from './BottomNav'
 import {Snackbars} from './Snackbars'
 import {TopNav} from './TopNav'
+import {selectBackdropActive, SET_BACKDROP} from '../../store/features/backdrop'
+import {selectRoute, SET_NAV} from '../../store/features/nav'
+import {ADD_SNACKBAR} from '../../store/features/snackbars'
 
 export const Layout = () => {
     const theme = useTheme()
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
-    const {backdrop, nav} = useAppSelector(({backdrop, nav}) => ({
-        backdrop,
-        nav,
-    }))
+    const route = useAppSelector(selectRoute)
+    const backdropActive = useAppSelector(selectBackdropActive)
     const [options, setOptions] = useState(LocalStore.get('options'))
     const {apiKey} = options
     //const apiKey = LocalStore.get('options.apiKey', '')
@@ -35,17 +35,17 @@ export const Layout = () => {
         })
 
         if ('' === apiKey) {
-            dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})))
+            dispatch(ADD_SNACKBAR(t('pleaseSetApiKey', {ns: 'translation'})))
 
-            dispatch(setNav('options'))
+            dispatch(SET_NAV('options'))
         }
     }, [])
 
     /*    useEffect(() => {
             if ('' === apiKey) {
-                dispatch(addSnackbar(t('pleaseSetApiKey', {ns: 'translation'})))
+                dispatch(ADD_SNACKBAR(t('pleaseSetApiKey', {ns: 'translation'})))
 
-                dispatch(setNav('options'))
+                dispatch(SET_NAV('options'))
             }
         }, [apiKey])*/
 
@@ -54,8 +54,8 @@ export const Layout = () => {
         <TopNav/>
 
         <Backdrop
-            open={backdrop}
-            onClick={() => dispatch(setBackdrop(false))}
+            onClick={() => dispatch(SET_BACKDROP(false))}
+            open={backdropActive}
             sx={{
                 color: '#fff',
                 zIndex: theme.zIndex.drawer + 1,
@@ -68,15 +68,15 @@ export const Layout = () => {
 
         <Container component='main'>
             {
-                'sms' === nav
+                'sms' === route
                     ? <Sms/>
-                    : 'options' === nav
+                    : 'options' === route
                         ? <Options/>
-                        : 'contacts' === nav
+                        : 'contacts' === route
                             ? <Contacts/>
-                            : 'pricing' === nav
+                            : 'pricing' === route
                                 ? <Pricings/>
-                                : 'voice' === nav
+                                : 'voice' === route
                                     ? <Voice/>
                                     : <Lookup/>
             }

@@ -8,7 +8,6 @@ import TextField from '@mui/material/TextField'
 import SevenClient, {type SmsParams, type VoiceParams} from '@seven.io/api'
 import {type ReactNode, type SyntheticEvent, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {addSnackbar, setBackdrop, setTo} from '../../store/actions'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {initClient} from '../../util/initClient'
 import {LocalStore, localStoreDefaults} from '../../util/LocalStore'
@@ -17,6 +16,9 @@ import {getOpts, type SendSmsProps} from '../../util/sendSms'
 import {From} from '../From'
 import {To} from '../To'
 import {Toolbar, type ToolbarProps} from './Toolbar'
+import {SET_BACKDROP} from '../../store/features/backdrop'
+import {selectTo, SET_TO} from '../../store/features/to'
+import {ADD_SNACKBAR} from '../../store/features/snackbars'
 
 export type CommonMessagePropKeys = 'from' | 'text' | 'to' | 'json'
 export type CommonMessageProps = Pick<SmsParams, CommonMessagePropKeys>
@@ -46,7 +48,7 @@ export function Message<T>(p: MessageProps<T>) {
     const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
-    const {to} = useAppSelector(s => s)
+    const to = useAppSelector(selectTo)
     const {t} = useTranslation([
         'message',
         p.ns,
@@ -71,7 +73,7 @@ export function Message<T>(p: MessageProps<T>) {
     const handleSubmit = async (e: SyntheticEvent): Promise<void> => {
         e.preventDefault()
 
-        dispatch(setBackdrop(true))
+        dispatch(SET_BACKDROP(true))
 
         const props: SendSmsProps = {text, to, from}
         const errors = []
@@ -89,17 +91,17 @@ export function Message<T>(p: MessageProps<T>) {
 
             const notification = errors.join('\n')
             await notify(notification)
-            dispatch(addSnackbar(notification))
+            dispatch(ADD_SNACKBAR(notification))
 
             return
         }
 
-        dispatch(addSnackbar(await p.dispatchFn({
+        dispatch(ADD_SNACKBAR(await p.dispatchFn({
             client: initClient(),
             options: {...getOpts(props.text, props.to, props.from), json: true},
         })))
 
-        dispatch(setBackdrop(false))
+        dispatch(SET_BACKDROP(false))
     }
 
     const setDefaults = () => {
@@ -111,7 +113,7 @@ export function Message<T>(p: MessageProps<T>) {
 
         setFrom(LocalStore.get('options.from', localStoreDefaults.options.from))
 
-        setTo(LocalStore.get('options.to', localStoreDefaults.options.to))
+        SET_TO(LocalStore.get('options.to', localStoreDefaults.options.to))
     }
 
     return <>
@@ -146,7 +148,7 @@ export function Message<T>(p: MessageProps<T>) {
             />
 
             <To msgType={p.type} onChange={to => {
-                dispatch(setTo(to))
+                dispatch(SET_TO(to))
             }} value={to}/>
 
             <From onChange={setFrom} value={from}/>

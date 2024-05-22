@@ -3,7 +3,6 @@ import Typography from '@mui/material/Typography'
 import {useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
-import {setTo} from '../../store/actions'
 import {LocalStore} from '../../util/LocalStore'
 import {BoolInput} from '../BoolInput'
 import {From} from '../From'
@@ -11,6 +10,7 @@ import {To} from '../To'
 import {ApiKey} from './ApiKey'
 import {Signature} from './Signature'
 import type {IOptions} from './types'
+import {SET_TO} from '../../store/features/to'
 
 export const Options = () => {
     const theme = useTheme()
@@ -63,7 +63,7 @@ export const Options = () => {
                 onChange={to => {
                     handleChange({target: {name: 'to', value: to}})
 
-                    dispatch(setTo(to))
+                    dispatch(SET_TO(to))
                 }}
                 value={state.to}
             />

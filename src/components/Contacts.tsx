@@ -10,11 +10,13 @@ import {ContactsAction} from '@seven.io/api/dist/constants/byEndpoint/contacts/C
 import {type ReactElement, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
-import {setBackdrop, setNav, setTo} from '../store/actions'
 import {cleanPhone} from '../util/cleanPhone'
 import {initClient} from '../util/initClient'
 import {LocalStore} from '../util/LocalStore'
 import {notify} from '../util/notify'
+import {SET_BACKDROP} from '../store/features/backdrop'
+import {SET_TO} from '../store/features/to'
+import {SET_NAV} from '../store/features/nav'
 
 type Contact = Pick<SevenContact, 'ID' | 'Name' | 'Number'> & {
     action?: ReactElement
@@ -54,13 +56,13 @@ export const Contacts = () => {
     }, [])
 
     const handleClickSms = (c: Contact) => {
-        dispatch(setTo(c.Number!))
+        dispatch(SET_TO(c.Number!))
 
-        dispatch(setNav('sms'))
+        dispatch(SET_NAV('sms'))
     }
 
     const getAndStore = async () => {
-        dispatch(setBackdrop(true))
+        dispatch(SET_BACKDROP(true))
 
         const contacts = await initClient(LocalStore.get('options.apiKey'))
             .contacts({action: ContactsAction.Read, json: true}) as Contact[]
@@ -69,7 +71,7 @@ export const Contacts = () => {
 
         setContacts(cleanContacts(contacts))
 
-        dispatch(setBackdrop(false))
+        dispatch(SET_BACKDROP(false))
     }
 
     return <>
