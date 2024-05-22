@@ -10,16 +10,15 @@ import BottomNavigationAction, {
 } from '@mui/material/BottomNavigationAction'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {useDispatch, useSelector} from 'react-redux'
 import {setNav} from '../../store/actions'
-import type {RootState} from '../../store/reducers'
+import {useAppDispatch, useAppSelector} from '../../store'
 import type {Route} from '../../store/reducers/nav'
 import {LocalStore} from '../../util/LocalStore'
 
 export const BottomNav = () => {
-    const navId = useSelector((state: RootState) => state.nav)
+    const navId = useAppSelector(s => s.nav)
     const {t} = useTranslation()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const [actions, setActions] = useState<BottomNavigationActionProps[]>([
         {value: 'sms', icon: <SmsIcon/>},
         {value: 'voice', icon: <VoiceIcon/>},

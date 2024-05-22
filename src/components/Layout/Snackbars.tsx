@@ -2,15 +2,14 @@ import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
 import Snackbar from '@mui/material/Snackbar'
 import {useTranslation} from 'react-i18next'
-import {useDispatch, useSelector} from 'react-redux'
 import {removeSnackbar} from '../../store/actions'
-import type {RootState} from '../../store/reducers'
+import {useAppDispatch, useAppSelector} from '../../store'
 
 export const Snackbars = () => {
     const {t} = useTranslation()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const handleClose = (i: number) => dispatch(removeSnackbar(i))
-    const {snackbars} = useSelector((s: RootState) => s)
+    const {snackbars} = useAppSelector(s => s)
 
     return snackbars.map((msg: string, i: number) => {
         return <Snackbar

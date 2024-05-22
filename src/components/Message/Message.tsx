@@ -8,9 +8,8 @@ import TextField from '@mui/material/TextField'
 import SevenClient, {type SmsParams, type VoiceParams} from '@seven.io/api'
 import {type ReactNode, type SyntheticEvent, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {useDispatch, useSelector} from 'react-redux'
 import {addSnackbar, setBackdrop, setTo} from '../../store/actions'
-import type {RootState} from '../../store/reducers'
+import {useAppDispatch, useAppSelector} from '../../store'
 import {initClient} from '../../util/initClient'
 import {LocalStore, localStoreDefaults} from '../../util/LocalStore'
 import {notify} from '../../util/notify'
@@ -44,10 +43,10 @@ export type MessageTranslations = {
 
 export function Message<T>(p: MessageProps<T>) {
     const theme = useTheme()
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
-    const to = useSelector((state: RootState) => state.to)
+    const {to} = useAppSelector(s => s)
     const {t} = useTranslation([
         'message',
         p.ns,
@@ -147,7 +146,6 @@ export function Message<T>(p: MessageProps<T>) {
             />
 
             <To msgType={p.type} onChange={to => {
-                console.log('to changed', to)
                 dispatch(setTo(to))
             }} value={to}/>
 

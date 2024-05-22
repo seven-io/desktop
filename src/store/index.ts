@@ -1,3 +1,1 @@
-import {rootReducer} from './reducers'
-
-export const store = rootReducer
+export * from  './reducers'

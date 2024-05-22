@@ -4,9 +4,8 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Container from '@mui/material/Container'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {useDispatch, useSelector} from 'react-redux'
 import {addSnackbar, setBackdrop, setNav} from '../../store/actions'
-import type {RootState} from '../../store/reducers'
+import {useAppDispatch, useAppSelector} from '../../store'
 import {LocalStore} from '../../util/LocalStore'
 import {Contacts} from '../Contacts'
 import {Lookup} from '../Lookup/Lookup'
@@ -21,8 +20,8 @@ import {TopNav} from './TopNav'
 export const Layout = () => {
     const theme = useTheme()
     const {t} = useTranslation()
-    const dispatch = useDispatch()
-    const {backdrop, nav} = useSelector(({backdrop, nav}: RootState) => ({
+    const dispatch = useAppDispatch()
+    const {backdrop, nav} = useAppSelector(({backdrop, nav}) => ({
         backdrop,
         nav,
     }))
