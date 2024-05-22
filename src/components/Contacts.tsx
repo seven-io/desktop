@@ -18,6 +18,7 @@ import {SET_BACKDROP} from '../store/features/backdrop'
 import {SET_TO} from '../store/features/to'
 import {SET_NAV} from '../store/features/nav'
 import Box from '@mui/material/Box'
+import ButtonGroup from '@mui/material/ButtonGroup'
 
 export const Contacts = () => {
     const {t} = useTranslation('contacts')
@@ -77,18 +78,23 @@ export const Contacts = () => {
                         <TableCell>{contact.Number}</TableCell>
                         <TableCell>{contact.Name}</TableCell>
                         <TableCell>
-                            <Button
-                                fullWidth
-                                onClick={() => {
-                                    dispatch(SET_TO([contact.Number]))
+                            <ButtonGroup fullWidth size='small' variant='outlined'>
+                                <Button
+                                    onClick={() => {
+                                        dispatch(SET_TO([contact.Number]))
 
-                                    dispatch(SET_NAV('sms'))
-                                }}
-                                size='small'
-                                variant='outlined'
-                            >
-                                {t('sms')}
-                            </Button>
+                                        dispatch(SET_NAV('sms'))
+                                    }}
+                                >{t('sms')}</Button>
+
+                                <Button
+                                    onClick={() => {
+                                        dispatch(SET_TO([contact.Number]))
+
+                                        dispatch(SET_NAV('voice'))
+                                    }}
+                                >{t('voice')}</Button>
+                            </ButtonGroup>
                         </TableCell>
                     </TableRow>)}
                 </TableBody>

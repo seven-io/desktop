@@ -8,4 +8,5 @@ export const contacts = {
     number: 'Nummer',
     reload: 'Neu laden',
     sms: 'SMS senden',
+    voice: 'Text-zu-Sprachanruf'
 }
