@@ -5,7 +5,7 @@ import MakerSquirrel from '@electron-forge/maker-squirrel'
 import MakerZIP from '@electron-forge/maker-zip'
 import PublisherGithub from '@electron-forge/publisher-github'
 import {ok} from 'node:assert'
-import { existsSync} from 'node:fs'
+import {existsSync} from 'node:fs'
 import {join, normalize} from 'node:path'
 import type {ForgeConfig} from '@electron-forge/shared-types'
 import VitePlugin from '@electron-forge/plugin-vite'
@@ -25,9 +25,9 @@ const description = 'Send SMS, Text2Speech messages and more via seven.io.'
 export default {
     hooks: {
         async packageAfterExtract() { // needed or logo won't be shown in production
-/*            const source = resolve(__dirname, '.webpack/renderer/!*.*')
-            const destination = resolve(__dirname, '.webpack/renderer/main_window')
-            cpSync(source, destination, {recursive: true})*/
+            /*            const source = resolve(__dirname, '.webpack/renderer/!*.*')
+                        const destination = resolve(__dirname, '.webpack/renderer/main_window')
+                        cpSync(source, destination, {recursive: true})*/
         },
     },
     makers: [
@@ -83,7 +83,6 @@ export default {
     plugins: [
         new AutoUnpackNativesPlugin({}),
         new VitePlugin({
-            //  devContentSecurityPolicy: 'connect-src \'self\' https://gateway.sms77.io \'unsafe-eval\'',
             build: [
                 {
                     config: 'vite.main.config.ts',

@@ -2,10 +2,7 @@ import {init} from '@sentry/electron/main'
 import electron, {app, BrowserWindow, ipcMain} from 'electron'
 import {IS_DEV, SENTRY_DSN} from './util/constants'
 import path from 'node:path'
-//import * as url from 'node:url'
-//import installExtension, {REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer'
-
-//const __dirname = url.fileURLToPath(new URL('.', import.meta.url))
+import installExtension, {REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer'
 
 init({dsn: SENTRY_DSN})
 
@@ -23,27 +20,17 @@ const createWindow = () => {
             contextIsolation: false,
             nodeIntegration: true,
             preload: path.join(__dirname, 'preload.js'),
-            webSecurity: !IS_DEV,
         },
         width: IS_DEV ? 1920 : 800,
     })
 
-    /*    if (IS_DEV) {
-            try {
-                await installExtension([
-                    REACT_DEVELOPER_TOOLS, // TODO: not working
-                    REDUX_DEVTOOLS,
-                ])
-            } catch (e) {
-                console.warn(e)
-            }
-
-            mainWindow.webContents.on('did-frame-finish-load', () => {
-                mainWindow.webContents.once('devtools-opened', () => mainWindow.focus())
-
-                mainWindow.webContents.openDevTools()
-            })
-        }*/
+    if (IS_DEV) {
+        installExtension([
+            REACT_DEVELOPER_TOOLS, // TODO: not working
+            REDUX_DEVTOOLS,
+        ])
+            .then().catch(console.warn)
+    }
 
     // and load the index.html of the app.
     if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
