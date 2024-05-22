@@ -8,7 +8,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import TextField from '@mui/material/TextField'
 import type {CountryPricing, PricingResponseJson} from '@seven.io/api'
-import {type ChangeEvent, useEffect, useState} from 'react'
+import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
 import {initClient} from '../../util/initClient'
@@ -78,9 +78,9 @@ export const Pricings = () => {
         {pricing && <Autocomplete<CountryPricing>
             getOptionLabel={o =>
                 `${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
-            onChange={(ev: ChangeEvent<{}>, cP: CountryPricing | null) => setCountry(cP)}
+            onChange={(_ev, cP: CountryPricing | null) => setCountry(cP)}
             options={pricing.countries}
-            renderOption={(p, o) => <Box component='li' {...p}>
+            renderOption={(p, o) => <Box component='li' {...p} key={o.countryCode}>
                 <CountryFlag pricing={o}/>&nbsp;
                 {` ${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
             </Box>}

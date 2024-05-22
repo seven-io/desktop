@@ -12,7 +12,6 @@ init({dsn: SENTRY_DSN})
 if (require('electron-squirrel-startup')) app.quit() // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 
 ipcMain.handle('get-user-data-path', async _event => {
-    console.log('get-user-data-path', _event)
     return electron.app.getPath('userData')
 })
 
