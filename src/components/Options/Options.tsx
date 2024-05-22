@@ -1,27 +1,19 @@
 import {useTheme} from '@mui/material'
 import Typography from '@mui/material/Typography'
-import {useEffect, useRef, useState} from 'react'
+import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {useDispatch} from 'react-redux'
 import {LocalStore} from '../../util/LocalStore'
-import {BoolInput} from '../BoolInput'
 import {From} from '../From'
-import {To} from '../To'
 import {ApiKey} from './ApiKey'
 import {Signature} from './Signature'
-import type {IOptions} from './types'
-import {SET_TO} from '../../store/features/to'
+import DefaultRecipients from './DefaultRecipients'
+import ExpertMode from './ExpertMode'
 
 export const Options = () => {
     const theme = useTheme()
-    const $apiKey = useRef<HTMLInputElement>()
-    const dispatch = useDispatch()
     const {t} = useTranslation()
-    const [state, setState] = useState<IOptions>(LocalStore.get('options'))
-
-    useEffect(() => {
-        !state.apiKey.length && $apiKey.current!.focus()
-    }, [])
+    const [state, setState] = useState(LocalStore.get('options'))
+    const {apiKey, from, signature} = state
 
     const handleChange = ({target: {name, value}}: any) => {
         setState({...state, [name]: value})
@@ -41,46 +33,27 @@ export const Options = () => {
             }}
         >
             <ApiKey
-                inputRef={$apiKey}
+                autoFocus={!apiKey.length}
                 onChange={value => handleChange({
                     target: {
                         name: 'apiKey',
                         value,
                     },
                 })}
-                value={state.apiKey}
+                value={apiKey}
             />
 
             <From
                 helperText={t('savedAutomatically')}
                 onChange={value => handleChange({target: {name: 'from', value}})}
-                value={state.from}
+                value={from}
             />
 
-            <To
-                helperText={t('savedAutomatically')}
-                msgType='sms'
-                onChange={to => {
-                    handleChange({target: {name: 'to', value: to}})
+            <DefaultRecipients/>
 
-                    dispatch(SET_TO(to))
-                }}
-                value={state.to}
-            />
+            <Signature onChange={handleChange} value={signature}/>
 
-            <Signature onChange={handleChange} value={state.signature}/>
-
-            <BoolInput<IOptions>
-                label={`${t('expertMode')} (${t('savedAutomatically')})`}
-                setState={o => handleChange({
-                    target: {
-                        name: 'expertMode',
-                        value: o.expertMode,
-                    },
-                })}
-                state={state}
-                stateKey='expertMode'
-            />
+            <ExpertMode/>
         </Typography>
     </>
 

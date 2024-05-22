@@ -1,4 +1,5 @@
 export const contacts = {
+    actions: 'Aktionen',
     contacts: 'Kontakte',
     email: 'Email',
     id: 'ID',
@@ -7,4 +8,4 @@ export const contacts = {
     number: 'Nummer',
     reload: 'Neu laden',
     sms: 'SMS senden',
-};
+}

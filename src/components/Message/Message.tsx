@@ -14,10 +14,10 @@ import {LocalStore, localStoreDefaults} from '../../util/LocalStore'
 import {notify} from '../../util/notify'
 import {getOpts, type SendSmsProps} from '../../util/sendSms'
 import {From} from '../From'
-import {To} from '../To'
+import {To} from './To'
 import {Toolbar, type ToolbarProps} from './Toolbar'
 import {SET_BACKDROP} from '../../store/features/backdrop'
-import {selectTo, SET_TO} from '../../store/features/to'
+import {selectRecipients, SET_TO} from '../../store/features/to'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
 
 export type CommonMessagePropKeys = 'from' | 'text' | 'to' | 'json'
@@ -48,7 +48,7 @@ export function Message<T>(p: MessageProps<T>) {
     const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
-    const to = useAppSelector(selectTo)
+    const to = useAppSelector(selectRecipients)
     const {t} = useTranslation([
         'message',
         p.ns,
@@ -75,16 +75,12 @@ export function Message<T>(p: MessageProps<T>) {
 
         dispatch(SET_BACKDROP(true))
 
-        const props: SendSmsProps = {text, to, from}
+        const props: SendSmsProps = {text, to: to.join(','), from}
         const errors = []
 
-        if (!props.to.length) {
-            props.to = LocalStore.get('options.to')
-        }
+        if (!props.to.length) props.to = LocalStore.get('options.to')
 
-        if (props.from && !props.from.length) {
-            props.from = LocalStore.get('options.from')
-        }
+        if (props.from && !props.from.length) props.from = LocalStore.get('options.from')
 
         if (errors.length) {
             errors.unshift('Error(s) while validation:')
@@ -147,9 +143,7 @@ export function Message<T>(p: MessageProps<T>) {
                 variant='outlined'
             />
 
-            <To msgType={p.type} onChange={to => {
-                dispatch(SET_TO(to))
-            }} value={to}/>
+            <To msgType={p.type}/>
 
             <From onChange={setFrom} value={from}/>
 

@@ -9,5 +9,5 @@ export type IOptions = {
     language: Language
     signature: string
     signaturePosition: SignaturePosition
-    to: string
+    to: string[]
 };

@@ -31,7 +31,7 @@ export const localStoreDefaults: ILocalStore = {
         language: 'us',
         signature: '',
         signaturePosition: 'append',
-        to: '',
+        to: [],
     },
     voices: [],
 }
