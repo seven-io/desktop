@@ -5,14 +5,14 @@ import MakerSquirrel from '@electron-forge/maker-squirrel'
 import MakerZIP from '@electron-forge/maker-zip'
 import PublisherGithub from '@electron-forge/publisher-github'
 import {ok} from 'node:assert'
-import {cpSync, existsSync} from 'node:fs'
-import {join, normalize, resolve} from 'node:path'
-import pkg from './package.json'
+import { existsSync} from 'node:fs'
+import {join, normalize} from 'node:path'
 import type {ForgeConfig} from '@electron-forge/shared-types'
 import VitePlugin from '@electron-forge/plugin-vite'
 import FusesPlugin from '@electron-forge/plugin-fuses'
 import {FuseVersion} from '@electron/fuses'
-//import {AutoUnpackNativesPlugin} from '@electron-forge/plugin-auto-unpack-natives'
+import {AutoUnpackNativesPlugin} from '@electron-forge/plugin-auto-unpack-natives'
+import pkg from './package.json'
 
 const icons = {
     ico: getIconPath('ico'),
@@ -25,10 +25,9 @@ const description = 'Send SMS, Text2Speech messages and more via seven.io.'
 export default {
     hooks: {
         async packageAfterExtract() { // needed or logo won't be shown in production
-            return // TODO
-            const source = resolve(__dirname, '.webpack/renderer/*.*')
+/*            const source = resolve(__dirname, '.webpack/renderer/!*.*')
             const destination = resolve(__dirname, '.webpack/renderer/main_window')
-            cpSync(source, destination, {recursive: true})
+            cpSync(source, destination, {recursive: true})*/
         },
     },
     makers: [
@@ -78,15 +77,13 @@ export default {
     packagerConfig: {
         appCategoryType: 'public.app-category.social-networking', // MacOSX only
         appCopyright: pkg.author,
-        //asar: true,
+        asar: true,
         icon: icons.png.replace('.png', ''), // omit file extension for auto-detection according to OS
     },
     plugins: [
-        //new AutoUnpackNativesPlugin({}),
+        new AutoUnpackNativesPlugin({}),
         new VitePlugin({
             //  devContentSecurityPolicy: 'connect-src \'self\' https://gateway.sms77.io \'unsafe-eval\'',
-            // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
-            // If you are familiar with Vite configuration, it will look really familiar.
             build: [
                 {
                     config: 'vite.main.config.ts',
