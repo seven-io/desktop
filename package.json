@@ -51,7 +51,7 @@
         "@mui/x-data-grid": "^6.16.3",
         "@mui/x-date-pickers-pro": "^6.16.3",
         "@reduxjs/toolkit": "^1.9.7",
-        "@sentry/electron": "^4.14.0",
+        "@sentry/electron": "^4.24.0",
         "@sentry/react": "^7.75.0",
         "@seven.io/api": "npm:sms77-client@^2.26.0",
         "date-fns": "^2.30.0",
