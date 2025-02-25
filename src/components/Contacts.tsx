@@ -43,6 +43,9 @@ export const Contacts = () => {
     }, [])
 
     const getAndStore = async () => {
+        const apiKey = LocalStore.get('options.apiKey')
+        if (!apiKey) return
+
         dispatch(SET_BACKDROP(true))
 
         const contacts = await initClient()

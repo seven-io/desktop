@@ -52,9 +52,11 @@ export const BottomNav = () => {
         setActions(_actions)
     }, [expertMode])
 
-    LocalStore.onDidChange('options', options => {
-        options && expertMode !== options.expertMode && setExpertMode(options.expertMode)
-    })
+    useEffect(() => {
+        LocalStore.onDidChange('options', options => {
+            options && expertMode !== options.expertMode && setExpertMode(options.expertMode)
+        })
+    }, [])
 
     return <BottomNavigation
         onChange={(e: any, newNavId: Route) => dispatch(SET_NAV(newNavId))}

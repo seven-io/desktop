@@ -59,7 +59,7 @@ export default {
         new MakerDMG({
             additionalDMGOptions: {
                 // 'code-sign': {identifier: 'io.seven.desktop'}, // TODO: add signing-identity
-                'icon-size': 256,
+                //'icon-size': 256,
             },
             icon: getIconPath('png', 256),
             iconSize: 256,
