@@ -5,12 +5,12 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
-import SevenClient, {type SmsParams, type VoiceParams} from '@seven.io/api'
+import {Client, type SmsParams, type VoiceParams} from '@seven.io/client'
 import {type ReactNode, type SyntheticEvent, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {initClient} from '../../util/initClient'
-import {LocalStore, localStoreDefaults} from '../../util/LocalStore'
+import localStore, {localStoreDefaults} from '../../util/LocalStore'
 import {notify} from '../../util/notify'
 import {getOpts, type SendSmsProps} from '../../util/sendSms'
 import {From} from '../From'
@@ -20,12 +20,12 @@ import {SET_BACKDROP} from '../../store/features/backdrop'
 import {selectRecipients, SET_TO} from '../../store/features/to'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
 
-export type CommonMessagePropKeys = 'from' | 'text' | 'to' | 'json'
+export type CommonMessagePropKeys = 'from' | 'text' | 'to'
 export type CommonMessageProps = Pick<SmsParams, CommonMessagePropKeys>
 export type MessageDispatchProps<T> = T & CommonMessageProps
 
 export type DispatchProps<T> = {
-    client: SevenClient
+    client: Client
     options: SmsParams | VoiceParams
 }
 
@@ -54,12 +54,12 @@ export function Message<T>(p: MessageProps<T>) {
         p.ns,
     ])
     const $textarea = useRef()
-    const [expertMode, setExpertMode] = useState<boolean>(LocalStore.get('options.expertMode'))
+    const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
 
     useEffect(() => {
         setDefaults()
 
-        LocalStore.onDidChange('options', options => {
+        localStore.onDidChange('options', (options) => {
             options && setExpertMode(options.expertMode)
         })
     }, [])
@@ -75,12 +75,12 @@ export function Message<T>(p: MessageProps<T>) {
 
         dispatch(SET_BACKDROP(true))
 
-        const props: SendSmsProps = {text, to: to.join(','), from}
+        const props: SendSmsProps = {text, to, from}
         const errors = []
 
-        if (!props.to.length) props.to = LocalStore.get('options.to')
+        if (!props.to.length) props.to = localStore.get('options.to')
 
-        if (props.from && !props.from.length) props.from = LocalStore.get('options.from')
+        if (props.from && !props.from.length) props.from = localStore.get('options.from')
 
         if (errors.length) {
             errors.unshift('Error(s) while validation:')
@@ -94,22 +94,22 @@ export function Message<T>(p: MessageProps<T>) {
 
         dispatch(ADD_SNACKBAR(await p.dispatchFn({
             client: initClient(),
-            options: {...getOpts(props.text, props.to, props.from), json: true},
+            options: {...getOpts(props.text, props.to, props.from)},
         })))
 
         dispatch(SET_BACKDROP(false))
     }
 
     const setDefaults = () => {
-        const signature = LocalStore.get('options.signature', '')
+        const signature = localStore.get('options.signature', '')
 
         if (signature) {
             setText(signature)
         }
 
-        setFrom(LocalStore.get('options.from', localStoreDefaults.options.from))
+        setFrom(localStore.get('options.from', localStoreDefaults.options.from))
 
-        SET_TO(LocalStore.get('options.to', localStoreDefaults.options.to))
+        SET_TO(localStore.get('options.to', localStoreDefaults.options.to))
     }
 
     return <>

@@ -4,12 +4,16 @@
     "esModuleInterop": true,
     "jsx": "react-jsx",
     "module": "CommonJS",
-    "moduleResolution": "Node",
+    "moduleResolution": "node",
     "outDir": "dist",
+    "paths": {
+      "*": ["node_modules/*"]
+    },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext"
-  }
+    "target": "ES6"
+  },
+  "include": ["src/**/*"]
 }

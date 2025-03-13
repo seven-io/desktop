@@ -1,4 +1,4 @@
-import type {CountryPricing} from '@seven.io/api'
+import type {CountryPricing} from '@seven.io/client'
 import {Network} from './Network'
 
 export type CountryNetworksProps = {

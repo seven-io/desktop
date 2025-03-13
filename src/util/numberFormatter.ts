@@ -1,7 +1,7 @@
-import {LocalStore} from './LocalStore'
+import localStore from './LocalStore'
 
 export const getNumberFormatter = (): Intl.NumberFormat => {
-    const locale = LocalStore.get('options.language')
+    const locale = localStore.get('options.language')
     const locales: string[] = []
 
     if ('us' === locale) {

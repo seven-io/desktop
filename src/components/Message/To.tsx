@@ -6,7 +6,8 @@ import Autocomplete from '@mui/material/Autocomplete'
 import Chip from '@mui/material/Chip'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {selectRecipients, SET_TO} from '../../store/features/to'
-import {LocalStore} from '../../util/LocalStore'
+import {Contact} from '@seven.io/client'
+import localStore from '../../util/LocalStore'
 
 export const To = ({
                        msgType,
@@ -16,14 +17,18 @@ export const To = ({
 }) => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
-    const [storage] = useState(LocalStore.get('options'))
+    const [storage] = useState(localStore.get('options'))
     const {to: defaultRecipients} = storage
     const recipients = useAppSelector(selectRecipients)
     const value = recipients.length ? recipients : [...new Set([...defaultRecipients, ...recipients])]
-    const [contacts] = useState(LocalStore.get('contacts'))
+    const [contacts] = useState(localStore.get('contacts'))
     const options = [
-        ...new Set(contacts.filter(c => c.Number && c.Number !== '').map(c => c.Number!))
+        ...new Set(
+            contacts.filter((c: Contact) => c.properties.mobile_number && c.properties.mobile_number !== '')
+                .map((c: Contact) => c.properties.mobile_number!)
+        )
     ]
+
     return <Autocomplete
         freeSolo
         getOptionLabel={option => option}

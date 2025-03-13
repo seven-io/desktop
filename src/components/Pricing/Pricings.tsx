@@ -7,22 +7,22 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 import TextField from '@mui/material/TextField'
-import type {CountryPricing, PricingResponseJson} from '@seven.io/api'
+import {CountryPricing, PricingResource, PricingResponse} from '@seven.io/client'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
 import {initClient} from '../../util/initClient'
-import {LocalStore} from '../../util/LocalStore'
 import {CountryFlag} from '../CountryFlag'
 import {Pricing} from './Pricing'
 import {SET_BACKDROP} from '../../store/features/backdrop'
+import localStore from '../../util/LocalStore'
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing')
     const [country, setCountry] = useState<CountryPricing | null>(null)
     const dispatch = useDispatch()
     const [pricing, setPricing] = useState(
-        LocalStore.get<'pricing', PricingResponseJson>('pricing'))
+        localStore.get<'pricing', PricingResponse>('pricing'))
 
     useEffect(() => {
         if (!pricing) {
@@ -35,12 +35,11 @@ export const Pricings = () => {
     const getAndStore = async () => {
         dispatch(SET_BACKDROP(true))
 
-        const pricing = await initClient()
-            .pricing({format: 'json'}) as PricingResponseJson
+        const pricing = await (new PricingResource(initClient())).get()
 
         dispatch(SET_BACKDROP(false))
 
-        LocalStore.set('pricing', pricing)
+        localStore.set('pricing', pricing)
 
         setPricing(pricing)
     }
@@ -61,7 +60,7 @@ export const Pricings = () => {
                         ([
                             'countCountries',
                             'countNetworks',
-                        ] as (keyof PricingResponseJson)[])
+                        ] as (keyof PricingResponse)[])
                             .map((o, i) => <TableRow key={i}>
                                 <TableCell component='th' scope='row'>
                                     {t(o)}

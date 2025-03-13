@@ -5,14 +5,12 @@ import PolicyIcon from '@mui/icons-material/Policy'
 import SettingsIcon from '@mui/icons-material/Settings'
 import SmsIcon from '@mui/icons-material/Sms'
 import BottomNavigation from '@mui/material/BottomNavigation'
-import BottomNavigationAction, {
-    type BottomNavigationActionProps,
-} from '@mui/material/BottomNavigationAction'
+import BottomNavigationAction, {type BottomNavigationActionProps,} from '@mui/material/BottomNavigationAction'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {Route, SET_NAV} from '../../store/features/nav'
-import {LocalStore} from '../../util/LocalStore'
+import localStore from '../../util/LocalStore'
 
 export const BottomNav = () => {
     const navId = useAppSelector(s => s.nav)
@@ -31,7 +29,7 @@ export const BottomNav = () => {
     }
 
     const [expertMode, setExpertMode] =
-        useState<boolean>(LocalStore.get('options.expertMode'))
+        useState<boolean>(localStore.get('options.expertMode'))
 
     useEffect(() => {
         const pricingIndex = getActionIndexByValue('pricing')
@@ -53,7 +51,7 @@ export const BottomNav = () => {
     }, [expertMode])
 
     useEffect(() => {
-        LocalStore.onDidChange('options', options => {
+        localStore.onDidChange('options', (options) => {
             options && expertMode !== options.expertMode && setExpertMode(options.expertMode)
         })
     }, [])

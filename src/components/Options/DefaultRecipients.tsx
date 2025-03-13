@@ -3,15 +3,18 @@ import Chip from '@mui/material/Chip'
 import Autocomplete from '@mui/material/Autocomplete'
 import {useTranslation} from 'react-i18next'
 import {useState} from 'react'
-import {LocalStore} from '../../util/LocalStore'
+import {Contact} from '@seven.io/client'
+import localStore from '../../util/LocalStore'
 
 export default () => {
     const {t} = useTranslation()
-    const [contacts] = useState(LocalStore.get('contacts'))
-    const [state, setState] = useState(LocalStore.get('options'))
-    const {to} = state
+    const [contacts] = useState(localStore.get('contacts'))
+    const [state, setState] = useState(localStore.get('options'))
     const options = [
-        ...new Set(contacts.filter(c => c.Number && c.Number !== '').map(c => c.Number!))
+        ...new Set(
+            contacts.filter((c: Contact) => c.properties.mobile_number && c.properties.mobile_number !== '')
+                .map((c: Contact) => c.properties.mobile_number!)
+        )
     ]
 
     return <Autocomplete
@@ -19,8 +22,9 @@ export default () => {
         getOptionLabel={option => option}
         multiple
         onChange={(_, values) => {
+            console.log('values', values)
             setState({...state, to: values})
-            LocalStore.set('options.to', values)
+            localStore.set('options.to', values)
         }}
         options={options}
         renderOption={(props, option) => {
@@ -39,6 +43,6 @@ export default () => {
                 <Chip {...getTagProps({index})} key={option} label={option}/>
             ))
         }}
-        value={to}
+        value={Array.isArray(state.to) ? state.to : []}
     />
 }

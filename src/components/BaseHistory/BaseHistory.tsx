@@ -2,7 +2,7 @@ import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
 import {useEffect, useState} from 'react'
-import {type ILocalStore, LocalStore} from '../../util/LocalStore'
+import localStore, {type ILocalStore} from '../../util/LocalStore'
 import {usePrevious} from '../../util/usePrevious'
 import {Navigation} from './Navigation'
 
@@ -19,7 +19,7 @@ export function BaseHistory<T>({
                                    rowHandler,
                                    storeKey,
                                }: BaseHistoryProps) {
-    const list = LocalStore.get(storeKey) as T[]
+    const list = localStore.get(storeKey) as T[]
     const previousList = usePrevious<T[]>(list)
     const getLastIndex = () => {
         return list.length - 1

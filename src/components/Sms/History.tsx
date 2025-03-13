@@ -1,7 +1,7 @@
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import Tooltip from '@mui/material/Tooltip'
-import type {SmsMessage} from '@seven.io/api'
+import type {SmsMessage} from '@seven.io/client'
 import {Fragment} from 'react'
 import {useTranslation} from 'react-i18next'
 import {getNumberFormatter} from '../../util/numberFormatter'

@@ -1,18 +1,20 @@
-import MakerDeb from '@electron-forge/maker-deb'
-import MakerDMG from '@electron-forge/maker-dmg'
-import MakerRpm from '@electron-forge/maker-rpm'
-import MakerSquirrel from '@electron-forge/maker-squirrel'
-import MakerZIP from '@electron-forge/maker-zip'
-import PublisherGithub from '@electron-forge/publisher-github'
+import {MakerDeb} from '@electron-forge/maker-deb'
+import {MakerDMG} from '@electron-forge/maker-dmg'
+import {MakerRpm} from '@electron-forge/maker-rpm'
+import {MakerSquirrel} from '@electron-forge/maker-squirrel'
+import {MakerZIP} from '@electron-forge/maker-zip'
+import {PublisherGithub} from '@electron-forge/publisher-github'
 import {ok} from 'node:assert'
 import {existsSync} from 'node:fs'
 import {join, normalize} from 'node:path'
 import type {ForgeConfig} from '@electron-forge/shared-types'
-import VitePlugin from '@electron-forge/plugin-vite'
-import FusesPlugin from '@electron-forge/plugin-fuses'
-import {FuseVersion} from '@electron/fuses'
+import {FusesPlugin} from '@electron-forge/plugin-fuses'
+import {FuseV1Options, FuseVersion} from '@electron/fuses'
 import {AutoUnpackNativesPlugin} from '@electron-forge/plugin-auto-unpack-natives'
 import pkg from './package.json'
+import { mainConfig } from './webpack.main.config';
+import { rendererConfig } from './webpack.renderer.config';
+import { WebpackPlugin } from '@electron-forge/plugin-webpack';
 
 const icons = {
     ico: getIconPath('ico'),
@@ -82,26 +84,30 @@ export default {
     },
     plugins: [
         new AutoUnpackNativesPlugin({}),
-        new VitePlugin({
-            build: [
-                {
-                    config: 'vite.main.config.ts',
-                    entry: 'src/main.ts', // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
-                },
-                {
-                    config: 'vite.preload.config.ts',
-                    entry: 'src/preload.ts',
-                },
-            ],
-            renderer: [
-                {
-                    config: 'vite.renderer.config.ts',
-                    name: 'main_window',
-                },
-            ],
+        new WebpackPlugin({
+            mainConfig,
+            renderer: {
+                config: rendererConfig,
+                entryPoints: [
+                    {
+                        html: './src/index.html',
+                        js: './src/renderer.ts',
+                        name: 'main_window',
+                        preload: {
+                            js: './src/preload.ts',
+                        },
+                    },
+                ],
+            },
         }),
         new FusesPlugin({
             version: FuseVersion.V1,
+            [FuseV1Options.RunAsNode]: false,
+            [FuseV1Options.EnableCookieEncryption]: true,
+            [FuseV1Options.EnableNodeOptionsEnvironmentVariable]: false,
+            [FuseV1Options.EnableNodeCliInspectArguments]: false,
+            [FuseV1Options.EnableEmbeddedAsarIntegrityValidation]: true,
+            [FuseV1Options.OnlyLoadAppFromAsar]: true,
         }),
     ],
     publishers: [

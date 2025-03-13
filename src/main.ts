@@ -1,15 +1,45 @@
 import {init} from '@sentry/electron/main'
-import electron, {app, BrowserWindow, ipcMain} from 'electron'
+import {app, BrowserWindow, ipcMain} from 'electron'
 import {IS_DEV, SENTRY_DSN} from './util/constants'
-import path from 'node:path'
-import installExtension, {REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer'
+import {installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer'
+import started from 'electron-squirrel-startup'
+import Store from 'electron-store'
+//import {ILocalStore, localStoreDefaults} from './util/LocalStore'
+
+declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
+declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
+
+Store.initRenderer();
+
+/*const store = new Store<ILocalStore>({
+    defaults: localStoreDefaults,
+})
+
+ipcMain.on('store-send', (event, params) => {
+    const { action, key, value } = params;
+
+    switch (action) {
+        case 'get':
+            event.returnValue = store.get(key);
+            break;
+        case 'onDidChange':
+            event.returnValue = store.onDidChange(key, value);
+            break;
+        case 'set':
+            event.returnValue = store.set(key, value);
+            break;
+    }
+});*/
 
 init({dsn: SENTRY_DSN})
 
-if (require('electron-squirrel-startup')) app.quit() // Handle creating/removing shortcuts on Windows when installing/uninstalling.
+// Handle creating/removing shortcuts on Windows when installing/uninstalling.
+if (started) {
+    app.quit();
+}
 
-ipcMain.handle('get-user-data-path', async _event => {
-    return electron.app.getPath('userData')
+ipcMain.handle('get-user-data-path', () => {
+    return app.getPath('userData')
 })
 
 const createWindow = () => {
@@ -19,7 +49,7 @@ const createWindow = () => {
         webPreferences: {
             contextIsolation: false,
             nodeIntegration: true,
-            preload: path.join(__dirname, 'preload.js'),
+            preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
         },
         width: IS_DEV ? 1920 : 800,
     })
@@ -30,19 +60,17 @@ const createWindow = () => {
             REDUX_DEVTOOLS,
         ])
             .then().catch(console.warn)
+
+        mainWindow.webContents.openDevTools()
     }
 
-    // and load the index.html of the app.
-    if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
-        mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL)
-    } else {
-        mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
-    }
-
-    mainWindow.webContents.openDevTools()
+    mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
 }
 
-app.on('ready', createWindow) // Some APIs can only be used after this event occurs.
+// This method will be called when Electron has finished
+// initialization and is ready to create browser windows.
+// Some APIs can only be used after this event occurs.
+app.on('ready', createWindow);
 
 // On OS X it is common for applications and their menu bar to stay active until the user quits explicitly with Cmd + Q
 app.on('window-all-closed', () => 'darwin' !== process.platform && app.quit())

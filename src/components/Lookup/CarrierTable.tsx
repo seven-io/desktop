@@ -1,7 +1,7 @@
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableContainer from '@mui/material/TableContainer'
-import type {Carrier} from '@seven.io/api'
+import type {Carrier} from '@seven.io/client'
 
 import {TableRowSpreader} from '../TableRowSpreader'
 

@@ -1,13 +1,12 @@
 import Grid from '@mui/material/Grid'
 import {DateTimePicker} from '@mui/x-date-pickers-pro'
-import {FOREIGN_ID_MAX_LENGTH, LABEL_MAX_LENGTH} from '@seven.io/api/dist/validators/request/sms'
 import {format} from 'date-fns'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {LocalStore} from '../../util/LocalStore'
 import {BoolInput} from '../BoolInput'
 import {TextInput} from '../TextInput'
 import type {SmsPartParams} from './Sms'
+import localStore from '../../util/LocalStore'
 
 type SmsOptionsProps = {
     params: SmsPartParams
@@ -16,10 +15,10 @@ type SmsOptionsProps = {
 
 export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
     const {t} = useTranslation('sms')
-    const [expertMode, setExpertMode] = useState<boolean>(LocalStore.get('options.expertMode'))
+    const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
 
     useEffect(() => {
-        LocalStore.onDidChange('options', options => {
+        localStore.onDidChange('options', (options) => {
             options && setExpertMode(options.expertMode)
         })
     }, [])
@@ -42,7 +41,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
         <Grid container spacing={3}>
             <Grid item xs={6}>
                 <TextInput<SmsPartParams>
-                    inputProps={{'maxLength': LABEL_MAX_LENGTH}}
+                    inputProps={{'maxLength': 100}}
                     label={t('label')}
                     setState={setParams}
                     state={params}
@@ -62,7 +61,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                     label={t('delay')}
                     onChange={date => setParams({
                         ...params,
-                        delay: date ? format(date, 'MM/dd/yyyy HH:MM') : undefined,
+                        delay: date ? new Date(format(date, 'MM/dd/yyyy HH:MM')) : undefined,
                     })}
                     value={params.delay ? new Date(params.delay) : null}
                 />
@@ -72,7 +71,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                 expertMode ? <>
                     <Grid item xs={5}>
                         <TextInput<SmsPartParams>
-                            inputProps={{'maxLength': FOREIGN_ID_MAX_LENGTH}}
+                            inputProps={{'maxLength': 64}}
                             label={t('foreignId')}
                             setState={setParams}
                             state={params}

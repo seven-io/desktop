@@ -1,13 +1,13 @@
-import {LocalStore} from '../../util/LocalStore'
 import {createSlice, type PayloadAction} from '@reduxjs/toolkit'
 import type {RootState} from '../index'
+import localStore from '../../util/LocalStore'
 
 type ToState = {
     entries: string[]
 }
 
 const initialState: ToState = {
-    entries: LocalStore.get('options.to'),
+    entries: localStore.get('options.to'),
 }
 
 export const counterSlice = createSlice({

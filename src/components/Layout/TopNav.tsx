@@ -11,28 +11,28 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
-import {shell} from 'electron'
+//import {shell} from 'electron'
 import {type MouseEvent, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import Logo from '../../assets/img/white-534x105.png'
 import i18n from '../../i18n'
-import {LocalStore} from '../../util/LocalStore'
+import localStore from '../../util/LocalStore'
 import {getNumberFormatter} from '../../util/numberFormatter'
 import type {Language} from '../Options/types'
 import {ExternalButton} from './ExternalButton'
 
 export const TopNav = () => {
     const {t} = useTranslation()
-    const [balance, setBalance] = useState(LocalStore.get('balance'))
-    const [language, setLanguage] = useState<Language>(LocalStore.get('options.language'))
+    const [balance, setBalance] = useState(localStore.get('balance'))
+    const [language, setLanguage] = useState<Language>(localStore.get('options.language'))
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
     useEffect(() => {
-        LocalStore.onDidChange('balance', balance => {
+        localStore.onDidChange('balance', (balance) => {
             typeof balance !== 'undefined' && setBalance(balance)
         })
 
-        LocalStore.onDidChange('options', options => {
+        localStore.onDidChange('options', (options) => {
             typeof options !== 'undefined' && setLanguage(options.language)
         })
     }, [])
@@ -46,7 +46,7 @@ export const TopNav = () => {
 
         if (!lang) return
 
-        LocalStore.set('options.language', lang)
+        localStore.set('options.language', lang)
 
         await i18n.changeLanguage('us' === lang ? 'en' : lang)
     }
@@ -62,7 +62,7 @@ export const TopNav = () => {
             <Box
                 alt=''
                 component='img'
-                onClick={() => shell.openExternal('https://www.seven.io/')}
+                onClick={() => window.require('electron').shell.openExternal('https://www.seven.io/')}
                 src={Logo}
                 sx={{
                     cursor: 'pointer',

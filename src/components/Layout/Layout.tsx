@@ -5,7 +5,6 @@ import Container from '@mui/material/Container'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch, useAppSelector} from '../../store'
-import {LocalStore} from '../../util/LocalStore'
 import {Contacts} from '../Contacts'
 import {Lookup} from '../Lookup/Lookup'
 import {Options} from '../Options/Options'
@@ -18,6 +17,7 @@ import {TopNav} from './TopNav'
 import {selectBackdropActive, SET_BACKDROP} from '../../store/features/backdrop'
 import {selectRoute, SET_NAV} from '../../store/features/nav'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
+import localStore from '../../util/LocalStore'
 
 export const Layout = () => {
     const theme = useTheme()
@@ -25,12 +25,12 @@ export const Layout = () => {
     const dispatch = useAppDispatch()
     const route = useAppSelector(selectRoute)
     const backdropActive = useAppSelector(selectBackdropActive)
-    const [options, setOptions] = useState(LocalStore.get('options'))
+    const [options, setOptions] = useState(localStore.get('options'))
     const {apiKey} = options
     //const apiKey = LocalStore.get('options.apiKey', '')
 
     useEffect(() => {
-        LocalStore.onDidChange('options', opts => {
+        localStore.onDidChange('options', (opts) => {
             opts && setOptions(opts)
         })
 

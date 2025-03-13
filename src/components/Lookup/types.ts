@@ -1,7 +1,8 @@
-import type {CNAMApiJsonResponse, Format, HLR, MNPApiJsonResponse} from '@seven.io/api'
+import type {CnamResponse, Format, HLR, MnpResponse, RcsCapabilities} from '@seven.io/client'
 
 export type LookupResponse =
-    Format
-    | HLR & { success?: never }
-    | CNAMApiJsonResponse
-    | MNPApiJsonResponse;
+    Format[]
+    | HLR[] // (HLR & { success?: never })[]
+    | CnamResponse[]
+    | MnpResponse[]
+    | RcsCapabilities[]

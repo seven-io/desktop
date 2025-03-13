@@ -7,8 +7,9 @@ import TextField, {type TextFieldProps} from '@mui/material/TextField'
 import {type BaseSyntheticEvent, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {initClient} from '../../util/initClient'
-import {LocalStore} from '../../util/LocalStore'
 import type {IOptions} from './types'
+import {BalanceResource} from '@seven.io/client'
+import localStore from '../../util/LocalStore'
 
 export type ApiKeyProps = Omit<TextFieldProps, 'onChange'> & {
     onChange: (apiKey: string) => void
@@ -37,8 +38,8 @@ export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
         const client = initClient(apiKey)
 
         try {
-            const balance = await client.balance()
-            LocalStore.set('balance', balance)
+            const balance = await (new BalanceResource(client)).get()
+            localStore.set('balance', balance.amount)
             setError(false)
             onChange(apiKey)
         } catch (e) {

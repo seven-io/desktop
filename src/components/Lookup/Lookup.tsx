@@ -8,12 +8,10 @@ import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import TextField from '@mui/material/TextField'
 import Tooltip from '@mui/material/Tooltip'
-import type {LookupParams} from '@seven.io/api'
-import {LookupType} from '@seven.io/api/dist/constants/byEndpoint/lookup/LookupType'
+import {LookupParams, LookupResource} from '@seven.io/client'
 import {Fragment, type SyntheticEvent, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {initClient} from '../../util/initClient'
-import {LocalStore} from '../../util/LocalStore'
 import {toString} from '../../util/toString'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 import {TableRowSpreader} from '../TableRowSpreader'
@@ -21,12 +19,17 @@ import type {LookupResponse} from './types'
 import {SET_BACKDROP} from '../../store/features/backdrop'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
 import {useAppDispatch} from '../../store'
+import localStore from '../../util/LocalStore'
+
+const LOOKUP_TYPES = ['cnam', 'hlr', 'mnp', 'format', 'rcs'] as const;
+type LookupTypeTuple = typeof LOOKUP_TYPES;
+export type LookupType = LookupTypeTuple[number];
 
 export const Lookup = () => {
     const theme = useTheme()
     const dispatch = useAppDispatch()
     const {t} = useTranslation('lookup')
-    const [type, setType] = useState<LookupType>(LookupType.Format)
+    const [type, setType] = useState<LookupType>('format')
     const [number, setNumber] = useState('')
     const [historyTransKey, setHistoryTransKey] = useState<'response' | 'history'>('response')
     const handleSubmit = async (e: SyntheticEvent) => {
@@ -34,21 +37,39 @@ export const Lookup = () => {
 
         dispatch(SET_BACKDROP(true))
         const lookupParams: LookupParams = {
-            json: true,
-            number,
-            type,
+            numbers: [number],
         }
-        const res = await initClient().lookup(lookupParams) as LookupResponse
+        const client = initClient()
+        const resource = new LookupResource(client)
+        let res
+        switch (type) {
+            case "cnam":
+                res = await resource.cnam(lookupParams)
+                break;
+            case "hlr":
+                res = await resource.hlr(lookupParams)
+                break;
+            case "mnp":
+                res = await resource.mnp(lookupParams)
+                break;
+            case "format":
+                res = await resource.format(lookupParams)
+                break;
+            case "rcs":
+                res = await resource.rcs(lookupParams)
+                break;
+
+        }
         dispatch(SET_BACKDROP(false))
         setHistoryTransKey('response')
 
-        LocalStore.append('lookups', res)
+        localStore.set('lookups', [...localStore.get('lookups'), res])
 
         dispatch(ADD_SNACKBAR(getPairs(res).map(([k, v]) => `${t(k)}: ${toString(v)}`).join(' ● ')))
     }
 
     const getPairs = (res: LookupResponse) => {
-        return Object.entries(res!).filter(([, v]) => null !== v)
+        return Object.entries(res).filter(([, v]) => null !== v) // TODO ?!
     }
 
     return <>
@@ -85,7 +106,7 @@ export const Lookup = () => {
                             onChange={e => setType(e.target.value as LookupType)}
                         >
                             {
-                                Object.values(LookupType)
+                                LOOKUP_TYPES
                                     .map((type, i) =>
                                         <Tooltip
                                             key={i}
