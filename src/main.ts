@@ -4,37 +4,15 @@ import {IS_DEV, SENTRY_DSN} from './util/constants'
 import {installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} from 'electron-devtools-installer'
 import started from 'electron-squirrel-startup'
 import Store from 'electron-store'
-//import {ILocalStore, localStoreDefaults} from './util/LocalStore'
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: string;
 declare const MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY: string;
 
 Store.initRenderer();
 
-/*const store = new Store<ILocalStore>({
-    defaults: localStoreDefaults,
-})
-
-ipcMain.on('store-send', (event, params) => {
-    const { action, key, value } = params;
-
-    switch (action) {
-        case 'get':
-            event.returnValue = store.get(key);
-            break;
-        case 'onDidChange':
-            event.returnValue = store.onDidChange(key, value);
-            break;
-        case 'set':
-            event.returnValue = store.set(key, value);
-            break;
-    }
-});*/
-
 init({dsn: SENTRY_DSN})
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (started) {
+if (started) { // Handle creating/removing shortcuts on Windows when installing/uninstalling.
     app.quit();
 }
 

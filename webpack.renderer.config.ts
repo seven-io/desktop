@@ -15,14 +15,6 @@ export const rendererConfig: Configuration = {
   plugins,
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
-/*    fallback: {
-      assert: false,
-      crypto: false,
-      fs: false,
-      os: false,
-      path: false,
-      util: false,
-    }*/
   },
   target: 'electron-renderer'
 };
