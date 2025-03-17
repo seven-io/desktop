@@ -34,7 +34,7 @@ const createWindow = () => {
 
     if (IS_DEV) {
         installExtension([
-            REACT_DEVELOPER_TOOLS, // TODO: not working
+            REACT_DEVELOPER_TOOLS,
             REDUX_DEVTOOLS,
         ])
             .then().catch(console.warn)

@@ -12,9 +12,9 @@ import {FusesPlugin} from '@electron-forge/plugin-fuses'
 import {FuseV1Options, FuseVersion} from '@electron/fuses'
 import {AutoUnpackNativesPlugin} from '@electron-forge/plugin-auto-unpack-natives'
 import pkg from './package.json'
-import { mainConfig } from './webpack.main.config';
-import { rendererConfig } from './webpack.renderer.config';
-import { WebpackPlugin } from '@electron-forge/plugin-webpack';
+import {mainConfig} from './webpack.main.config'
+import {rendererConfig} from './webpack.renderer.config'
+import {WebpackPlugin} from '@electron-forge/plugin-webpack'
 
 const icons = {
     ico: getIconPath('ico'),
@@ -85,6 +85,7 @@ export default {
     plugins: [
         new AutoUnpackNativesPlugin({}),
         new WebpackPlugin({
+            devContentSecurityPolicy: "connect-src 'self' https://gateway.seven.io 'unsafe-eval'",
             mainConfig,
             renderer: {
                 config: rendererConfig,
