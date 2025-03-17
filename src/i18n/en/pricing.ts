@@ -7,6 +7,7 @@ export const pricing = {
     choose: 'Choose a Country',
     chosen: 'In Selection',
     code: 'Code',
+    comment: 'Comment',
     countCountries: 'Number of Countries',
     countNetworks: 'Number of Networks',
     countryInformation: 'Country Information',
