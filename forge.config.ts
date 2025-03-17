@@ -11,10 +11,11 @@ import type {ForgeConfig} from '@electron-forge/shared-types'
 import {FusesPlugin} from '@electron-forge/plugin-fuses'
 import {FuseV1Options, FuseVersion} from '@electron/fuses'
 import {AutoUnpackNativesPlugin} from '@electron-forge/plugin-auto-unpack-natives'
-import pkg from './package.json'
 import {mainConfig} from './webpack.main.config'
 import {rendererConfig} from './webpack.renderer.config'
 import {WebpackPlugin} from '@electron-forge/plugin-webpack'
+
+console.log(process.env)
 
 const icons = {
     ico: getIconPath('ico'),
@@ -37,7 +38,7 @@ export default {
         new MakerSquirrel({
             description,
             iconUrl: icons.ico,
-            name: pkg.name,
+            name: process.env.npm_package_name,
             setupIcon: icons.ico,
         }),
         new MakerDeb({
@@ -50,12 +51,12 @@ export default {
                 genericName: 'seven Desktop Application',
                 homepage: 'https://www.seven.io/',
                 icon: icons.png,
-                maintainer: pkg.author,
-                name: pkg.name,
+                maintainer: 'seven communications GmbH & Co. KG',
+                name: process.env.npm_package_name,
                 productDescription: 'Application to send SMS through the seven gateway.',
                 productName: 'seven Desktop Application',
                 section: 'mail',
-                version: pkg.version,
+                version: process.env.npm_package_version,
             },
         }),
         new MakerDMG({
@@ -65,20 +66,20 @@ export default {
             },
             icon: getIconPath('png', 256),
             iconSize: 256,
-            name: pkg.name,
+            name: process.env.npm_package_name,
         }),
         new MakerRpm({
             options: {
                 description,
                 icon: icons.png,
-                name: pkg.name,
-                version: pkg.version,
+                name: process.env.npm_package_name,
+                version: process.env.npm_package_version,
             },
         }),
     ],
     packagerConfig: {
         appCategoryType: 'public.app-category.social-networking', // MacOSX only
-        appCopyright: pkg.author,
+        appCopyright: 'seven communications GmbH & Co. KG',
         asar: true,
         icon: icons.png.replace('.png', ''), // omit file extension for auto-detection according to OS
     },
