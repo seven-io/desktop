@@ -1,7 +1,6 @@
 import TextField, {type TextFieldProps} from '@mui/material/TextField'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import type {MessageType} from './Message'
 import Autocomplete from '@mui/material/Autocomplete'
 import Chip from '@mui/material/Chip'
 import {useAppDispatch, useAppSelector} from '../../store'
@@ -9,12 +8,7 @@ import {selectRecipients, SET_TO} from '../../store/features/to'
 import {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
 
-export const To = ({
-                       msgType,
-                       ...props
-                   }: Omit<TextFieldProps, 'onChange' | 'value'> & {
-    msgType: MessageType
-}) => {
+export const SmsRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'>) => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const [storage] = useState(localStore.get('options'))
@@ -31,11 +25,11 @@ export const To = ({
 
     return <Autocomplete
         freeSolo
-/*        getOptionLabel={option => {
+        getOptionLabel={option => {
             console.log(option)
             return option
-        }}*/
-        multiple={msgType !== 'rcs'}
+        }}
+        multiple
         onChange={(_, values) => {
             console.log('onChange', values)
             dispatch(SET_TO(Array.isArray(values) ? values : [values!]))

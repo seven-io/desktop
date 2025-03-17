@@ -1,14 +1,13 @@
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
-import type {VoiceResponse} from '@seven.io/client'
+import type {VoiceParams, VoiceResponse} from '@seven.io/client'
 import {Fragment} from 'react'
 import {useTranslation} from 'react-i18next'
-import type {SendSmsProps} from '../../util/sendSms'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 
 export type VoiceDump = {
     notification: string,
-    options: SendSmsProps
+    options: VoiceParams
     response: VoiceResponse
 }
 

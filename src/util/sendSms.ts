@@ -1,13 +1,15 @@
-import {SmsParams, SmsResource, SmsResponse} from '@seven.io/client'
-import type {
-    CommonMessagePropKeys,
-    CommonMessageProps,
-    DispatchProps,
-    MessageDispatchProps,
-} from '../components/Message/Message'
+import {Client, SmsParams, SmsResource, SmsResponse} from '@seven.io/client'
+import type {CommonMessagePropKeys,} from '../components/Message/Message'
 import {notify} from './notify'
 import localStore from './LocalStore'
 
+type DispatchProps = {
+    client: Client
+    options: SmsParams
+}
+
+type CommonMessageProps = Pick<SmsParams, CommonMessagePropKeys>
+type MessageDispatchProps<T> = T & CommonMessageProps
 export type SmsPartialProps = Omit<SmsParams, CommonMessagePropKeys>
 export type SendSmsProps = MessageDispatchProps<SmsPartialProps>
 export type SmsDump = {
@@ -30,7 +32,7 @@ export const getOpts = (text: string, to: string[], from?: string): CommonMessag
     return opts
 }
 
-export const sendSms = async (p: DispatchProps<SendSmsProps>): Promise<string> => {
+export const sendSms = async (p: DispatchProps): Promise<string> => {
     const lines = []
     const res = await (new SmsResource(p.client)).dispatch(p.options as SmsParams)
     const {balance, messages, sms_type, success, total_price} = res
@@ -62,7 +64,6 @@ export const sendSms = async (p: DispatchProps<SendSmsProps>): Promise<string> =
     const dump: SmsDump = {
         errors: [],
         notification: lines.join('\n'),
-        // @ts-ignore TODO: fix this
         opts: p.options,
         res,
     }

@@ -9,7 +9,7 @@ import type {SmsDump} from '../../util/sendSms'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 import {BoolChip} from '../BoolChip'
 
-export const History = () => {
+export const SmsHistory = () => {
     const {t} = useTranslation('history')
 
     const rowHandler = (row: SmsMessage, i: number) => {

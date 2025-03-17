@@ -1,20 +1,21 @@
-import {VoiceParams, VoiceResource} from '@seven.io/client'
-import type {CommonMessagePropKeys, DispatchProps, MessageDispatchProps,} from '../components/Message/Message'
+import {Client, VoiceParams, VoiceResource} from '@seven.io/client'
 import type {VoiceDump} from '../components/Voice/VoiceHistory'
 import {notify} from './notify'
 import localStore from './LocalStore'
 
-export type VoicePartialProps = Omit<VoiceParams, CommonMessagePropKeys>
-export type SendVoiceProps = MessageDispatchProps<VoicePartialProps>
+type DispatchProps = {
+    client: Client
+    options: VoiceParams
+}
 
-export const sendVoice = async (p: DispatchProps<SendVoiceProps>) => {
+
+export const sendVoice = async (p: DispatchProps) => {
     const response = await (new VoiceResource(p.client)).dispatch(p.options as VoiceParams)
 
     const d: VoiceDump = {
         notification: '100' === response.success
             ? `Voice message ${response.messages[0].id} sent for ${response.total_price}€.`
             : `Error sending Voice to "${p.options.to}": ${JSON.stringify(response)}`,
-        // @ts-ignore TODO: fix this
         options: p.options,
         response,
     }
