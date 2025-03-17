@@ -18,7 +18,7 @@ import {Toolbar} from '../Message/Toolbar'
 import {SET_BACKDROP} from '../../store/features/backdrop'
 import {selectRcsRecipient, SET_TO} from '../../store/features/to'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
-import {getRcsDispatchOpts, RcsPartialProps, sendRcs} from '../../util/sendRcs'
+import {RcsPartialProps, sendRcs} from '../../util/sendRcs'
 import {RcsHistory} from './RcsHistory'
 import {RcsOptions} from './RcsOptions'
 
@@ -55,10 +55,10 @@ export function Rcs() {
 
         dispatch(SET_BACKDROP(true))
 
-        const params: RcsDispatchParams = {text, to, from}
+        const dispatchParams: RcsDispatchParams = {text, to, from}
         const errors = []
 
-        if (!params.to.length) params.to = localStore.get('options.to')
+        if (!dispatchParams.to.length) dispatchParams.to = localStore.get('options.to')
 
         //if (params.from && !params.from.length) params.from = localStore.get('options.from')
 
@@ -74,7 +74,10 @@ export function Rcs() {
 
         dispatch(ADD_SNACKBAR(await sendRcs({
             client: initClient(),
-            options: getRcsDispatchOpts(params.text, params.to, params.from),
+            options: {
+                ...params,
+                ...dispatchParams
+            },
         })))
 
         dispatch(SET_BACKDROP(false))

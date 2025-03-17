@@ -11,19 +11,6 @@ export type RcsDump = {
     res: RcsDispatchResponse
 };
 
-export const getRcsDispatchOpts = (text: string, to: string, from?: string): RcsDispatchParams => {
-    const opts: RcsDispatchParams = {
-        text,
-        to,
-    }
-
-    if ('string' === typeof from && from.length) {
-        opts.from = from
-    }
-
-    return opts
-}
-
 export const sendRcs = async (p: {
     client: Client
     options: RcsDispatchParams
