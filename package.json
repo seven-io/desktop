@@ -1,6 +1,8 @@
 {
   "author": "seven communications GmbH & Co. KG",
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "@headlessui/tailwindcss": "^0.2.2",
     "@date-io/date-fns": "^3.2.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
