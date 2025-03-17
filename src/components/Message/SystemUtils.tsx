@@ -1,5 +1,5 @@
 import MenuItem from '@mui/material/MenuItem'
-//import {ipcRenderer} from 'electron'
+import {ipcRenderer} from 'electron'
 import os from 'os'
 import {useTranslation} from 'react-i18next'
 import {toMegaBytes} from '../../util/toMegaBytes'
@@ -89,7 +89,7 @@ export const SystemUtils = ({onClick}: MessageToolbarProps) => {
         },
         {
             name: 'userDataDir',
-            value: (window as any).electron.ipcRenderer.invoke('get-user-data-path'),
+            value: ipcRenderer.invoke('get-user-data-path'),
         },
     ]
 
