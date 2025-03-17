@@ -28,11 +28,8 @@ export function Rcs() {
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
     const to = useAppSelector(selectRcsRecipient)
-    const {t} = useTranslation([
-        'message',
-        'rcs',
-    ])
-    const $textarea = useRef()
+    const {t} = useTranslation(['message', 'rcs'])
+    const $textarea = useRef(null)
     const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
     const [params, setParams] = useState<RcsPartialProps>({})
 

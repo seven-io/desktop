@@ -28,7 +28,7 @@ export function Voice() {
     const [from, setFrom] = useState('')
     const to = useAppSelector(selectRecipients)
     const {t} = useTranslation(['message', 'voice'])
-    const $textarea = useRef()
+    const $textarea = useRef(null)
     const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
 
     useEffect(() => {
