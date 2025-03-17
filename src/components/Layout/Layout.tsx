@@ -18,6 +18,7 @@ import {selectBackdropActive, SET_BACKDROP} from '../../store/features/backdrop'
 import {selectRoute, SET_NAV} from '../../store/features/nav'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
 import localStore from '../../util/LocalStore'
+import {Rcs} from '../Rcs/Rcs'
 
 export const Layout = () => {
     const theme = useTheme()
@@ -78,7 +79,7 @@ export const Layout = () => {
                                 ? <Pricings/>
                                 : 'voice' === route
                                     ? <Voice/>
-                                    : <Lookup/>
+                                    : 'rcs' === route ? <Rcs/> : <Lookup/>
             }
         </Container>
 

@@ -42,16 +42,23 @@ export function BaseHistory<T>({
     }
 
     const getRealEntry = (): any[] => {
+        console.log('getRealEntry', {entry, path})
         if (!path) {
             return [entry].flat()
         }
 
         let current: any = entry
-        const objects = path.split('.') as (keyof T)[]
-
-        for (const o of objects) {
-            current = current[o]
+        const keys = path.split('.') as (keyof T)[]
+        console.log('keys', keys)
+        for (const key of keys) {
+            current = current[key]
         }
+
+        if (!Array.isArray(current)) {
+            return []
+        }
+
+        console.log('current', current)
 
         return current as any[]
     }

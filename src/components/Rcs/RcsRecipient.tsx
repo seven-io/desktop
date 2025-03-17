@@ -1,26 +1,22 @@
 import TextField, {type TextFieldProps} from '@mui/material/TextField'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import type {MessageType} from './Message'
 import Autocomplete from '@mui/material/Autocomplete'
 import Chip from '@mui/material/Chip'
 import {useAppDispatch, useAppSelector} from '../../store'
-import {selectRecipients, SET_TO} from '../../store/features/to'
+import {selectRcsRecipient, SET_TO_RCS} from '../../store/features/to'
 import {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
 
-export const To = ({
-                       msgType,
+export const RcsRecipient = ({
                        ...props
-                   }: Omit<TextFieldProps, 'onChange' | 'value'> & {
-    msgType: MessageType
-}) => {
+                   }: Omit<TextFieldProps, 'onChange' | 'value'>) => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const [storage] = useState(localStore.get('options'))
     const {to: defaultRecipients} = storage
-    const recipients = useAppSelector(selectRecipients)
-    const value = recipients.length ? recipients : [...new Set([...defaultRecipients, ...recipients])]
+    const recipient = useAppSelector(selectRcsRecipient)
+    const value = recipient.length ? recipient : defaultRecipients[0] ?? ''
     const [contacts] = useState(localStore.get('contacts'))
     const options = [
         ...new Set(
@@ -29,16 +25,15 @@ export const To = ({
         )
     ]
 
-    return <Autocomplete
+    return <Autocomplete<string, false, false, true>
         freeSolo
-/*        getOptionLabel={option => {
+        getOptionLabel={option => {
             console.log(option)
             return option
-        }}*/
-        multiple={msgType !== 'rcs'}
-        onChange={(_, values) => {
-            console.log('onChange', values)
-            dispatch(SET_TO(Array.isArray(values) ? values : [values!]))
+        }}
+        onChange={(_, value) => {
+            console.log('onChange', value)
+            dispatch(SET_TO_RCS(value ?? ''))
         }}
         options={options}
         renderOption={(props, option) => <li {...props} key={option}>{option}</li>}

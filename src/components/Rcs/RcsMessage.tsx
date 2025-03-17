@@ -5,53 +5,41 @@ import Typography from '@mui/material/Typography'
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
 import TextField from '@mui/material/TextField'
-import {Client, type SmsParams, type VoiceParams} from '@seven.io/client'
+import {Client, RcsDispatchParams} from '@seven.io/client'
 import {type ReactNode, type SyntheticEvent, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {initClient} from '../../util/initClient'
 import localStore, {localStoreDefaults} from '../../util/LocalStore'
 import {notify} from '../../util/notify'
-import {getOpts, type SendSmsProps} from '../../util/sendSms'
 import {From} from '../From'
-import {To} from './To'
-import {Toolbar, type ToolbarProps} from './Toolbar'
+import {RcsRecipient} from './RcsRecipient'
+import {Toolbar, type ToolbarProps} from '../Message/Toolbar'
 import {SET_BACKDROP} from '../../store/features/backdrop'
-import {selectRecipients, SET_TO} from '../../store/features/to'
+import {selectRcsRecipient, SET_TO} from '../../store/features/to'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
-
-export type CommonMessagePropKeys = 'from' | 'text' | 'to'
-export type CommonMessageProps = Pick<SmsParams, CommonMessagePropKeys>
-export type MessageDispatchProps<T> = T & CommonMessageProps
+import {getRcsDispatchOpts} from '../../util/sendRcs'
+import {RcsHistory} from './RcsHistory'
 
 export type DispatchProps<T> = {
     client: Client
-    options: SmsParams | VoiceParams
+    options: RcsDispatchParams
 }
 
 export type MessageProps<T> = Pick<ToolbarProps, 'emoji'> & {
     dispatchFn(p: DispatchProps<T>): Promise<string>
     FormAddons?: ReactNode
-    History: ReactNode
-    ns: string
-    type: MessageType
 }
 
-export type MessageType = 'sms' | 'voice' | 'rcs'
-
-export type MessageTranslations = {
-    h1: string
-}
-
-export function Message<T extends Record<string, any>>(p: MessageProps<T>) {
+export function RcsMessage<T extends Record<string, any>>(p: MessageProps<T>) {
     const theme = useTheme()
     const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
-    const to = useAppSelector(selectRecipients)
+    const to = useAppSelector(selectRcsRecipient)
     const {t} = useTranslation([
         'message',
-        p.ns,
+        'rcs',
     ])
     const $textarea = useRef()
     const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
@@ -75,12 +63,12 @@ export function Message<T extends Record<string, any>>(p: MessageProps<T>) {
 
         dispatch(SET_BACKDROP(true))
 
-        const props: SendSmsProps = {text, to, from}
+        const params: RcsDispatchParams = {text, to, from}
         const errors = []
 
-        if (!props.to.length) props.to = localStore.get('options.to')
+        if (!params.to.length) params.to = localStore.get('options.to')
 
-        if (props.from && !props.from.length) props.from = localStore.get('options.from')
+        //if (params.from && !params.from.length) params.from = localStore.get('options.from')
 
         if (errors.length) {
             errors.unshift('Error(s) while validation:')
@@ -94,7 +82,7 @@ export function Message<T extends Record<string, any>>(p: MessageProps<T>) {
 
         dispatch(ADD_SNACKBAR(await p.dispatchFn({
             client: initClient(),
-            options: {...getOpts(props.text, props.to, props.from)},
+            options: getRcsDispatchOpts(params.text, params.to, params.from),
         })))
 
         dispatch(SET_BACKDROP(false))
@@ -113,7 +101,7 @@ export function Message<T extends Record<string, any>>(p: MessageProps<T>) {
     }
 
     return <>
-        <h1>{t(`${p.ns}:h1`)}</h1>
+        <h1>{t('rcs:h1')}</h1>
 
         <Typography
             component='form' onSubmit={handleSubmit} sx={{
@@ -122,13 +110,11 @@ export function Message<T extends Record<string, any>>(p: MessageProps<T>) {
             },
         }}
         >
-            {expertMode
-                ? <Toolbar
-                    emoji={p.emoji}
-                    onAction={setText}
-                    textarea={$textarea.current!}
-                /> :
-                null}
+            {expertMode && <Toolbar
+                emoji={p.emoji}
+                onAction={setText}
+                textarea={$textarea.current!}
+            />}
 
             <TextField
                 fullWidth
@@ -143,7 +129,7 @@ export function Message<T extends Record<string, any>>(p: MessageProps<T>) {
                 variant='outlined'
             />
 
-            <To msgType={p.type}/>
+            <RcsRecipient />
 
             <From onChange={setFrom} value={from}/>
 
@@ -177,6 +163,6 @@ export function Message<T extends Record<string, any>>(p: MessageProps<T>) {
             </Grid>
         </Typography>
 
-        {p.History}
+        <RcsHistory/>
     </>
 }

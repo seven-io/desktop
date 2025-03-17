@@ -5,12 +5,14 @@ import {message} from './message'
 import {pricing} from './pricing'
 import {lookup} from './lookup'
 import {voice} from './voice'
+import {rcs} from './rcs'
 
 export default {
     contacts,
     history,
     lookup,
     pricing,
+    rcs,
     sms,
     voice,
     message,
@@ -35,6 +37,7 @@ export default {
         savedAutomatically: 'Automatisch gespeichert',
         senderIdentifier: 'Absenderkennung',
         signatureExplanation: 'Signatur eingefügt in ausgehende Nachrichten',
+        rcs: 'RCS',
         sms: 'SMS',
         socialsBtnGroup: 'seven in sozialen Medien',
         support: 'Support',

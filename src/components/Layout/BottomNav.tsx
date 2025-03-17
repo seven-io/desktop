@@ -3,9 +3,10 @@ import LocalAtmIcon from '@mui/icons-material/LocalAtm'
 import VoiceIcon from '@mui/icons-material/PermPhoneMsg'
 import PolicyIcon from '@mui/icons-material/Policy'
 import SettingsIcon from '@mui/icons-material/Settings'
+import ContactMailIcon from '@mui/icons-material/ContactMail'
 import SmsIcon from '@mui/icons-material/Sms'
 import BottomNavigation from '@mui/material/BottomNavigation'
-import BottomNavigationAction, {type BottomNavigationActionProps,} from '@mui/material/BottomNavigationAction'
+import BottomNavigationAction, {type BottomNavigationActionProps} from '@mui/material/BottomNavigationAction'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch, useAppSelector} from '../../store'
@@ -18,6 +19,7 @@ export const BottomNav = () => {
     const dispatch = useAppDispatch()
     const [actions, setActions] = useState<BottomNavigationActionProps[]>([
         {value: 'sms', icon: <SmsIcon/>},
+        {value: 'rcs', icon: <ContactMailIcon/>},
         {value: 'voice', icon: <VoiceIcon/>},
         {value: 'lookup', icon: <PolicyIcon/>},
         {value: 'options', icon: <SettingsIcon/>},
@@ -57,7 +59,7 @@ export const BottomNav = () => {
     }, [])
 
     return <BottomNavigation
-        onChange={(e: any, newNavId: Route) => dispatch(SET_NAV(newNavId))}
+        onChange={(_e: any, newNavId: Route) => dispatch(SET_NAV(newNavId))}
         showLabels
         value={navId}
         sx={{

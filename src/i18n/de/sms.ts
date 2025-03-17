@@ -1,8 +1,6 @@
 import {MessageTranslations} from '../../components/Message/Message'
 
-export const sms: MessageTranslations & {
-    [k: string]: any
-} = {
+export const sms: MessageTranslations & Record<string, any> = {
     delay: 'Verzögerung',
     flash: 'Flash',
     foreignId: 'Foreign ID',

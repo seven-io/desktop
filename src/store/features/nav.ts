@@ -1,7 +1,7 @@
 import {createSlice, type PayloadAction} from '@reduxjs/toolkit'
 import type {RootState} from '../index'
 
-export type Route = 'sms' | 'options' | 'contacts' | 'pricing' | 'lookup' | 'voice'
+export type Route = 'sms' | 'options' | 'contacts' | 'pricing' | 'lookup' | 'voice' | 'rcs'
 
 type NavState = {
     route: Route

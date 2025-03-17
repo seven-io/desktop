@@ -5,12 +5,14 @@ import {message} from './message'
 import {pricing} from './pricing'
 import {lookup} from './lookup'
 import {voice} from './voice'
+import {rcs} from './rcs'
 
 export default {
     contacts,
     history,
     lookup,
     pricing,
+    rcs,
     sms,
     voice,
     message,
@@ -30,6 +32,7 @@ export default {
         options: 'Options',
         pleaseSetApiKey: 'Please set your API key from seven.io.',
         pricing: 'Pricing',
+        rcs: 'RCS',
         required: 'required',
         savedAutomatically: 'Saved automatically',
         senderIdentifier: 'Sender Identifier',
