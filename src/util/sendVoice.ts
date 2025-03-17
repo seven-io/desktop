@@ -8,9 +8,8 @@ type DispatchProps = {
     options: VoiceParams
 }
 
-
 export const sendVoice = async (p: DispatchProps) => {
-    const response = await (new VoiceResource(p.client)).dispatch(p.options as VoiceParams)
+    const response = await (new VoiceResource(p.client)).dispatch(p.options)
 
     const d: VoiceDump = {
         notification: '100' === response.success

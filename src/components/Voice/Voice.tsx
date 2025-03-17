@@ -11,7 +11,6 @@ import {useAppDispatch, useAppSelector} from '../../store'
 import {initClient} from '../../util/initClient'
 import localStore, {localStoreDefaults} from '../../util/LocalStore'
 import {notify} from '../../util/notify'
-import {getOpts, type SendSmsProps} from '../../util/sendSms'
 import {Toolbar} from '../Message/Toolbar'
 import {SET_BACKDROP} from '../../store/features/backdrop'
 import {selectRecipients, SET_TO} from '../../store/features/to'
@@ -20,6 +19,7 @@ import {VoiceHistory} from './VoiceHistory'
 import {sendVoice} from '../../util/sendVoice'
 import {VoiceRecipients} from './VoiceRecipients'
 import {VoiceSender} from './VoiceSender'
+import {VoiceParams} from '@seven.io/client'
 
 export function Voice() {
     const theme = useTheme()
@@ -49,7 +49,7 @@ export function Voice() {
 
         dispatch(SET_BACKDROP(true))
 
-        const props: SendSmsProps = {text, to, from}
+        const props: VoiceParams = {text, to, from}
         const errors = []
 
         if (!props.to.length) props.to = localStore.get('options.to')
@@ -68,7 +68,11 @@ export function Voice() {
 
         dispatch(ADD_SNACKBAR(await sendVoice({
             client: initClient(),
-            options: getOpts(props.text, props.to, props.from),
+            options: {
+                from: props.from,
+                text: props.text,
+                to: props.to
+            },
         })))
 
         dispatch(SET_BACKDROP(false))

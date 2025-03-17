@@ -1,6 +1,6 @@
 import type {SmsParams} from '@seven.io/client'
 import {type SyntheticEvent, useEffect, useRef, useState} from 'react'
-import {getOpts, sendSms, type SendSmsProps} from '../../util/sendSms'
+import {sendSms, type SendSmsProps} from '../../util/sendSms'
 import {type CommonMessagePropKeys} from '../Message/Message'
 import {SmsHistory} from './SmsHistory'
 import {SmsOptions} from './SmsOptions'
@@ -74,7 +74,10 @@ export const Sms = () => {
 
         dispatch(ADD_SNACKBAR(await sendSms({
             client: initClient(),
-            options: getOpts(props.text, props.to, props.from),
+            options: {
+                ...props,
+                ...params,
+            },
         })))
 
         dispatch(SET_BACKDROP(false))

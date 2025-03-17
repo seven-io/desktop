@@ -19,22 +19,9 @@ export type SmsDump = {
     res: SmsResponse
 };
 
-export const getOpts = (text: string, to: string[], from?: string): CommonMessageProps => {
-    const opts: SmsParams = {
-        text,
-        to,
-    }
-
-    if ('string' === typeof from && from.length) {
-        opts.from = from
-    }
-
-    return opts
-}
-
 export const sendSms = async (p: DispatchProps): Promise<string> => {
     const lines = []
-    const res = await (new SmsResource(p.client)).dispatch(p.options as SmsParams)
+    const res = await (new SmsResource(p.client)).dispatch(p.options)
     const {balance, messages, sms_type, success, total_price} = res
 
     if (100 === Number.parseInt(success)) {

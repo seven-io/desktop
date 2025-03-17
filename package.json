@@ -14,7 +14,7 @@
     "@reduxjs/toolkit": "^2.6.0",
     "@sentry/electron": "^5.11.0",
     "@sentry/react": "^8.55.0",
-    "@seven.io/client": "^5.0.0",
+    "@seven.io/client": "^5.1.0",
     "@tailwindcss/postcss": "^4.0.14",
     "date-fns": "^3.6.0",
     "electron-squirrel-startup": "^1.0.1",
