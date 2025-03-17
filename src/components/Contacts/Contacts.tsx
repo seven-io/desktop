@@ -15,7 +15,6 @@ import {SET_BACKDROP} from '../../store/features/backdrop'
 import {SET_TO} from '../../store/features/to'
 import {SET_NAV} from '../../store/features/nav'
 import Box from '@mui/material/Box'
-import ButtonGroup from '@mui/material/ButtonGroup'
 import {Contact, ContactsResource} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
 import SmsIcon from '@mui/icons-material/Sms'
@@ -88,23 +87,21 @@ export const Contacts = () => {
                         <TableCell>{contact.properties.firstname}</TableCell>
                         <TableCell>{contact.properties.lastname}</TableCell>
                         <TableCell>
-                            <ButtonGroup fullWidth size='small' variant='outlined'>
-                                <Button
-                                    onClick={() => {
-                                        dispatch(SET_TO([contact.properties.mobile_number!]))
+                            <Button
+                                onClick={() => {
+                                    dispatch(SET_TO([contact.properties.mobile_number!]))
 
-                                        dispatch(SET_NAV('sms'))
-                                    }}
-                                ><SmsIcon/></Button>
+                                    dispatch(SET_NAV('sms'))
+                                }}
+                            ><SmsIcon/></Button>
 
-                                <Button
-                                    onClick={() => {
-                                        dispatch(SET_TO([contact.properties.mobile_number!]))
+                            <Button
+                                onClick={() => {
+                                    dispatch(SET_TO([contact.properties.mobile_number!]))
 
-                                        dispatch(SET_NAV('voice'))
-                                    }}
-                                ><VoiceIcon/></Button>
-                            </ButtonGroup>
+                                    dispatch(SET_NAV('voice'))
+                                }}
+                            ><VoiceIcon/></Button>
                         </TableCell>
                     </TableRow>)}
                 </TableBody>
