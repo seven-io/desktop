@@ -78,6 +78,12 @@ export const Contacts = () => {
                         <TableCell>{t('number')}</TableCell>
                         <TableCell>{t('firstName')}</TableCell>
                         <TableCell>{t('lastName')}</TableCell>
+                        <TableCell>{t('email')}</TableCell>
+                        <TableCell>{t('birthday')}</TableCell>
+                        <TableCell>{t('address')}</TableCell>
+                        <TableCell>{t('zip')}</TableCell>
+                        <TableCell>{t('city')}</TableCell>
+                        <TableCell>{t('notes')}</TableCell>
                         <TableCell>{t('actions')}</TableCell>
                     </TableRow>
                 </TableHead>
@@ -87,6 +93,12 @@ export const Contacts = () => {
                         <TableCell>{contact.properties.mobile_number}</TableCell>
                         <TableCell>{contact.properties.firstname}</TableCell>
                         <TableCell>{contact.properties.lastname}</TableCell>
+                        <TableCell>{contact.properties.email}</TableCell>
+                        <TableCell>{contact.properties.birthday}</TableCell>
+                        <TableCell>{contact.properties.address}</TableCell>
+                        <TableCell>{contact.properties.postal_code}</TableCell>
+                        <TableCell>{contact.properties.city}</TableCell>
+                        <TableCell>{contact.properties.notes}</TableCell>
                         <TableCell>
                             <Button
                                 onClick={() => {
