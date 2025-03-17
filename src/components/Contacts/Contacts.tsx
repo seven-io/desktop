@@ -5,26 +5,20 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-//import type {Contact} from '@seven.io/client'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
-import {cleanPhone} from '../util/cleanPhone'
-import {initClient} from '../util/initClient'
-import {notify} from '../util/notify'
-import {SET_BACKDROP} from '../store/features/backdrop'
-import {SET_TO} from '../store/features/to'
-import {SET_NAV} from '../store/features/nav'
+import {cleanPhone} from '../../util/cleanPhone'
+import {initClient} from '../../util/initClient'
+import {notify} from '../../util/notify'
+import {SET_BACKDROP} from '../../store/features/backdrop'
+import {SET_TO} from '../../store/features/to'
+import {SET_NAV} from '../../store/features/nav'
 import Box from '@mui/material/Box'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import {Contact, ContactsResource} from '@seven.io/client'
-import localStore from '../util/LocalStore'
+import localStore from '../../util/LocalStore'
 
-/*export type Contact = {
-    ID: string
-    Name: string
-    Number: string
-}*/
 const CONTACTS_ACTIONS = ['read', 'write', 'del'] as const;
 type ContactsActionTuple = typeof CONTACTS_ACTIONS;
 type ContactsAction = ContactsActionTuple[number];
@@ -35,11 +29,14 @@ export const Contacts = () => {
 
     const cleanContacts = (contacts: Contact[]) => contacts
         .filter(c => '' !== (c.properties.mobile_number ?? ''))
-        .map(c => ({
-            ID: c.id,
-            Name: c.properties.fullname,
-            Number: cleanPhone(c.properties.mobile_number!),
-        }))
+        .map(c => {
+            const {mobile_number, ...properties} = c.properties
+            return {
+                ...c,
+                ...properties,
+                mobile_number: cleanPhone(mobile_number!),
+            }
+        })
 
     const [contacts, setContacts] = useState(cleanContacts(localStore.get('contacts', [])))
 
@@ -59,7 +56,7 @@ export const Contacts = () => {
 
         const client = initClient()
         const resource = new ContactsResource(client)
-        const contacts = await resource.list()
+        const {data: contacts} = await resource.list()
 
         localStore.set('contacts', contacts)
 
@@ -87,14 +84,14 @@ export const Contacts = () => {
                 </TableHead>
                 <TableBody>
                     {contacts.map((contact, i) => <TableRow key={i}>
-                        <TableCell>{contact.ID}</TableCell>
-                        <TableCell>{contact.Number}</TableCell>
-                        <TableCell>{contact.Name}</TableCell>
+                        <TableCell>{contact.id}</TableCell>
+                        <TableCell>{contact.properties.mobile_number}</TableCell>
+                        <TableCell>{contact.properties.fullname}</TableCell>
                         <TableCell>
                             <ButtonGroup fullWidth size='small' variant='outlined'>
                                 <Button
                                     onClick={() => {
-                                        dispatch(SET_TO([contact.Number]))
+                                        dispatch(SET_TO([contact.properties.mobile_number!]))
 
                                         dispatch(SET_NAV('sms'))
                                     }}
@@ -102,7 +99,7 @@ export const Contacts = () => {
 
                                 <Button
                                     onClick={() => {
-                                        dispatch(SET_TO([contact.Number]))
+                                        dispatch(SET_TO([contact.properties.mobile_number!]))
 
                                         dispatch(SET_NAV('voice'))
                                     }}
