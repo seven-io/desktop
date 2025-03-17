@@ -11,7 +11,6 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import Toolbar from '@mui/material/Toolbar'
-//import {shell} from 'electron'
 import {type MouseEvent, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import Logo from '../../assets/img/white-534x105.png'
@@ -71,7 +70,7 @@ export const TopNav = () => {
             />
 
             <div>
-                {null === balance ? null : <Box
+                {null !== balance && <Box
                     component='span'
                     sx={{
                         color: '#fff',

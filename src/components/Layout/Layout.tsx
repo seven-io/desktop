@@ -50,7 +50,6 @@ export const Layout = () => {
             }
         }, [apiKey])*/
 
-
     return <>
         <TopNav/>
 
