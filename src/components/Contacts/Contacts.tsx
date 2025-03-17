@@ -18,10 +18,8 @@ import Box from '@mui/material/Box'
 import ButtonGroup from '@mui/material/ButtonGroup'
 import {Contact, ContactsResource} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
-
-const CONTACTS_ACTIONS = ['read', 'write', 'del'] as const;
-type ContactsActionTuple = typeof CONTACTS_ACTIONS;
-type ContactsAction = ContactsActionTuple[number];
+import SmsIcon from '@mui/icons-material/Sms'
+import VoiceIcon from '@mui/icons-material/PermPhoneMsg'
 
 export const Contacts = () => {
     const {t} = useTranslation('contacts')
@@ -78,7 +76,8 @@ export const Contacts = () => {
                     <TableRow>
                         <TableCell>{t('id')}</TableCell>
                         <TableCell>{t('number')}</TableCell>
-                        <TableCell>{t('nick')}</TableCell>
+                        <TableCell>{t('firstName')}</TableCell>
+                        <TableCell>{t('lastName')}</TableCell>
                         <TableCell>{t('actions')}</TableCell>
                     </TableRow>
                 </TableHead>
@@ -86,7 +85,8 @@ export const Contacts = () => {
                     {contacts.map((contact, i) => <TableRow key={i}>
                         <TableCell>{contact.id}</TableCell>
                         <TableCell>{contact.properties.mobile_number}</TableCell>
-                        <TableCell>{contact.properties.fullname}</TableCell>
+                        <TableCell>{contact.properties.firstname}</TableCell>
+                        <TableCell>{contact.properties.lastname}</TableCell>
                         <TableCell>
                             <ButtonGroup fullWidth size='small' variant='outlined'>
                                 <Button
@@ -95,7 +95,7 @@ export const Contacts = () => {
 
                                         dispatch(SET_NAV('sms'))
                                     }}
-                                >{t('sms')}</Button>
+                                ><SmsIcon/></Button>
 
                                 <Button
                                     onClick={() => {
@@ -103,7 +103,7 @@ export const Contacts = () => {
 
                                         dispatch(SET_NAV('voice'))
                                     }}
-                                >{t('voice')}</Button>
+                                ><VoiceIcon/></Button>
                             </ButtonGroup>
                         </TableCell>
                     </TableRow>)}
