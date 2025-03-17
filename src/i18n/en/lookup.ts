@@ -33,6 +33,7 @@ export const lookup = {
     original_carrier: 'Original Carrier',
     ported: 'Porting Status',
     rcs: 'RCS',
+    rcs_capabilities: 'RCS Capabilities',
     reachable: 'Reachable Status',
     response: 'Last Response',
     roaming: 'Roaming Status',
