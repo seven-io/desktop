@@ -1,7 +1,7 @@
 import type {Contact} from '@seven.io/client'
 import type {LookupResponse} from '../components/Lookup/types'
 import type {IOptions} from '../components/Options/types'
-import type {VoiceDump} from '../components/Voice/History'
+import type {VoiceDump} from '../components/Voice/VoiceHistory'
 import type {SmsDump} from './sendSms'
 import Store from 'electron-store'
 import {RcsDump} from './sendRcs'

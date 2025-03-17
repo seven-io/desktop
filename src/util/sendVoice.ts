@@ -1,6 +1,6 @@
 import {VoiceParams, VoiceResource} from '@seven.io/client'
 import type {CommonMessagePropKeys, DispatchProps, MessageDispatchProps,} from '../components/Message/Message'
-import type {VoiceDump} from '../components/Voice/History'
+import type {VoiceDump} from '../components/Voice/VoiceHistory'
 import {notify} from './notify'
 import localStore from './LocalStore'
 
