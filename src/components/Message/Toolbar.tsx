@@ -1,4 +1,3 @@
-import ButtonGroup from '@mui/material/ButtonGroup'
 import {useTranslation} from 'react-i18next'
 import {DateTimeUtils} from './DateTimeUtils'
 import {EmojiPicker} from './EmojiPicker'
@@ -20,12 +19,16 @@ export const Toolbar = ({emoji, onAction, textarea}: ToolbarProps) => {
         onAction(textarea!.value)
     }
 
-    return <ButtonGroup variant='text' aria-label={t('toolbar.label')}>
+    return <div
+        aria-label={t('toolbar.label')}
+        className='flex flex-col'
+        //variant='text'
+    >
         {emoji && <EmojiPicker
             onEmojiClick={(e, _d) => setRangeText(e.emoji)}
         />}
 
         <DateTimeUtils onClick={setRangeText}/>
         <SystemUtils onClick={setRangeText}/>
-    </ButtonGroup>
+    </div>
 }

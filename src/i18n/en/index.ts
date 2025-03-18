@@ -27,6 +27,7 @@ export default {
         history: 'Message History',
         lookup: 'Lookup',
         mailUs: 'Feel free to contact us <a href="mailto: support@seven.io">via email</a>.',
+        notification: 'Notification',
         ok: 'OK',
         recipients: 'Recipients',
         options: 'Options',

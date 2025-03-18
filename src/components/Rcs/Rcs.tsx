@@ -1,10 +1,3 @@
-import ClearIcon from '@mui/icons-material/Clear'
-import SendIcon from '@mui/icons-material/Send'
-import {useTheme} from '@mui/material'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
 import {RcsDispatchParams} from '@seven.io/client'
 import {type SyntheticEvent, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
@@ -21,9 +14,12 @@ import {ADD_SNACKBAR} from '../../store/features/snackbars'
 import {RcsPartialProps, sendRcs} from '../../util/sendRcs'
 import {RcsHistory} from './RcsHistory'
 import {RcsOptions} from './RcsOptions'
+import {Textarea} from '../catalyst/textarea'
+import {Description, Field, Label} from '../catalyst/fieldset'
+import {Button} from '../catalyst/button'
+import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
 
 export function Rcs() {
-    const theme = useTheme()
     const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
@@ -95,31 +91,29 @@ export function Rcs() {
     return <>
         <h1>{t('rcs:h1')}</h1>
 
-        <Typography
-            component='form' onSubmit={handleSubmit} sx={{
-            '& .MuiTextField-root': {
-                margin: theme.spacing(1),
-            },
-        }}
-        >
+        <form onSubmit={handleSubmit}>
             {expertMode && <Toolbar
                 emoji
                 onAction={setText}
                 textarea={$textarea.current!}
             />}
 
-            <TextField
-                fullWidth
-                helperText={t('helperText')}
-                inputRef={$textarea}
-                label={t('label')}
-                multiline
-                onChange={ev => setText(ev.target.value)}
-                required
-                rows='3'
-                value={text}
-                variant='outlined'
-            />
+            <Field>
+                <Label>{t('label')}</Label>
+                <Description>{t('helperText')}</Description>
+                <Textarea
+                    //fullWidth
+                    //helperText={t('helperText')}
+                    ref={$textarea}
+                    //label={t('label')}
+                    //multiline
+                    onChange={ev => setText(ev.target.value)}
+                    required
+                    rows={3}
+                    value={text}
+                    //variant='outlined'
+                />
+            </Field>
 
             <RcsRecipient />
 
@@ -127,33 +121,34 @@ export function Rcs() {
 
             <RcsOptions params={params} setParams={setParams}/>
 
-            <Grid container spacing={3}>
-                <Grid item xs={4}>
-                    <Button
-                        endIcon={<ClearIcon/>}
-                        fullWidth
-                        onClick={handleClear}
-                        sx={{color: 'red'}}
-                        variant='outlined'
-                    >
-                        {t('clear')}
-                    </Button>
-                </Grid>
+            <div className='grid grid-cols-2'>
+                <Button
+                    color='red'
+                    //endIcon={<ClearIcon/>}
+                    //fullWidth
+                    onClick={handleClear}
+                    //outline
+                   // sx={{color: 'red'}}
+                    //variant='outlined'
+                >
+                    {t('clear')}
+                    <XMarkIcon/>
+                </Button>
 
-                <Grid item xs={8}>
-                    <Button
-                        color='primary'
-                        disabled={!text.length}
-                        endIcon={<SendIcon/>}
-                        fullWidth
-                        type='submit'
-                        variant='outlined'
-                    >
-                        {t('send')}
-                    </Button>
-                </Grid>
-            </Grid>
-        </Typography>
+                <Button
+                    //color='primary'
+                    disabled={!text.length}
+                    //endIcon={<SendIcon/>}
+                    //fullWidth
+                    //outline
+                    type='submit'
+                    //variant='outlined'
+                >
+                    {t('send')}
+                    <PaperAirplaneIcon />
+                </Button>
+            </div>
+        </form>
 
         <RcsHistory/>
     </>

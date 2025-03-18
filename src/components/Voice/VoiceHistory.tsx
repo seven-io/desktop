@@ -1,5 +1,4 @@
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
+import {TableCell, TableHeader, TableRow} from '../catalyst/table'
 import type {VoiceParams, VoiceResponse} from '@seven.io/client'
 import {Fragment} from 'react'
 import {useTranslation} from 'react-i18next'
@@ -20,63 +19,33 @@ export const VoiceHistory = () => {
     const rowHandler = (row: VoiceDump, i: number) => {
         return <Fragment key={i}>
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('to')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.options.to}
-                </TableCell>
+                <TableHeader scope='row'>{t('to')}</TableHeader>
+                <TableCell align='right'>{row.options.to}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('text')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.options.text}
-                </TableCell>
+                <TableHeader scope='row'>{t('text')}</TableHeader>
+                <TableCell align='right'>{row.options.text}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('from')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.options.from}
-                </TableCell>
+                <TableHeader scope='row'>{t('from')}</TableHeader>
+                <TableCell align='right'>{row.options.from}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('voice:code')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.response.success}
-                </TableCell>
+                <TableHeader scope='row'>{t('voice:code')}</TableHeader>
+                <TableCell align='right'>{row.response.success}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('voice:cost')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.response.total_price}
-                </TableCell>
+                <TableHeader scope='row'>{t('voice:cost')}</TableHeader>
+                <TableCell align='right'>{row.response.total_price}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('id')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.response.messages[0].id}
-                </TableCell>
+                <TableHeader scope='row'>{t('id')}</TableHeader>
+                <TableCell align='right'>{row.response.messages[0].id}</TableCell>
             </TableRow>
         </Fragment>
     }

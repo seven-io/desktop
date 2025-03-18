@@ -1,12 +1,3 @@
-import Box from '@mui/material/Box'
-import Autocomplete from '@mui/material/Autocomplete'
-import Button from '@mui/material/Button'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableRow from '@mui/material/TableRow'
-import TextField from '@mui/material/TextField'
 import {CountryPricing, PricingResource, PricingResponse} from '@seven.io/client'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
@@ -16,13 +7,16 @@ import {CountryFlag} from '../CountryFlag'
 import {Pricing} from './Pricing'
 import {SET_BACKDROP} from '../../store/features/backdrop'
 import localStore from '../../util/LocalStore'
+import {Button} from '../catalyst/button'
+import {Table, TableBody, TableCell, TableHeader, TableRow} from '../catalyst/table'
+import {Field, Label} from '../catalyst/fieldset'
+import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing')
     const [country, setCountry] = useState<CountryPricing | null>(null)
     const dispatch = useDispatch()
-    const [pricing, setPricing] = useState(
-        localStore.get<'pricing', PricingResponse>('pricing'))
+    const [pricing, setPricing] = useState(localStore.get<'pricing', PricingResponse>('pricing'))
 
     useEffect(() => {
         if (!pricing) {
@@ -47,36 +41,47 @@ export const Pricings = () => {
     return <>
         <div style={{display: 'flex', justifyContent: 'space-between'}}>
             <h1 style={{display: 'inline-flex'}}>{t('pricing')}</h1>
-
-            <Button onClick={() => getAndStore()}>
-                {t('reload')}
-            </Button>
+            <Button onClick={() => getAndStore()}>{t('reload')}</Button>
         </div>
 
-        <TableContainer style={{marginBottom: '2em'}}>
-            <Table aria-label={t('ariaLabels.countryTable')} size='small'>
-                <TableBody>
-                    {pricing &&
-                        ([
-                            'countCountries',
-                            'countNetworks',
-                        ] as (keyof PricingResponse)[])
-                            .map((o, i) => <TableRow key={i}>
-                                <TableCell component='th' scope='row'>
-                                    {t(o)}
-                                </TableCell>
+        <Table className='mb-4' aria-label={t('ariaLabels.countryTable')} >
+            <TableBody>
+                {pricing &&
+                    ([
+                        'countCountries',
+                        'countNetworks',
+                    ] as (keyof PricingResponse)[])
+                        .map((o, i) => <TableRow key={i}>
+                            <TableHeader scope='row'>{t(o)}</TableHeader>
+                            <TableCell align='right'>{pricing[o].toString()}</TableCell>
+                        </TableRow>)}
+            </TableBody>
+        </Table>
 
-                                <TableCell align='right'>
-                                    {pricing[o].toString()}
-                                </TableCell>
-                            </TableRow>)}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        {pricing && <Field>
+            <Label>{t('choose')}</Label>
 
-        {pricing && <Autocomplete<CountryPricing>
-            getOptionLabel={o =>
-                `${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
+            <Combobox<CountryPricing>
+                onChange={(value) => {
+                    setCountry(value)
+                }}
+            >
+                <ComboboxInput
+                    //onChange={(event) => setQuery(event.target.value)}
+                />
+                <ComboboxOptions>
+                    {pricing.countries.map((option, idx) => (
+                        <ComboboxOption key={idx} value={option}>
+                            <CountryFlag pricing={option}/>&nbsp;
+                            {option.countryCode} {option.countryName} {option.countryPrefix}
+                        </ComboboxOption>
+                    ))}
+                </ComboboxOptions>
+            </Combobox>
+        </Field>}
+
+  {/*      {pricing && <Autocomplete<CountryPricing>
+            getOptionLabel={o => `${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
             onChange={(_ev, cP: CountryPricing | null) => setCountry(cP)}
             options={pricing.countries}
             renderOption={(p, o) => <Box component='li' {...p} key={o.countryCode}>
@@ -88,7 +93,7 @@ export const Pricings = () => {
                 label={t('choose')}
                 variant='outlined'
             />}
-        />}
+        />}*/}
 
         {country && <Pricing pricing={country}/>}
     </>

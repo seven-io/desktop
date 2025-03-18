@@ -1,5 +1,4 @@
-import Button, {type ButtonProps} from '@mui/material/Button'
-//import {shell} from 'electron'
+import {Button, type ButtonProps} from '../catalyst/button'
 
 type ExternalButtonProps = ButtonProps & {
     url: string
@@ -12,10 +11,8 @@ export const ExternalButton = ({
                                    ...props
                                }: ExternalButtonProps) => {
     return <Button
+        className='text-white'
         onClick={() => window.require('electron').shell.openExternal(url)}
-        sx={{
-            color: '#fff',
-        }}
         {...props}
     >
         {children}

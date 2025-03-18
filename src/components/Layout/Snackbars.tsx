@@ -1,9 +1,7 @@
-import CloseIcon from '@mui/icons-material/Close'
-import IconButton from '@mui/material/IconButton'
-import Snackbar from '@mui/material/Snackbar'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {REMOVE_SNACKBAR, selectSnackbars} from '../../store/features/snackbars'
+import Snackbar from '../Snackbar'
 
 export const Snackbars = () => {
     const {t} = useTranslation()
@@ -13,19 +11,20 @@ export const Snackbars = () => {
 
     return snackbars.map((msg: string, i: number) => {
         return <Snackbar
-            action={<IconButton
+  /*          action={<Button
                 aria-label={t('close')}
-                color='inherit'
+                //color='inherit'
                 onClick={() => handleClose(i)}
-                size='small'
+                //size='small'
             >
-                <CloseIcon fontSize='small'/>
-            </IconButton>}
+                <XMarkIcon fontSize='small'/>
+            </Button>}
             anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-            autoHideDuration={6000}
+            autoHideDuration={6000}*/
             key={i}
-            onClose={() => handleClose(i)}
-            open={true}
+            index={i}
+            //onClose={() => handleClose(i)}
+            //open
             message={msg}
         />
     })

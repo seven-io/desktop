@@ -1,12 +1,8 @@
-import Table from '@mui/material//Table'
-import TableBody from '@mui/material//TableBody'
-import TableCell from '@mui/material//TableCell'
-import TableRow from '@mui/material//TableRow'
-import TableContainer from '@mui/material/TableContainer'
 import type {CountryPricing} from '@seven.io/client'
 import {useTranslation} from 'react-i18next'
 import type {KeyValue} from '../../types'
 import {CountryNetworks} from './CountryNetworks'
+import {Table, TableBody, TableCell, TableHeader, TableRow} from '../catalyst/table'
 
 export type PricingProps = {
     pricing: CountryPricing
@@ -24,23 +20,16 @@ export const Pricing = ({pricing}: PricingProps) => {
     return <>
         <h2>{t('countryInformation')}</h2>
 
-        <TableContainer sx={{marginBottom: '1em'}}>
-            <Table size='small' aria-label={t('ariaLabels.network')}>
-                <TableBody>
-                    {
-                        populationFields.map((o, i) => <TableRow key={i}>
-                            <TableCell component='th' scope='row'>
-                                {t(o.key)}
-                            </TableCell>
-
-                            <TableCell align='right'>
-                                {o.value}
-                            </TableCell>
-                        </TableRow>)
-                    }
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Table className='mb-4' aria-label={t('ariaLabels.network')}>
+            <TableBody>
+                {
+                    populationFields.map((o, i) => <TableRow key={i}>
+                        <TableHeader scope='row'>{t(o.key)}</TableHeader>
+                        <TableCell align='right'>{o.value}</TableCell>
+                    </TableRow>)
+                }
+            </TableBody>
+        </Table>
 
         <h3>{t('networks')}</h3>
 

@@ -1,5 +1,5 @@
-import Chip from '@mui/material/Chip'
 import {useTranslation} from 'react-i18next'
+import {Badge} from './catalyst/badge'
 
 export type BoolChipProps = {
     value: boolean
@@ -8,8 +8,8 @@ export type BoolChipProps = {
 export const BoolChip = ({value}: BoolChipProps) => {
     const {t} = useTranslation()
 
-    return <Chip
-        label={t(value.toString())}
+    return <Badge
+        //label={t(value.toString())}
         style={{backgroundColor: value ? 'green' : 'red', color: '#fff'}}
-    />
+    >{t(value.toString())}</Badge>
 }

@@ -1,5 +1,4 @@
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
-import ArrowRightIcon from '@mui/icons-material/ArrowRight'
+import {ArrowLeftIcon, ArrowRightIcon} from '@heroicons/react/16/solid'
 import type {NavigationBaseProps, Operator} from '../../types'
 import {NavigationBaseButton} from './NavigationBaseButton'
 
@@ -27,7 +26,7 @@ export const Navigation = ({index, list, onNavigation}: NavigationProps) => {
 
         return <NavigationBaseButton
             Icon={isPlus ? ArrowRightIcon : ArrowLeftIcon}
-            IconButtonProps={{
+            ButtonProps={{
                 onClick: () => handleNavigation(operator),
                 style: {[isPlus ? 'right' : 'left']: '0px'},
             }}

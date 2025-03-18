@@ -1,5 +1,3 @@
-import {useTheme} from '@mui/material'
-import Typography from '@mui/material/Typography'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {From} from '../From'
@@ -10,7 +8,6 @@ import ExpertMode from './ExpertMode'
 import localStore from '../../util/LocalStore'
 
 export const Options = () => {
-    const theme = useTheme()
     const {t} = useTranslation()
     const [state, setState] = useState(localStore.get('options'))
     const {apiKey, from, signature} = state
@@ -24,14 +21,7 @@ export const Options = () => {
     return <>
         <h1>{t('options')}</h1>
 
-        <Typography
-            component='div'
-            sx={{
-                '& .MuiTextField-root, .MuiFormControl-root': {
-                    marginBottom: theme.spacing(3),
-                },
-            }}
-        >
+        <div>
             <ApiKey
                 autoFocus={!apiKey.length}
                 onChange={value => handleChange({
@@ -54,7 +44,7 @@ export const Options = () => {
             <Signature onChange={handleChange} value={signature}/>
 
             <ExpertMode/>
-        </Typography>
+        </div>
     </>
 
 }

@@ -1,10 +1,9 @@
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
 import type {HLR} from '@seven.io/client'
 import {useTranslation} from 'react-i18next'
 import {toString} from '../util/toString'
 import {BoolChip} from './BoolChip'
 import {CarrierTable} from './Lookup/CarrierTable'
+import {TableCell, TableHeader, TableRow} from './catalyst/table'
 
 export type TableRowSpreader = {
     nsKey: string
@@ -24,9 +23,9 @@ export const TableRowSpreader = ({nsKey, pairs, transEditor}: TableRowSpreader) 
         {
             pairs.map(([k, v], i) =>
                 <TableRow key={i}>
-                    <TableCell component='th' scope='row'>
+                    <TableHeader  scope='row'>
                         {t(transEditor ? transEditor(k, v) : k)}
-                    </TableCell>
+                    </TableHeader>
 
                     <TableCell align='right'>
                         {'boolean' === typeof v

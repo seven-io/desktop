@@ -1,13 +1,9 @@
-import Chip from '@mui/material/Chip'
-import Divider from '@mui/material/Divider'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableCell from '@mui/material/TableCell'
-import TableContainer from '@mui/material/TableContainer'
-import TableRow from '@mui/material/TableRow'
 import type {CountryNetwork} from '@seven.io/client'
 import {useTranslation} from 'react-i18next'
 import {getNumberFormatter} from '../../util/numberFormatter'
+import {Table, TableBody, TableCell, TableHeader, TableRow} from '../catalyst/table'
+import {Divider} from '../catalyst/divider'
+import {Badge} from '../catalyst/badge'
 
 type NetworkProps = {
     index: number
@@ -18,64 +14,35 @@ type NetworkProps = {
 export const Network = ({index, network, networks}: NetworkProps) => {
     const {t} = useTranslation('pricing')
 
-    return <TableContainer key={index} style={{marginBottom: '1em'}}>
-        <Table size='small' aria-label={t('ariaLabels.network')}>
+    return <>
+        <Table className='mb-4'  key={index}  aria-label={t('ariaLabels.network')}>
             <TableBody>
                 <TableRow>
-                    <TableCell component='th' scope='row'>
-                        {t('mcc')}
-                    </TableCell>
-
-                    <TableCell align='right'>
-                        {network.mcc}
-                    </TableCell>
+                    <TableHeader  scope='row'>{t('mcc')}</TableHeader>
+                    <TableCell align='right'>{network.mcc}</TableCell>
                 </TableRow>
-
                 <TableRow>
-                    <TableCell component='th' scope='row'>
-                        {t('mncs')}
-                    </TableCell>
-
-                    <TableCell align='right'>
-                        {(network.mncs || []).join(',')}
-                    </TableCell>
+                    <TableHeader scope='row'>{t('mncs')}</TableHeader>
+                    <TableCell align='right'>{(network.mncs || []).join(',')}</TableCell>
                 </TableRow>
-
                 <TableRow>
-                    <TableCell component='th' scope='row'>
-                        {t('networkName')}
-                    </TableCell>
-
-                    <TableCell align='right'>
-                        {network.networkName}
-                    </TableCell>
+                    <TableHeader  scope='row'>{t('networkName')}</TableHeader>
+                    <TableCell align='right'>{network.networkName}</TableCell>
                 </TableRow>
-
                 <TableRow>
-                    <TableCell component='th' scope='row'>
-                        {t('price')}
-                    </TableCell>
-
-                    <TableCell align='right'>
-                        {getNumberFormatter().format(network.price)}
-                    </TableCell>
+                    <TableHeader  scope='row'>{t('price')}</TableHeader>
+                    <TableCell align='right'>{getNumberFormatter().format(network.price)}</TableCell>
                 </TableRow>
-
                 <TableRow>
-                    <TableCell component='th' scope='row'>
-                        {t('features')}
-                    </TableCell>
-
-                    <TableCell align='right'>
-                        {network.features.map((f, i) => <Chip key={i} label={t(f)}/>)}
-                    </TableCell>
+                    <TableHeader  scope='row'>{t('features')}</TableHeader>
+                    <TableCell align='right'>{network.features.map((f, i) => <Badge key={i}>{t(f)}</Badge>)}</TableCell>
                 </TableRow>
 
                 {
                     network.comment ? <TableRow>
-                        <TableCell component='th' scope='row'>
+                        <TableHeader  scope='row'>
                             {t('comment')}
-                        </TableCell>
+                        </TableHeader>
 
                         <TableCell align='right'>
                             {network.comment}
@@ -86,5 +53,5 @@ export const Network = ({index, network, networks}: NetworkProps) => {
         </Table>
 
         {index === networks.length - 1 ? null : <Divider/>}
-    </TableContainer>
+    </>
 }

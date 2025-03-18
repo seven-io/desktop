@@ -1,14 +1,13 @@
-import TextField, {type TextFieldProps} from '@mui/material/TextField'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import Autocomplete from '@mui/material/Autocomplete'
-import Chip from '@mui/material/Chip'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {selectRecipients, SET_TO} from '../../store/features/to'
-import {Contact} from '@seven.io/client'
+import type {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
+import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
+import {Field, Label} from '../catalyst/fieldset'
 
-export const SmsRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'>) => {
+export const SmsRecipients = () => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const [storage] = useState(localStore.get('options'))
@@ -23,7 +22,30 @@ export const SmsRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'>)
         )
     ]
 
-    return <Autocomplete
+    return <Field>
+        <Label>{t('recipients')}</Label>
+
+        <Combobox multiple
+            value={value}
+            onChange={(values) => {
+                console.log('onChange', values)
+                dispatch(SET_TO(values ? values : []))
+            }}
+        >
+            <ComboboxInput
+                //onChange={(event) => setQuery(event.target.value)}
+            />
+            <ComboboxOptions>
+                {options.map((option) => (
+                    <ComboboxOption key={option} value={option}>
+                        {option}
+                    </ComboboxOption>
+                ))}
+            </ComboboxOptions>
+        </Combobox>
+    </Field>
+
+/*    return <Autocomplete
         freeSolo
         getOptionLabel={option => {
             console.log(option)
@@ -36,16 +58,18 @@ export const SmsRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'>)
         }}
         options={options}
         renderOption={(props, option) => <li {...props} key={option}>{option}</li>}
-        renderInput={params => <TextField
-            {...params}
-            {...props}
-            label={t('recipients')}
-            placeholder='+491799999999'
-            variant='standard'
-        />}
+        renderInput={params => <Field>
+            <Label>{t('recipients')}</Label>
+            <Input
+                {...params}
+               // label={t('recipients')}
+                placeholder='+491799999999'
+                //variant='standard'
+            />
+        </Field>}
         renderTags={(values, getTagProps) => {
-            return values.map((o, index) => <Chip {...getTagProps({index})} key={o} label={o}/>)
+            return values.map((o, index) => <Badge {...getTagProps({index})} key={o}>{o}</Badge>)
         }}
         value={value}
-    />
+    />*/
 }

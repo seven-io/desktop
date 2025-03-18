@@ -1,10 +1,4 @@
-import ClearIcon from '@mui/icons-material/Clear'
-import SendIcon from '@mui/icons-material/Send'
-import {useTheme} from '@mui/material'
-import Typography from '@mui/material/Typography'
-import Button from '@mui/material/Button'
-import Grid from '@mui/material/Grid'
-import TextField from '@mui/material/TextField'
+import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
 import {type SyntheticEvent, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch, useAppSelector} from '../../store'
@@ -20,9 +14,9 @@ import {sendVoice} from '../../util/sendVoice'
 import {VoiceRecipients} from './VoiceRecipients'
 import {VoiceSender} from './VoiceSender'
 import {VoiceParams} from '@seven.io/client'
+import {Textarea} from '../catalyst/textarea'
 
 export function Voice() {
-    const theme = useTheme()
     const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
@@ -93,63 +87,57 @@ export function Voice() {
     return <>
         <h1>{t('voice:h1')}</h1>
 
-        <Typography
-            component='form' onSubmit={handleSubmit} sx={{
-            '& .MuiTextField-root': {
-                margin: theme.spacing(1),
-            },
-        }}
-        >
+        <form onSubmit={handleSubmit}>
             {expertMode && <Toolbar
                 emoji={false}
                 onAction={setText}
                 textarea={$textarea.current!}
             />}
 
-            <TextField
-                fullWidth
-                helperText={t('helperText')}
-                inputRef={$textarea}
-                label={t('label')}
-                multiline
-                onChange={ev => setText(ev.target.value)}
-                required
-                rows='3'
-                value={text}
-                variant='outlined'
-            />
+            <Field>
+                <Label>{t('label')}</Label>
+                <Description>{t('helperText')}</Description>
+                <Textarea
+                    //fullWidth
+                    //helperText={t('helperText')}
+                    re={$textarea}
+                    //label={t('label')}
+                    //multiline
+                    onChange={ev => setText(ev.target.value)}
+                    required
+                    rows={3}
+                    value={text}
+                    //variant='outlined'
+                />
+            </Field>
 
             <VoiceRecipients />
 
             <VoiceSender onChange={setFrom} value={from}/>
 
-            <Grid container spacing={3}>
-                <Grid item xs={4}>
-                    <Button
-                        endIcon={<ClearIcon/>}
-                        fullWidth
-                        onClick={handleClear}
-                        sx={{color: 'red'}}
-                        variant='outlined'
-                    >
-                        {t('clear')}
-                    </Button>
-                </Grid>
+            <div className='grid grid-cols-2'>
+                <Button
+                    endIcon={<XMarkIcon/>}
+                    fullWidth
+                    onClick={handleClear}
+                    sx={{color: 'red'}}
+                    variant='outlined'
+                >
+                    {t('clear')}
+                </Button>
 
-                <Grid item xs={8}>
-                    <Button
-                        color='primary'
-                        disabled={!text.length}
-                        endIcon={<SendIcon/>}
-                        fullWidth
-                        type='submit'
-                        variant='outlined'
-                    >
-                        {t('send')}
-                    </Button>
-                </Grid>
-            </Grid>
-        </Typography>
+                <Button
+                    color='primary'
+                    disabled={!text.length}
+                    endIcon={<PaperAirplaneIcon/>}
+                    fullWidth
+                    type='submit'
+                    variant='outlined'
+                >
+                    {t('send')}
+                </Button>
+            </div>
+        </form>
 
         <VoiceHistory/>
     </>

@@ -1,16 +1,13 @@
-import TextField, {type TextFieldProps} from '@mui/material/TextField'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import Autocomplete from '@mui/material/Autocomplete'
-import Chip from '@mui/material/Chip'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {selectRcsRecipient, SET_TO_RCS} from '../../store/features/to'
 import {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
+import {Field, Label} from '../catalyst/fieldset'
+import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
-export const RcsRecipient = ({
-                       ...props
-                   }: Omit<TextFieldProps, 'onChange' | 'value'>) => {
+export const RcsRecipient = () => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const [storage] = useState(localStore.get('options'))
@@ -25,7 +22,30 @@ export const RcsRecipient = ({
         )
     ]
 
-    return <Autocomplete<string, false, false, true>
+    return <Field>
+        <Label>{t('recipients')}</Label>
+
+        <Combobox
+            value={value}
+            onChange={(value) => {
+                console.log('onChange', value)
+                dispatch(SET_TO_RCS(value ?? ''))
+            }}
+        >
+            <ComboboxInput placeholder='+491799999999'
+                //onChange={(event) => setQuery(event.target.value)}
+            />
+            <ComboboxOptions>
+                {options.map((option) => (
+                    <ComboboxOption key={option} value={option}>
+                        {option}
+                    </ComboboxOption>
+                ))}
+            </ComboboxOptions>
+        </Combobox>
+    </Field>
+
+/*    return <Autocomplete<string, false, false, true>
         freeSolo
         getOptionLabel={option => {
             console.log(option)
@@ -48,5 +68,5 @@ export const RcsRecipient = ({
             return values.map((o, index) => <Chip {...getTagProps({index})} key={o} label={o}/>)
         }}
         value={value}
-    />
+    />*/
 }

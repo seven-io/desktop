@@ -1,13 +1,12 @@
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import Tooltip from '@mui/material/Tooltip'
+import {TableCell, TableHeader, TableRow} from '../catalyst/table'
 import type {RcsMessage} from '@seven.io/client'
 import {Fragment} from 'react'
 import {useTranslation} from 'react-i18next'
 import {getNumberFormatter} from '../../util/numberFormatter'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 import {BoolChip} from '../BoolChip'
-import {RcsDump} from '../../util/sendRcs'
+import type {RcsDump} from '../../util/sendRcs'
+import Tooltip from '../Tooltip'
 
 export const RcsHistory = () => {
     const {t} = useTranslation('history')
@@ -15,81 +14,46 @@ export const RcsHistory = () => {
     const rowHandler = (row: RcsMessage, i: number) => {
         return <Fragment key={i}>
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('to')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.recipient}
-                </TableCell>
+                <TableHeader scope='row'>{t('to')}</TableHeader>
+                <TableCell align='right'>{row.recipient}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('text')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.text}
-                </TableCell>
+                <TableHeader scope='row'>{t('text')}</TableHeader>
+                <TableCell align='right'>{row.text}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('success')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    <BoolChip value={row.success}/>
-                </TableCell>
+                <TableHeader scope='row'>{t('success')}</TableHeader>
+                <TableCell align='right'><BoolChip value={row.success}/></TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('from')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.sender}
-                </TableCell>
+                <TableHeader scope='row'>{t('from')}</TableHeader>
+                <TableCell align='right'>{row.sender}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('encoding')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.encoding}
-                </TableCell>
+                <TableHeader scope='row'>{t('encoding')}</TableHeader>
+                <TableCell align='right'>{row.encoding}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('parts')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.parts}
-                </TableCell>
+                <TableHeader scope='row'>{t('parts')}</TableHeader>
+                <TableCell align='right'>{row.parts}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('price')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {getNumberFormatter().format(row.price)}
-                </TableCell>
+                <TableHeader scope='row'>{t('price')}</TableHeader>
+                <TableCell align='right'>{getNumberFormatter().format(row.price)}</TableCell>
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
+                <TableHeader scope='row'>
                     <Tooltip title={t('tooltips.message') as string}>
                         <span>{t('messages')}</span>
                     </Tooltip>
-                </TableCell>
+                </TableHeader>
 
                 <TableCell align='right'>
                     {
@@ -101,13 +65,8 @@ export const RcsHistory = () => {
             </TableRow>
 
             <TableRow>
-                <TableCell component='th' scope='row'>
-                    {t('id')}
-                </TableCell>
-
-                <TableCell align='right'>
-                    {row.id}
-                </TableCell>
+                <TableHeader scope='row'>{t('id')}</TableHeader>
+                <TableCell align='right'>{row.id}</TableCell>
             </TableRow>
         </Fragment>
     }

@@ -1,9 +1,8 @@
-import MenuItem from '@mui/material/MenuItem'
 import {ipcRenderer} from 'electron'
 import os from 'os'
 import {useTranslation} from 'react-i18next'
 import {toMegaBytes} from '../../util/toMegaBytes'
-import {PopupMenu} from '../PopupMenu'
+import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../catalyst/dropdown'
 
 type MessageToolbarProps = {
     onClick: (label: string) => void
@@ -93,13 +92,18 @@ export const SystemUtils = ({onClick}: MessageToolbarProps) => {
         },
     ]
 
-    const children = SYSTEM_PAIRS.map((p, i) =>
-        <MenuItem key={i} onClick={async () => onClick(await p.value as string)}>
-            {t(p.name)}
-        </MenuItem>)
+    return <Dropdown
+        //buttonText={t('label')}
+        //children={children}
+        //identifier='system'
+    >
+        <DropdownButton>{t('label')}</DropdownButton>
 
-    return <PopupMenu
-        buttonText={t('label')} children={children}
-        identifier='system'
-    />
+        <DropdownMenu>
+            {SYSTEM_PAIRS.map((p, i) =>
+                <DropdownItem key={i} onClick={async () => onClick(await p.value as string)}>
+                    {t(p.name)}
+                </DropdownItem>)}
+        </DropdownMenu>
+    </Dropdown>
 }

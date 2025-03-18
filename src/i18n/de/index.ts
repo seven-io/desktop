@@ -28,6 +28,7 @@ export default {
         history: 'Nachrichtenverlauf',
         lookup: 'Lookup',
         mailUs: 'Wir sind gerne <a href="mailto: support@seven.io">via E-Mail</a> erreichbar.',
+        notification: 'Nachricht',
         ok: 'OK',
         recipients: 'Empfänger',
         options: 'Optionen',

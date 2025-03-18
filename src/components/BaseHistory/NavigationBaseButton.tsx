@@ -1,28 +1,30 @@
-import type {SvgIconProps} from '@mui/material'
-import IconButton, {type IconButtonProps} from '@mui/material/IconButton'
-import type {JSXElementConstructor} from 'react'
+import {JSXElementConstructor, SVGProps} from 'react'
 import type {NavigationBaseProps, Operator} from '../../types'
+import {Button, ButtonProps} from '../catalyst/button'
 
-export type NavigationBaseButtonProps = NavigationBaseProps & {
-    Icon: JSXElementConstructor<SvgIconProps>
-    IconButtonProps: IconButtonProps
+type NavigationBaseButtonProps = NavigationBaseProps & {
+    Icon: JSXElementConstructor<SVGProps<SVGSVGElement>>
+    ButtonProps: Pick<ButtonProps, 'onClick' | 'style'>
     operator: Operator
 }
 
 export const NavigationBaseButton = ({
                                          Icon,
-                                         IconButtonProps,
+                                         ButtonProps,
                                          index,
                                          list,
                                          operator,
                                      }: NavigationBaseButtonProps) => {
-    IconButtonProps.style!.position = 'absolute'
+    ButtonProps.style!.position = 'absolute'
 
-    return <IconButton
+
+    // @ts-ignore TODO!
+    return <Button
+        className='absolute'
         disabled={undefined === list['+' === operator ? index + 1 : index - 1]}
-        onClick={IconButtonProps.onClick}
-        style={{...IconButtonProps.style, position: 'absolute'}}
+        plain
+        {...ButtonProps}
     >
         <Icon fontSize='large' style={{fontSize: '3rem'}}/>
-    </IconButton>
+    </Button>
 }

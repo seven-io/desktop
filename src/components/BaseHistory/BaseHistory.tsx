@@ -1,10 +1,8 @@
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableContainer from '@mui/material/TableContainer'
 import {useEffect, useState} from 'react'
 import localStore, {type ILocalStore} from '../../util/LocalStore'
 import {usePrevious} from '../../util/usePrevious'
 import {Navigation} from './Navigation'
+import {Table, TableBody} from '../catalyst/table'
 
 export type BaseHistoryProps = {
     onNavigation?: (isCurrent: boolean) => void
@@ -70,12 +68,10 @@ export function BaseHistory<T>({
             onNavigation={handleOnNavigation}
         />}
 
-        <TableContainer>
-            <Table size='small'>
-                <TableBody>
-                    {entry && getRealEntry().map(rowHandler)}
-                </TableBody>
-            </Table>
-        </TableContainer>
+        <Table>
+            <TableBody>
+                {entry && getRealEntry().map(rowHandler)}
+            </TableBody>
+        </Table>
     </>
 }

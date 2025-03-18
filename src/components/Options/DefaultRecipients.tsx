@@ -1,10 +1,9 @@
-import TextField from '@mui/material/TextField'
-import Chip from '@mui/material/Chip'
-import Autocomplete from '@mui/material/Autocomplete'
 import {useTranslation} from 'react-i18next'
 import {useState} from 'react'
 import {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
+import {Description, Field, Label} from '../catalyst/fieldset'
+import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
 export default () => {
     const {t} = useTranslation()
@@ -17,7 +16,32 @@ export default () => {
         )
     ]
 
-    return <Autocomplete
+    return <Field>
+        <Label>{t('recipients')}</Label>
+        <Description>{t('savedAutomatically')}</Description>
+
+        <Combobox
+            value={Array.isArray(state.to) ? state.to : []}
+            onChange={(values) => {
+                console.log('values', values)
+                setState({...state, to: values ?? []})
+                localStore.set('options.to', values)
+            }}
+        >
+            <ComboboxInput
+                //onChange={(event) => setQuery(event.target.value)}
+            />
+            <ComboboxOptions>
+                {options.map((option) => (
+                    <ComboboxOption key={option} value={option}>
+                        {option}
+                    </ComboboxOption>
+                ))}
+            </ComboboxOptions>
+        </Combobox>
+    </Field>
+
+   /* return <Autocomplete
         freeSolo
         getOptionLabel={option => option}
         multiple
@@ -44,5 +68,5 @@ export default () => {
             ))
         }}
         value={Array.isArray(state.to) ? state.to : []}
-    />
+    />*/
 }

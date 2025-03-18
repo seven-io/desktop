@@ -1,29 +1,29 @@
-import ContactsIcon from '@mui/icons-material/Contacts'
-import LocalAtmIcon from '@mui/icons-material/LocalAtm'
-import VoiceIcon from '@mui/icons-material/PermPhoneMsg'
-import PolicyIcon from '@mui/icons-material/Policy'
-import SettingsIcon from '@mui/icons-material/Settings'
-import ContactMailIcon from '@mui/icons-material/ContactMail'
-import SmsIcon from '@mui/icons-material/Sms'
-import BottomNavigation from '@mui/material/BottomNavigation'
-import BottomNavigationAction, {type BottomNavigationActionProps} from '@mui/material/BottomNavigationAction'
-import {useEffect, useState} from 'react'
+import {ReactNode, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {Route, SET_NAV} from '../../store/features/nav'
 import localStore from '../../util/LocalStore'
+import {
+    CogIcon,
+    CurrencyDollarIcon,
+    DocumentMagnifyingGlassIcon,
+    EnvelopeIcon,
+    IdentificationIcon,
+    PhoneIcon,
+    UserIcon
+} from '@heroicons/react/16/solid'
 
 export const BottomNav = () => {
-    const navId = useAppSelector(s => s.nav)
+    const navId = useAppSelector(s => s.nav) // TODO??
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
-    const [actions, setActions] = useState<BottomNavigationActionProps[]>([
-        {value: 'sms', icon: <SmsIcon/>},
-        {value: 'rcs', icon: <ContactMailIcon/>},
-        {value: 'voice', icon: <VoiceIcon/>},
-        {value: 'lookup', icon: <PolicyIcon/>},
-        {value: 'options', icon: <SettingsIcon/>},
-        {value: 'contacts', icon: <ContactsIcon/>},
+    const [actions, setActions] = useState<{value: Route, icon: ReactNode}[]>([
+        {value: 'sms', icon: <EnvelopeIcon/>},
+        {value: 'rcs', icon: <IdentificationIcon/>},
+        {value: 'voice', icon: <PhoneIcon/>},
+        {value: 'lookup', icon: <DocumentMagnifyingGlassIcon/>},
+        {value: 'options', icon: <CogIcon/>},
+        {value: 'contacts', icon: <UserIcon/>},
     ])
 
     const getActionIndexByValue = (value: string): number => {
@@ -42,7 +42,7 @@ export const BottomNav = () => {
             if (!hasPricingRoute) {
                 _actions.push({
                     value: 'pricing',
-                    icon: <LocalAtmIcon/>,
+                    icon: <CurrencyDollarIcon/>,
                 })
             }
         } else {
@@ -58,7 +58,21 @@ export const BottomNav = () => {
         })
     }, [])
 
-    return <BottomNavigation
+    return <>
+        <div
+            className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
+            <div className="grid h-full max-w-lg auto-cols-max grid-flow-col mx-auto font-medium">
+                {actions.map((a, i) => <button key={i} type="button" onClick={() => dispatch(SET_NAV(a.value))}
+                                               className="inline-flex flex-col items-center justify-center px-5 border-gray-200 border-x hover:bg-gray-50 dark:hover:bg-gray-800 group dark:border-gray-600">
+                    {a.icon}
+                    <span
+                        className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">{t(a.value)}</span>
+                </button>)}
+            </div>
+        </div>
+
+        {/*
+        <BottomNavigation
         onChange={(_e: any, newNavId: Route) => dispatch(SET_NAV(newNavId))}
         showLabels
         value={navId}
@@ -76,4 +90,6 @@ export const BottomNav = () => {
             value={a.value}
         />)}
     </BottomNavigation>
+        */}
+    </>
 }

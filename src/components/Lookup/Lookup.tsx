@@ -1,13 +1,3 @@
-import {useTheme} from '@mui/material'
-import Button from '@mui/material/Button'
-import FormControl from '@mui/material/FormControl'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import FormLabel from '@mui/material/FormLabel'
-import Grid from '@mui/material/Grid'
-import Radio from '@mui/material/Radio'
-import RadioGroup from '@mui/material/RadioGroup'
-import TextField from '@mui/material/TextField'
-import Tooltip from '@mui/material/Tooltip'
 import {LookupParams, LookupResource} from '@seven.io/client'
 import {Fragment, type SyntheticEvent, useState} from 'react'
 import {useTranslation} from 'react-i18next'
@@ -20,13 +10,17 @@ import {SET_BACKDROP} from '../../store/features/backdrop'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
 import {useAppDispatch} from '../../store'
 import localStore from '../../util/LocalStore'
+import {Field, Fieldset, Label, Legend} from '../catalyst/fieldset'
+import {Radio, RadioField, RadioGroup} from '../catalyst/radio'
+import Tooltip from '../Tooltip'
+import {Input} from '../catalyst/input'
+import {Button} from '../catalyst/button'
 
 const LOOKUP_TYPES = ['cnam', 'hlr', 'mnp', 'format', 'rcs'] as const;
 type LookupTypeTuple = typeof LOOKUP_TYPES;
 export type LookupType = LookupTypeTuple[number];
 
 export const Lookup = () => {
-    const theme = useTheme()
     const dispatch = useAppDispatch()
     const {t} = useTranslation('lookup')
     const [type, setType] = useState<LookupType>('format')
@@ -73,65 +67,66 @@ export const Lookup = () => {
     }
 
     return <>
-        <Grid container sx={{alignItems: 'center', justifyContent: 'space-between'}}>
-            <Grid item>
-                <h1>{t('lookup')}</h1>
-            </Grid>
+        <div className='grid grid-cols-2 justify-between items-center'>
+            <h1>{t('lookup')}</h1>
 
-            <Grid item>
-                <Button
-                    color='primary' form='lookup' type='submit'
-                    disabled={0 === number.length} variant='outlined'
-                >
-                    {t('submit')}
-                </Button>
-            </Grid>
-        </Grid>
+            <Button
+                //color='primary'
+                disabled={0 === number.length}
+                form='lookup'
+                outline
+                type='submit'
+                //variant='outlined'
+            >
+                {t('submit')}
+            </Button>
+        </div>
 
         <form id='lookup' onSubmit={handleSubmit}>
-            <Grid
-                container
-                sx={{alignItems: 'center', justifyContent: 'space-between'}}
-            >
-                <Grid item lg={12}>
-                    <FormControl
-                        component='fieldset' sx={{
-                        margin: theme.spacing(3),
-                    }}
-                    >
-                        <FormLabel component='legend'>{t('type')}</FormLabel>
+            <div className='grid auto-cols-max grid-flow-col justify-between items-center'>
+                <Fieldset>
+                    <Legend>{t('type')}</Legend>
 
-                        <RadioGroup
-                            row style={{}} aria-label={t('type')} value={type}
-                            onChange={e => setType(e.target.value as LookupType)}
-                        >
-                            {
-                                LOOKUP_TYPES
-                                    .map((type, i) =>
+                    <RadioGroup
+                        //row
+                        aria-label={t('type')}
+                        value={type}
+                        onChange={e => setType(e as LookupType)}
+                    >
+                        {
+                            LOOKUP_TYPES
+                                .map((type, i) => {
+
+                                    return <RadioField>
+                                        <Radio
+                                            //label={t(type)}
+                                            //labelPlacement='bottom'
+                                            value={type}
+                                        />
                                         <Tooltip
                                             key={i}
                                             title={t(`tooltips.${type}`)}
                                         >
-                                            <FormControlLabel
-                                                control={<Radio/>}
-                                                label={t(type)}
-                                                labelPlacement='bottom'
-                                                value={type}
-                                            />
-                                        </Tooltip>)
-                            }
-                        </RadioGroup>
-                    </FormControl>
+                                            <Label>{t(type)}</Label>
+                                        </Tooltip>
+                                    </RadioField>
+                                })
+                        }
+                    </RadioGroup>
+                </Fieldset>
 
-                    <TextField
-                        fullWidth
-                        label={t('number')}
+                <Field>
+                    <Label>{t('number')}</Label>
+                    <Input
+                        //fullWidth
+                        //label={t('number')}
                         onChange={ev => setNumber(ev.target.value)}
                         required
                         value={number}
                     />
-                </Grid>
-            </Grid>
+                </Field>
+
+            </div>
         </form>
 
         <h1>{t(historyTransKey)}</h1>

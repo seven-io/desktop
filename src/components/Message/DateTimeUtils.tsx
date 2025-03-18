@@ -1,6 +1,5 @@
-import MenuItem from '@mui/material/MenuItem'
 import {useTranslation} from 'react-i18next'
-import {PopupMenu} from '../PopupMenu'
+import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../catalyst/dropdown'
 
 export type MessageToolbarProps = {
     onClick: (label: string) => void
@@ -10,48 +9,52 @@ export const DateTimeUtils = ({onClick}: MessageToolbarProps) => {
     const trans = useTranslation('message')
     const t = (k: string) => trans.t(`toolbar.${k}`)
 
-    return <PopupMenu
-        buttonText={`${t('date')}/${t('time')}`}
-        identifier='date-time'
+    return <Dropdown
+        //buttonText={`${t('date')}/${t('time')}`}
+        //identifier='date-time'
     >
-        <MenuItem onClick={() => onClick(Date.now().toString())}>
-            {t('timestamp')}
-        </MenuItem>
+        <DropdownButton>{`${t('date')}/${t('time')}`}</DropdownButton>
 
-        <MenuItem onClick={() => onClick(new Date().toString())}>
-            {t('date')}
-        </MenuItem>
+        <DropdownMenu>
+            <DropdownItem onClick={() => onClick(Date.now().toString())}>
+                {t('timestamp')}
+            </DropdownItem>
 
-        <MenuItem onClick={() => onClick(new Date().toLocaleString())}>
-            {t('locale')}
-        </MenuItem>
+            <DropdownItem onClick={() => onClick(new Date().toString())}>
+                {t('date')}
+            </DropdownItem>
 
-        <MenuItem
-            onClick={() => onClick(new Date().toLocaleDateString())}
-        >
-            {t('locale')} {t('date')}
-        </MenuItem>
+            <DropdownItem onClick={() => onClick(new Date().toLocaleString())}>
+                {t('locale')}
+            </DropdownItem>
 
-        <MenuItem
-            onClick={() => onClick(new Date().toLocaleTimeString())}
-        >
-            {t('locale')} {t('time')}
-        </MenuItem>
+            <DropdownItem
+                onClick={() => onClick(new Date().toLocaleDateString())}
+            >
+                {t('locale')} {t('date')}
+            </DropdownItem>
 
-        <MenuItem onClick={() => onClick(new Date().toDateString())}>
-            {t('date')}
-        </MenuItem>
+            <DropdownItem
+                onClick={() => onClick(new Date().toLocaleTimeString())}
+            >
+                {t('locale')} {t('time')}
+            </DropdownItem>
 
-        <MenuItem onClick={() => onClick(new Date().toISOString())}>
-            ISO {t('date')}
-        </MenuItem>
+            <DropdownItem onClick={() => onClick(new Date().toDateString())}>
+                {t('date')}
+            </DropdownItem>
 
-        <MenuItem onClick={() => onClick(new Date().toTimeString())}>
-            {t('time')}
-        </MenuItem>
+            <DropdownItem onClick={() => onClick(new Date().toISOString())}>
+                ISO {t('date')}
+            </DropdownItem>
 
-        <MenuItem onClick={() => onClick(new Date().toUTCString())}>
-            UTC {t('date')}
-        </MenuItem>
-    </PopupMenu>
+            <DropdownItem onClick={() => onClick(new Date().toTimeString())}>
+                {t('time')}
+            </DropdownItem>
+
+            <DropdownItem onClick={() => onClick(new Date().toUTCString())}>
+                UTC {t('date')}
+            </DropdownItem>
+        </DropdownMenu>
+    </Dropdown>
 }

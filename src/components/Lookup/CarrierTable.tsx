@@ -1,24 +1,19 @@
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
-import TableContainer from '@mui/material/TableContainer'
 import type {Carrier} from '@seven.io/client'
-
 import {TableRowSpreader} from '../TableRowSpreader'
+import {Table, TableBody} from '../catalyst/table'
 
-export type CarrierTableProps = {
+type CarrierTableProps = {
     carrier: Carrier
 }
 
 export const CarrierTable = ({carrier}: CarrierTableProps) => {
-    return <TableContainer>
-        <Table size='small'>
-            <TableBody>
-                <TableRowSpreader
-                    nsKey={'lookup'} pairs={Object.entries(carrier)} transEditor={(k, v) => {
-                    return 'object' === typeof v ? `Carrier.${k}` : 'carrier'
-                }}
-                />
-            </TableBody>
-        </Table>
-    </TableContainer>
+    return <Table>
+        <TableBody>
+            <TableRowSpreader
+                nsKey={'lookup'} pairs={Object.entries(carrier)} transEditor={(k, v) => {
+                return 'object' === typeof v ? `Carrier.${k}` : 'carrier'
+            }}
+            />
+        </TableBody>
+    </Table>
 }

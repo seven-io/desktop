@@ -1,12 +1,11 @@
-import TextField, {type TextFieldProps} from '@mui/material/TextField'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import Autocomplete from '@mui/material/Autocomplete'
-import Chip from '@mui/material/Chip'
 import {useAppDispatch, useAppSelector} from '../../store'
 import {selectRecipients, SET_TO} from '../../store/features/to'
-import {Contact} from '@seven.io/client'
+import type {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
+import {Field, Label} from '../catalyst/fieldset'
+import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
 export const VoiceRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'>) => {
     const dispatch = useAppDispatch()
@@ -23,7 +22,31 @@ export const VoiceRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'
         )
     ]
 
-    return <Autocomplete
+    return <Field>
+        <Label>{t('recipients')}</Label>
+
+        <Combobox
+            multiple
+            value={Array.isArray(state.to) ? state.to : []}
+            onChange={(values) => {
+                console.log('onChange', values)
+                dispatch(SET_TO(Array.isArray(values) ? values : [values!]))
+            }}
+        >
+            <ComboboxInput placeholder='+491799999999'
+                //onChange={(event) => setQuery(event.target.value)}
+            />
+            <ComboboxOptions>
+                {options.map((option) => (
+                    <ComboboxOption key={option} value={option}>
+                        {option}
+                    </ComboboxOption>
+                ))}
+            </ComboboxOptions>
+        </Combobox>
+    </Field>
+
+/*    return <Autocomplete
         freeSolo
         getOptionLabel={option => {
             console.log(option)
@@ -47,5 +70,5 @@ export const VoiceRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'
             return values.map((o, index) => <Chip {...getTagProps({index})} key={o} label={o}/>)
         }}
         value={value}
-    />
+    />*/
 }

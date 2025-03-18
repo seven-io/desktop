@@ -1,9 +1,17 @@
-/*@import "tailwindcss";*/
+@import "tailwindcss";
 
-@import '@fontsource/roboto/index.css';
+@import '@fontsource/inter/index.css';
 
 @import 'flag-icons/css/flag-icons.min.css';
 
-.MuiButtonGroup-root button:not(:last-of-type) {
-  margin-right: 10px;
+@theme {
+  --font-sans: Inter, sans-serif;
+}
+
+.tooltip {
+  @apply invisible absolute;
+}
+
+.has-tooltip:hover .tooltip {
+  @apply visible z-50;
 }
