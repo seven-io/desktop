@@ -126,7 +126,8 @@ export const Sms = () => {
 
             <div className='grid grid-cols-2'>
                 <Button
-                    className='bg-red-500'
+                    //className='bg-red-500'
+                    color='red'
                     //endIcon={<ClearIcon/>}
                     //fullWidth
                     onClick={handleClear}

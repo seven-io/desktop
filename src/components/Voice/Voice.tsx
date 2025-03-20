@@ -119,11 +119,11 @@ export function Voice() {
 
             <div className='grid grid-cols-2'>
                 <Button
-                    //color='red'
+                    color='red'
                     //endIcon={<XMarkIcon/>}
                     //fullWidth
                     onClick={handleClear}
-                    outline
+                    //outline
                     //sx={{color: 'red'}}
                     //variant='outlined'
                 >
