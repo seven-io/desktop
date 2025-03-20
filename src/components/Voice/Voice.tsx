@@ -15,6 +15,8 @@ import {VoiceRecipients} from './VoiceRecipients'
 import {VoiceSender} from './VoiceSender'
 import {VoiceParams} from '@seven.io/client'
 import {Textarea} from '../catalyst/textarea'
+import {Description, Field, Label} from '../catalyst/fieldset'
+import {Button} from '../catalyst/button'
 
 export function Voice() {
     const dispatch = useAppDispatch()
@@ -100,7 +102,7 @@ export function Voice() {
                 <Textarea
                     //fullWidth
                     //helperText={t('helperText')}
-                    re={$textarea}
+                    ref={$textarea}
                     //label={t('label')}
                     //multiline
                     onChange={ev => setText(ev.target.value)}
@@ -117,24 +119,29 @@ export function Voice() {
 
             <div className='grid grid-cols-2'>
                 <Button
-                    endIcon={<XMarkIcon/>}
-                    fullWidth
+                    //color='red'
+                    //endIcon={<XMarkIcon/>}
+                    //fullWidth
                     onClick={handleClear}
-                    sx={{color: 'red'}}
-                    variant='outlined'
+                    outline
+                    //sx={{color: 'red'}}
+                    //variant='outlined'
                 >
                     {t('clear')}
+                    <XMarkIcon/>
                 </Button>
 
                 <Button
-                    color='primary'
+                    //color='primary'
                     disabled={!text.length}
-                    endIcon={<PaperAirplaneIcon/>}
-                    fullWidth
+                    //endIcon={<PaperAirplaneIcon/>}
+                    //fullWidth
+                    outline
                     type='submit'
-                    variant='outlined'
+                    //variant='outlined'
                 >
                     {t('send')}
+                    <PaperAirplaneIcon/>
                 </Button>
             </div>
         </form>

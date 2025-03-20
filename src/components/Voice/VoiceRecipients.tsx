@@ -7,7 +7,7 @@ import localStore from '../../util/LocalStore'
 import {Field, Label} from '../catalyst/fieldset'
 import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
-export const VoiceRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'>) => {
+export const VoiceRecipients = () => {
     const dispatch = useAppDispatch()
     const {t} = useTranslation()
     const [storage] = useState(localStore.get('options'))
@@ -27,11 +27,11 @@ export const VoiceRecipients = (props: Omit<TextFieldProps, 'onChange' | 'value'
 
         <Combobox
             multiple
-            value={Array.isArray(state.to) ? state.to : []}
             onChange={(values) => {
                 console.log('onChange', values)
                 dispatch(SET_TO(Array.isArray(values) ? values : [values!]))
             }}
+            value={value}
         >
             <ComboboxInput placeholder='+491799999999'
                 //onChange={(event) => setQuery(event.target.value)}

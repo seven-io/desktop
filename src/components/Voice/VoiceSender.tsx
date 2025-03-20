@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next'
 import {Input, type InputProps} from '../catalyst/input'
 import {Field, Label} from '../catalyst/fieldset'
 
-export const VoiceSender = ({onChange, value}: Pick<InputProps, 'onChange' | 'value'> & {
+export const VoiceSender = ({onChange, value}: Omit<InputProps, 'onChange' | 'value'> & {
     onChange: (from: string) => void
     value: string
 }) => {
