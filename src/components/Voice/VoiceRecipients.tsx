@@ -21,23 +21,33 @@ export const VoiceRecipients = () => {
                 .map((c: Contact) => c.properties.mobile_number!)
         )
     ]
+    const [query, setQuery] = useState('')
+    const filteredRecipients =
+        query === ''
+            ? options
+            : options.filter((option) => {
+                return option.toLowerCase().includes(query.toLowerCase())
+            })
 
     return <Field>
         <Label>{t('recipients')}</Label>
 
         <Combobox
+            immediate
             multiple
             onChange={(values) => {
                 console.log('onChange', values)
-                dispatch(SET_TO(Array.isArray(values) ? values : [values!]))
+                const value = Array.isArray(values) ? values : [values!]
+                dispatch(SET_TO(value))
             }}
             value={value}
         >
-            <ComboboxInput placeholder='+491799999999'
-                //onChange={(event) => setQuery(event.target.value)}
+            <ComboboxInput
+                placeholder='+491799999999'
+                           onChange={(ev) => setQuery(ev.target.value)}
             />
             <ComboboxOptions>
-                {options.map((option) => (
+                {filteredRecipients.map((option) => (
                     <ComboboxOption key={option} value={option}>
                         {option}
                     </ComboboxOption>
@@ -45,30 +55,4 @@ export const VoiceRecipients = () => {
             </ComboboxOptions>
         </Combobox>
     </Field>
-
-/*    return <Autocomplete
-        freeSolo
-        getOptionLabel={option => {
-            console.log(option)
-            return option
-        }}
-        multiple
-        onChange={(_, values) => {
-            console.log('onChange', values)
-            dispatch(SET_TO(Array.isArray(values) ? values : [values!]))
-        }}
-        options={options}
-        renderOption={(props, option) => <li {...props} key={option}>{option}</li>}
-        renderInput={params => <TextField
-            {...params}
-            {...props}
-            label={t('recipients')}
-            placeholder='+491799999999'
-            variant='standard'
-        />}
-        renderTags={(values, getTagProps) => {
-            return values.map((o, index) => <Chip {...getTagProps({index})} key={o} label={o}/>)
-        }}
-        value={value}
-    />*/
 }

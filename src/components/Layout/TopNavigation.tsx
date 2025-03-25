@@ -1,4 +1,4 @@
-import {Navbar, NavbarDivider, NavbarItem, NavbarSection, NavbarSpacer} from '../catalyst/navbar'
+import {Navbar, NavbarItem, NavbarSection, NavbarSpacer} from '../catalyst/navbar'
 import {useEffect, useState} from 'react'
 import Logo from '../../assets/img/white-534x105.png'
 import {ExternalButton} from './ExternalButton'
@@ -16,12 +16,24 @@ import i18n from '../../i18n'
 import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../catalyst/dropdown'
 
 const links = [
-    <ExternalButton url='https://www.facebook.com/sevencommunications7'><FacebookIcon/></ExternalButton>,
-    <ExternalButton url='https://www.linkedin.com/company/sevenio'><LinkedInIcon/></ExternalButton>,
-    <ExternalButton url='https://twitter.com/sevenio7'><TwitterIcon/></ExternalButton>,
-    <ExternalButton url='https://www.seven.io/en/feed/'><RssFeedIcon/></ExternalButton>,
-    <ExternalButton url='https://github.com/seven-io'><GitHubIcon/></ExternalButton>,
-    <ExternalButton url='https://www.seven.io/en/company/contact/'><HelpIcon/></ExternalButton>
+    <ExternalButton url='https://www.facebook.com/sevencommunications7'>
+        <FacebookIcon className='text-white'/>
+    </ExternalButton>,
+    <ExternalButton url='https://www.linkedin.com/company/sevenio'>
+        <LinkedInIcon className='text-white'/>
+    </ExternalButton>,
+    <ExternalButton url='https://twitter.com/sevenio7'>
+        <TwitterIcon className='text-white'/>
+    </ExternalButton>,
+    <ExternalButton url='https://www.seven.io/en/feed/'>
+        <RssFeedIcon className='text-white'/>
+    </ExternalButton>,
+    <ExternalButton url='https://github.com/seven-io'>
+        <GitHubIcon className='text-white'/>
+    </ExternalButton>,
+    <ExternalButton url='https://www.seven.io/en/company/contact/'>
+        <HelpIcon className='text-white'/>
+    </ExternalButton>
 ]
 
 export default function TopNavigation() {
@@ -55,15 +67,14 @@ export default function TopNavigation() {
             src={Logo}
         />
 
-        <NavbarDivider className='max-lg:hidden' />
         <NavbarSpacer />
+
         <NavbarSection>
-            {null !== balance && <NavbarItem className='text-white align-super font-bold'
-            >
-                {t('balance')}: {getNumberFormatter().format(balance)}</NavbarItem>}
+            {null !== balance && <NavbarItem className='align-super font-bold'
+            ><span className='text-white dark:text-black'>{t('balance')}: {getNumberFormatter().format(balance)}</span></NavbarItem>}
 
             <Dropdown>
-                <DropdownButton outline className='h-9 flex items-center' onClick={() => handleCloseLanguage()}>
+                <DropdownButton plain className='h-9 flex items-center' onClick={() => handleCloseLanguage()}>
                           <span
                               aria-label={t('chooseLanguage')}
                               className={`fi fi-${language}`}
@@ -87,10 +98,7 @@ export default function TopNavigation() {
             </Dropdown>
 
             {links.map((component, key) =>  {
-                return component
-                return <NavbarItem key={key}>
-                    {component}
-                </NavbarItem>
+                return <span key={key}>{component}</span>
             })}
         </NavbarSection>
     </Navbar>

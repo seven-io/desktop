@@ -10,9 +10,8 @@ export const ExternalButton = ({
                                    url,
                                }: ExternalButtonProps) => {
     return <Button
-        outline
-        //className='text-white'
         onClick={() => window.require('electron').shell.openExternal(url)}
+        plain
     >
         {children}
     </Button>
