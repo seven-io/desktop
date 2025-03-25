@@ -91,7 +91,7 @@ export const Contacts = () => {
                     <TableCell>{contact.properties.city}</TableCell>
                     <TableCell>{contact.properties.notes}</TableCell>
                     <TableCell>
-                        <Button
+                        <Button outline
                             onClick={() => {
                                 dispatch(SET_TO([contact.properties.mobile_number!]))
 
@@ -99,7 +99,7 @@ export const Contacts = () => {
                             }}
                         ><EnvelopeIcon/></Button>
 
-                        <Button
+                        <Button outline
                             onClick={() => {
                                 dispatch(SET_TO([contact.properties.mobile_number!]))
 
@@ -107,7 +107,7 @@ export const Contacts = () => {
                             }}
                         ><PhoneIcon/></Button>
 
-                        <Button
+                        <Button outline
                             onClick={() => {
                                 dispatch(SET_TO_RCS(contact.properties.mobile_number!))
 

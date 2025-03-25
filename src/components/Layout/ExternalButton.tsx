@@ -1,19 +1,18 @@
-import {Button, type ButtonProps} from '../catalyst/button'
+import {Button} from '../catalyst/button'
+import {PropsWithChildren} from 'react'
 
-type ExternalButtonProps = ButtonProps & {
+type ExternalButtonProps = PropsWithChildren<{
     url: string
-}
+}>
 
 export const ExternalButton = ({
                                    children,
-                                   className,
                                    url,
-                                   ...props
                                }: ExternalButtonProps) => {
     return <Button
-        className='text-white'
+        outline
+        //className='text-white'
         onClick={() => window.require('electron').shell.openExternal(url)}
-        {...props}
     >
         {children}
     </Button>

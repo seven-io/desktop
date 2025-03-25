@@ -102,16 +102,12 @@ export function Rcs() {
                 <Label>{t('label')}</Label>
                 <Description>{t('helperText')}</Description>
                 <Textarea
-                    //fullWidth
-                    //helperText={t('helperText')}
                     ref={$textarea}
-                    //label={t('label')}
-                    //multiline
                     onChange={ev => setText(ev.target.value)}
+                    placeholder={t('helperText')}
                     required
                     rows={3}
                     value={text}
-                    //variant='outlined'
                 />
             </Field>
 
@@ -124,25 +120,15 @@ export function Rcs() {
             <div className='grid grid-cols-2'>
                 <Button
                     color='red'
-                    //endIcon={<ClearIcon/>}
-                    //fullWidth
                     onClick={handleClear}
-                    //outline
-                   // sx={{color: 'red'}}
-                    //variant='outlined'
                 >
                     {t('clear')}
                     <XMarkIcon/>
                 </Button>
 
                 <Button
-                    //color='primary'
                     disabled={!text.length}
-                    //endIcon={<SendIcon/>}
-                    //fullWidth
-                    //outline
                     type='submit'
-                    //variant='outlined'
                 >
                     {t('send')}
                     <PaperAirplaneIcon />

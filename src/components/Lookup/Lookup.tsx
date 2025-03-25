@@ -18,7 +18,7 @@ import {Button} from '../catalyst/button'
 
 const LOOKUP_TYPES = ['cnam', 'hlr', 'mnp', 'format', 'rcs'] as const;
 type LookupTypeTuple = typeof LOOKUP_TYPES;
-export type LookupType = LookupTypeTuple[number];
+type LookupType = LookupTypeTuple[number];
 
 export const Lookup = () => {
     const dispatch = useAppDispatch()
@@ -33,23 +33,22 @@ export const Lookup = () => {
         const lookupParams: LookupParams = {
             numbers: [number],
         }
-        const client = initClient()
-        const resource = new LookupResource(client)
+        const resource = new LookupResource(initClient())
         let res
         switch (type) {
-            case "cnam":
+            case 'cnam':
                 res = await resource.cnam(lookupParams)
                 break;
-            case "hlr":
+            case 'hlr':
                 res = await resource.hlr(lookupParams)
                 break;
-            case "mnp":
+            case 'mnp':
                 res = await resource.mnp(lookupParams)
                 break;
-            case "format":
+            case 'format':
                 res = await resource.format(lookupParams)
                 break;
-            case "rcs":
+            case 'rcs':
                 res = await resource.rcs(lookupParams)
                 break;
 
@@ -71,12 +70,10 @@ export const Lookup = () => {
             <h1>{t('lookup')}</h1>
 
             <Button
-                //color='primary'
+                color='green'
                 disabled={0 === number.length}
                 form='lookup'
-                outline
                 type='submit'
-                //variant='outlined'
             >
                 {t('submit')}
             </Button>
@@ -88,7 +85,6 @@ export const Lookup = () => {
                     <Legend>{t('type')}</Legend>
 
                     <RadioGroup
-                        //row
                         aria-label={t('type')}
                         value={type}
                         onChange={e => setType(e as LookupType)}
@@ -96,13 +92,8 @@ export const Lookup = () => {
                         {
                             LOOKUP_TYPES
                                 .map((type, i) => {
-
                                     return <RadioField>
-                                        <Radio
-                                            //label={t(type)}
-                                            //labelPlacement='bottom'
-                                            value={type}
-                                        />
+                                        <Radio value={type} />
                                         <Tooltip
                                             key={i}
                                             title={t(`tooltips.${type}`)}
@@ -118,8 +109,6 @@ export const Lookup = () => {
                 <Field>
                     <Label>{t('number')}</Label>
                     <Input
-                        //fullWidth
-                        //label={t('number')}
                         onChange={ev => setNumber(ev.target.value)}
                         required
                         value={number}

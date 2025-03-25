@@ -54,19 +54,19 @@ export const BottomNav = () => {
 
     useEffect(() => {
         localStore.onDidChange('options', (options) => {
-            options && expertMode !== options.expertMode && setExpertMode(options.expertMode)
+            expertMode !== options?.expertMode && setExpertMode(options!.expertMode)
         })
     }, [])
-
+    console.log(`grid h-full max-w-lg grid-cols-${actions.length} mx-auto`)
     return <>
         <div
-            className="fixed bottom-0 left-0 z-50 w-full h-16 bg-white border-t border-gray-200 dark:bg-gray-700 dark:border-gray-600">
-            <div className="grid h-full max-w-lg auto-cols-max grid-flow-col mx-auto font-medium">
-                {actions.map((a, i) => <button key={i} type="button" onClick={() => dispatch(SET_NAV(a.value))}
-                                               className="inline-flex flex-col items-center justify-center px-5 border-gray-200 border-x hover:bg-gray-50 dark:hover:bg-gray-800 group dark:border-gray-600">
+            className='fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600'>
+            <div className={`grid h-full max-w-lg grid-cols-7 mx-auto`}>
+                {actions.map((a, i) => <button key={i} onClick={() => dispatch(SET_NAV(a.value))}
+                                               className='inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group'>
                     {a.icon}
                     <span
-                        className="text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500">{t(a.value)}</span>
+                        className='text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500'>{t(a.value)}</span>
                 </button>)}
             </div>
         </div>

@@ -16,27 +16,10 @@ export const Signature = ({value, ...props}: SignatureProps) => {
         <Description>{t('savedAutomatically')}</Description>
 
         <Textarea
-            //fullWidth
-            //helperText={t('savedAutomatically')}
-            //label={t('signatureExplanation')}
-            //multiline
             name='signature'
             rows={3}
             value={value}
-            //variant='outlined'
             {...props}
         />
     </Field>
-
-/*    return <TextField
-        fullWidth
-        helperText={t('savedAutomatically')}
-        label={t('signatureExplanation')}
-        multiline
-        name='signature'
-        rows='3'
-        value={value}
-        variant='outlined'
-        {...props}
-    />*/
 }

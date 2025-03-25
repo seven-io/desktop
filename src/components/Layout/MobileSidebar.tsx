@@ -16,7 +16,6 @@ import i18n from '../../i18n'
 const links = [
     <ExternalButton
         url='https://www.facebook.com/sevencommunications7'
-        //size='small'
     ><FacebookIcon/></ExternalButton>,
     <ExternalButton url='https://www.linkedin.com/company/sevenio'><LinkedInIcon/></ExternalButton>,
     <ExternalButton url='https://twitter.com/sevenio7'><TwitterIcon/></ExternalButton>,

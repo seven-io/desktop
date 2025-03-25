@@ -6,15 +6,15 @@ import {Signature} from './Signature'
 import DefaultRecipients from './DefaultRecipients'
 import ExpertMode from './ExpertMode'
 import localStore from '../../util/LocalStore'
+import {IOptions} from './types'
 
 export const Options = () => {
     const {t} = useTranslation()
     const [state, setState] = useState(localStore.get('options'))
     const {apiKey, from, signature} = state
 
-    const handleChange = ({target: {name, value}}: any) => {
+    const handleChange = ({name, value}: {name: keyof IOptions, value: any}) => {
         setState({...state, [name]: value})
-
         localStore.set(`options.${name}`, value)
     }
 
@@ -25,23 +25,21 @@ export const Options = () => {
             <ApiKey
                 autoFocus={!apiKey.length}
                 onChange={value => handleChange({
-                    target: {
-                        name: 'apiKey',
-                        value,
-                    },
+                    name: 'apiKey',
+                    value,
                 })}
                 value={apiKey}
             />
 
             <From
                 helperText={t('savedAutomatically')}
-                onChange={value => handleChange({target: {name: 'from', value}})}
+                onChange={value => handleChange({name: 'from', value})}
                 value={from}
             />
 
             <DefaultRecipients/>
 
-            <Signature onChange={handleChange} value={signature}/>
+            <Signature onChange={e => handleChange({name: 'signature', value: e.target.value})} value={signature}/>
 
             <ExpertMode/>
         </div>

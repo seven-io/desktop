@@ -5,7 +5,7 @@ import type {IOptions} from './types'
 import {BalanceResource} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
 import {Input, InputGroup, type InputProps} from '../catalyst/input'
-import {Field, Label} from '../catalyst/fieldset'
+import {ErrorMessage, Field, Label} from '../catalyst/fieldset'
 import {Button} from '../catalyst/button'
 import {EyeIcon, EyeSlashIcon} from '@heroicons/react/16/solid'
 
@@ -19,7 +19,7 @@ const identifier: keyof IOptions = 'apiKey'
 export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
     const {t} = useTranslation()
     const [apiKey, setApiKey] = useState('')
-    const [error, setError] = useState(false)
+    const [error, setError] = useState('')
     const [show, setShow] = useState(false)
     const handleClickToggleShow = () => setShow(!show)
     const handleMouseDownShow = (e: BaseSyntheticEvent) => e.preventDefault()
@@ -29,11 +29,11 @@ export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
         try {
             const balance = await (new BalanceResource(client)).get()
             localStore.set('balance', balance.amount)
-            setError(false)
+            setError('')
             onChange(apiKey)
         } catch (e) {
             console.error(e)
-            setError(true)
+            setError((e as Error).message)
         }
     }
 
@@ -42,29 +42,29 @@ export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
     return <InputGroup>
         <Field>
             <Label>{t('apiKey')}</Label>
+            {error && <ErrorMessage>{error}</ErrorMessage>}
 
-            <Input
-                //error={error}
-                //fullWidth
-                id={identifier}
-                //label={t('apiKey')}
-                name={identifier}
-                onChange={e => setApiKey(e.target.value)}
-                required
-                type={show ? 'text' : 'password'}
-                value={apiKey}
-                {...props}
-            />
+            <div className='flex'>
+                <Input
+                    id={identifier}
+                    name={identifier}
+                    onChange={e => setApiKey(e.target.value)}
+                    required
+                    type={show ? 'text' : 'password'}
+                    value={apiKey}
+                    {...props}
+                />
 
-            <Button
-                aria-label={t('toggleApiKeyVisibility')}
-                onClick={handleClickToggleShow}
-                onMouseDown={handleMouseDownShow}
-            >
-                {show ? <EyeIcon/> : <EyeSlashIcon/>}
-            </Button>
+                <Button
+                    aria-label={t('toggleApiKeyVisibility')}
+                    onClick={handleClickToggleShow}
+                    onMouseDown={handleMouseDownShow}
+                >
+                    {show ? <EyeIcon/> : <EyeSlashIcon/>}
+                </Button>
 
-            <Button onClick={handleClickSave}>{t('ok')}</Button>
+                <Button onClick={handleClickSave}>{t('ok')}</Button>
+            </div>
         </Field>
     </InputGroup>
 }

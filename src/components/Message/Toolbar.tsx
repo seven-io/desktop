@@ -21,7 +21,7 @@ export const Toolbar = ({emoji, onAction, textarea}: ToolbarProps) => {
 
     return <div
         aria-label={t('toolbar.label')}
-        className='flex flex-col'
+        className='flex space-x-1'
         //variant='text'
     >
         {emoji && <EmojiPicker

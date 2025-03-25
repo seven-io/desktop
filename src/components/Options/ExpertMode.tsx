@@ -11,6 +11,7 @@ export default () => {
     return <SwitchField>
         <Label>{t('expertMode')} ({t('savedAutomatically')})</Label>
         <Switch
+            checked={state.expertMode}
             onChange={(expertMode) => {
                 setState({...state, expertMode})
 
@@ -18,15 +19,4 @@ export default () => {
             }}
         />
     </SwitchField>
-
-/*    return <BoolInput<IOptions>
-        label={`${t('expertMode')} (${t('savedAutomatically')})`}
-        setState={({expertMode}) => {
-            setState({...state, expertMode})
-
-            localStore.set('options.expertMode', expertMode)
-        }}
-        state={state}
-        stateKey='expertMode'
-    />*/
 }

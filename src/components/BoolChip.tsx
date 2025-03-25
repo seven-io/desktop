@@ -1,7 +1,7 @@
 import {useTranslation} from 'react-i18next'
 import {Badge} from './catalyst/badge'
 
-export type BoolChipProps = {
+type BoolChipProps = {
     value: boolean
 }
 
@@ -9,7 +9,7 @@ export const BoolChip = ({value}: BoolChipProps) => {
     const {t} = useTranslation()
 
     return <Badge
-        //label={t(value.toString())}
+        // color={value ? 'green' : 'red'}
         style={{backgroundColor: value ? 'green' : 'red', color: '#fff'}}
     >{t(value.toString())}</Badge>
 }

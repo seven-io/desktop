@@ -1,6 +1,6 @@
 import type {CountryPricing} from '@seven.io/client'
 
-export type CountryFlagProps = {
+type CountryFlagProps = {
     pricing: CountryPricing
 }
 

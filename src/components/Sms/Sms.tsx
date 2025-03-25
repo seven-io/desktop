@@ -16,7 +16,7 @@ import {Toolbar} from '../Message/Toolbar'
 import {From} from '../From'
 import {SmsRecipients} from './SmsRecipients'
 import {Textarea} from '../catalyst/textarea'
-import {Description, Field, Label} from '../catalyst/fieldset'
+import {Field, Label} from '../catalyst/fieldset'
 import {Button} from '../catalyst/button'
 import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
 
@@ -103,18 +103,13 @@ export const Sms = () => {
 
             <Field>
                 <Label>{t('label')}</Label>
-                <Description>{t('helperText')}</Description>
                 <Textarea
-                    //fullWidth
-                    //helperText={t('helperText')}
                     ref={$textarea}
-                    //label={t('label')}
-                    //multiline
                     onChange={ev => setText(ev.target.value)}
+                    placeholder={t('helperText')}
                     required
                     rows={3}
                     value={text}
-                    //variant='outlined'
                 />
             </Field>
 
@@ -126,25 +121,16 @@ export const Sms = () => {
 
             <div className='grid grid-cols-2'>
                 <Button
-                    //className='bg-red-500'
                     color='red'
-                    //endIcon={<ClearIcon/>}
-                    //fullWidth
                     onClick={handleClear}
-                    //sx={{color: 'red'}}
-                    //variant='outlined'
                 >
                     {t('clear')}
                     <XMarkIcon />
                 </Button>
 
                 <Button
-                    //color='primary'
                     disabled={!text.length}
-                    //endIcon={<SendIcon/>}
-                    //fullWidth
                     type='submit'
-                    //variant='outlined'
                 >
                     {t('send')}
                     <PaperAirplaneIcon />
