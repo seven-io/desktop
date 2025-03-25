@@ -1,4 +1,4 @@
-module.exports = function typographyStyles({ theme }) {
+export default function typographyStyles({ theme }) {
     return {
         DEFAULT: {
             css: {

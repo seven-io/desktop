@@ -1,8 +1,7 @@
-const typographyStyles = require('./typography')
-const headlessuiPlugin = require('@headlessui/tailwindcss')
+import typographyStyles from './typography'
+import headlessuiPlugin from '@headlessui/tailwindcss'
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
     content: [
         "./src/**/*.{js,jsx,ts,tsx}",
     ],

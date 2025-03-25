@@ -17,6 +17,7 @@ export const Pricings = () => {
     const [country, setCountry] = useState<CountryPricing | null>(null)
     const dispatch = useDispatch()
     const [pricing, setPricing] = useState(localStore.get<'pricing', PricingResponse>('pricing'))
+    const [query, setQuery] = useState('')
 
     useEffect(() => {
         if (!pricing) {
@@ -28,23 +29,29 @@ export const Pricings = () => {
 
     const getAndStore = async () => {
         dispatch(SET_BACKDROP(true))
-
         const pricing = await (new PricingResource(initClient())).get()
-
         dispatch(SET_BACKDROP(false))
-
         localStore.set('pricing', pricing)
-
         setPricing(pricing)
     }
 
+    const filteredCountries =
+        query === ''
+            ? pricing.countries
+            : pricing.countries.filter((country) => {
+                return country.countryName.toLowerCase().includes(query.toLowerCase())
+                    || country.countryCode.toLowerCase().includes(query.toLowerCase())
+                    || country.countryPrefix.toLowerCase().includes(query.toLowerCase())
+            })
+
     return <>
-        <div style={{display: 'flex', justifyContent: 'space-between'}}>
-            <h1 style={{display: 'inline-flex'}}>{t('pricing')}</h1>
+        <div className='flex justify-between'>
+            <h1 className='inline-flex'>{t('pricing')}</h1>
             <Button onClick={() => getAndStore()}>{t('reload')}</Button>
         </div>
 
-        <Table className='mb-4' aria-label={t('ariaLabels.countryTable')} >
+        <Table className='mb-4' aria-label={t('ariaLabels.countryTable')}>
+            <caption>{t('ariaLabels.countryTable')}</caption>
             <TableBody>
                 {pricing &&
                     ([
@@ -62,16 +69,25 @@ export const Pricings = () => {
             <Label>{t('choose')}</Label>
 
             <Combobox<CountryPricing>
+                immediate
                 onChange={(value) => {
                     setCountry(value)
                 }}
+                onClose={() => setQuery('')}
+                value={country ?? undefined}
             >
                 <ComboboxInput
-                    //onChange={(event) => setQuery(event.target.value)}
+                    className='w-full'
+                    displayValue={(country?: CountryPricing) => country?.countryName ?? ''}
+                    onChange={(ev) => setQuery(ev.target.value)}
                 />
-                <ComboboxOptions>
-                    {pricing.countries.map((option, idx) => (
-                        <ComboboxOption key={idx} value={option}>
+                <ComboboxOptions anchor='bottom' className='border empty:invisible'>
+                    {filteredCountries.map((option, idx) => (
+                        <ComboboxOption
+                            className='ui-active:bg-blue-500 ui-active:text-white ui-not-active:bg-white ui-not-active:text-black'
+                            key={idx}
+                            value={option}
+                        >
                             <CountryFlag pricing={option}/>&nbsp;
                             {option.countryCode} {option.countryName} {option.countryPrefix}
                         </ComboboxOption>

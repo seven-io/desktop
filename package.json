@@ -46,6 +46,7 @@
     "@types/node": "^20.17.27",
     "@types/react": "^19.0.12",
     "@types/react-dom": "^19.0.4",
+    "@types/tailwindcss": "^3.0.11",
     "@vercel/webpack-asset-relocator-loader": "1.7.3",
     "cross-env": "^7.0.3",
     "css-loader": "^7.1.2",

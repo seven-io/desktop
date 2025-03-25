@@ -4,7 +4,7 @@ import type {KeyValue} from '../../types'
 import {CountryNetworks} from './CountryNetworks'
 import {Table, TableBody, TableCell, TableHeader, TableRow} from '../catalyst/table'
 
-export type PricingProps = {
+type PricingProps = {
     pricing: CountryPricing
 }
 
