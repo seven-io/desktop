@@ -112,7 +112,7 @@ export function Voice() {
 
             <VoiceSender onChange={setFrom} value={from}/>
 
-            <div className='grid grid-cols-2'>
+            <div className='grid grid-cols-2 mt-6'>
                 <Button
                     color='red'
                     onClick={handleClear}

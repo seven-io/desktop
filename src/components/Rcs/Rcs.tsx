@@ -117,7 +117,7 @@ export function Rcs() {
 
             <RcsOptions params={params} setParams={setParams}/>
 
-            <div className='grid grid-cols-2'>
+            <div className='grid grid-cols-2 mt-6'>
                 <Button
                     color='red'
                     onClick={handleClear}
