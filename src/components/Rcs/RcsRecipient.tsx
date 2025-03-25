@@ -41,8 +41,9 @@ export const RcsRecipient = () => {
             value={value}
         >
             <ComboboxInput
+                displayValue={(value: string) => value}
+                onChange={(ev) => setQuery(ev.target.value)}
                 placeholder='+491799999999'
-                           onChange={(ev) => setQuery(ev.target.value)}
             />
             <ComboboxOptions>
                 {filteredRecipients.map((option) => (

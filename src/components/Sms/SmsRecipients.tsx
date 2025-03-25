@@ -36,13 +36,14 @@ export const SmsRecipients = () => {
             immediate
             multiple
             onChange={(values) => {
-                console.log('onChange', values)
-                dispatch(SET_TO(values ? values : []))
+                dispatch(SET_TO(values))
             }}
             value={value}
         >
             <ComboboxInput
+                displayValue={(value: string) => value}
                 onChange={(ev) => setQuery(ev.target.value)}
+                placeholder='+491799999999'
             />
             <ComboboxOptions>
                 {filteredRecipients.map((option) => (
