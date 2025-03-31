@@ -56,7 +56,7 @@ export default function TopNavigation() {
         await i18n.changeLanguage('us' === lang ? 'en' : lang)
     }
 
-    return <Navbar style={{backgroundColor: '#00d488'}}>
+    return <Navbar className='px-1' style={{backgroundColor: '#00d488'}}>
         <img
             alt='seven Logo'
             className='cursor-pointer max-w-32'
