@@ -13,6 +13,11 @@ export const contacts = {
     notes: 'Notes',
     number: 'Number',
     reload: 'Reload',
+    send: {
+        rcs: 'Send RCS',
+        sms: 'Send SMS',
+        voice: 'Start text-to-speech call',
+    },
     sms: 'Send SMS',
     voice: 'Text-To-Speech Call',
     zip: 'Zip'

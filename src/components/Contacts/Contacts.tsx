@@ -12,6 +12,7 @@ import localStore from '../../util/LocalStore'
 import {Button} from '../catalyst/button'
 import {Table, TableBody, TableCell, TableHead, TableRow} from '../catalyst/table'
 import {EnvelopeIcon, PencilSquareIcon, PhoneIcon} from '@heroicons/react/16/solid'
+import Tooltip from '../Tooltip'
 
 export const Contacts = () => {
     const {t} = useTranslation('contacts')
@@ -91,29 +92,35 @@ export const Contacts = () => {
                     <TableCell>{contact.properties.city}</TableCell>
                     <TableCell>{contact.properties.notes}</TableCell>
                     <TableCell>
-                        <Button outline
-                            onClick={() => {
-                                dispatch(SET_TO([contact.properties.mobile_number!]))
+                        <Tooltip title={t('send.sms')}>
+                            <Button outline
+                                    onClick={() => {
+                                        dispatch(SET_TO([contact.properties.mobile_number!]))
 
-                                dispatch(SET_NAV('sms'))
-                            }}
-                        ><EnvelopeIcon/></Button>
+                                        dispatch(SET_NAV('sms'))
+                                    }}
+                            ><EnvelopeIcon/></Button>
+                        </Tooltip>
 
-                        <Button outline
-                            onClick={() => {
-                                dispatch(SET_TO([contact.properties.mobile_number!]))
+                        <Tooltip title={t('send.voice')}>
+                            <Button outline
+                                    onClick={() => {
+                                        dispatch(SET_TO([contact.properties.mobile_number!]))
 
-                                dispatch(SET_NAV('voice'))
-                            }}
-                        ><PhoneIcon/></Button>
+                                        dispatch(SET_NAV('voice'))
+                                    }}
+                            ><PhoneIcon/></Button>
+                        </Tooltip>
 
-                        <Button outline
-                            onClick={() => {
-                                dispatch(SET_TO_RCS(contact.properties.mobile_number!))
+                        <Tooltip title={t('send.rcs')}>
+                            <Button outline
+                                    onClick={() => {
+                                        dispatch(SET_TO_RCS(contact.properties.mobile_number!))
 
-                                dispatch(SET_NAV('rcs'))
-                            }}
-                        ><PencilSquareIcon/></Button>
+                                        dispatch(SET_NAV('rcs'))
+                                    }}
+                            ><PencilSquareIcon/></Button>
+                        </Tooltip>
                     </TableCell>
                 </TableRow>)}
             </TableBody>
