@@ -15,21 +15,33 @@ export default () => {
                 .map((c: Contact) => c.properties.mobile_number!)
         )
     ]
+    const [query, setQuery] = useState('')
+    const filteredRecipients =
+        query === ''
+            ? options
+            : options.filter((option) => {
+                return option.toLowerCase().includes(query.toLowerCase())
+            })
 
     return <Field>
         <Label>{t('recipients')}</Label>
         <Description>{t('savedAutomatically')}</Description>
 
         <Combobox
-            value={Array.isArray(state.to) ? state.to : []}
+            immediate
+            multiple
             onChange={(values) => {
                 console.log('values', values)
                 setState({...state, to: values ?? []})
                 localStore.set('options.to', values)
             }}
+            value={Array.isArray(state.to) ? state.to : []}
         >
             <ComboboxInput
-                //onChange={(event) => setQuery(event.target.value)}
+                className='block'
+                displayValue={(value: string) => value}
+                onChange={(ev) => setQuery(ev.target.value)}
+                placeholder='+491799999999'
             />
             <ComboboxOptions>
                 {options.map((option) => (
