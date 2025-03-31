@@ -27,11 +27,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
             <Label>{t('flash')}</Label>
             <Switch
                 checked={params.flash}
-                //label={t('flash')}
                 onChange={(flash) => setParams({...params, flash})}
-                //setState={setParams}
-                //state={params}
-                //stateKey='flash'
             />
         </SwitchField>
 
@@ -39,11 +35,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
             <Label>{t('performanceTracking')}</Label>
             <Switch
                 checked={params.performance_tracking}
-                //label={t('performanceTracking')}
                 onChange={(performance_tracking) => setParams({...params, performance_tracking})}
-                //setState={setParams}
-                //state={params}
-                //stateKey='performance_tracking'
             />
         </SwitchField>
 
@@ -51,13 +43,8 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
             <Field>
                 <Label>{t('label')}</Label>
                 <Input
-                    //inputProps={{'maxLength': 100}}
-                    //label={t('label')}
                     onChange={(e) => setParams({ ...params, label: e.target.value })}
                     maxLength={100}
-                    //setState={setParams}
-                   //state={params}
-                    //stateKey='label'
                     value={params.label}
                 />
             </Field>
@@ -65,20 +52,18 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
             <Field>
                 <Label>{t('delay')}</Label>
                 <Input
-                    //slotProps={{textField: {fullWidth: true}}}
-                    //disablePast={true}
-                    //format='yyyy-MM-dd hh:ii'
-                    //fullWidth
-                    min={new Date().toISOString()}
-                    //InputLabelProps={{shrink: true}}
-                    //inputVariant='outlined'
-                    //label={t('delay')}
-                    onChange={e => setParams({
-                        ...params,
-                        delay: e.target.value ? new Date(format(e.target.value, 'MM/dd/yyyy HH:MM')) : undefined,
-                    })}
+                    min={format(new Date, 'yyyy-MM-ddTHH:mm')}
+                    onChange={e => {
+                        const date = new Date(e.target.value)
+                        const formatted = format(date, 'MM/dd/yyyy HH:MM')
+
+                        setParams({
+                            ...params,
+                            delay: e.target.value ? new Date(formatted) : undefined,
+                        })
+                    }}
                     type='datetime-local'
-                    value={params.delay ? params.delay.toISOString() : ''}
+                    value={params.delay ?  format(params.delay, 'yyyy-MM-dd\'T\'HH:mm').slice(0, 16) : ''}
                 />
             </Field>
 
@@ -98,7 +83,6 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                         <Input
                             min={0}
                             onChange={e => setParams({...params, ttl: Number.parseInt(e.target.value)})}
-                            //shrink
                             type="number"
                             value={params.ttl}
                         />
@@ -108,7 +92,6 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                         <Label>{t('udh')}</Label>
                         <Input
                             onChange={e => setParams({...params, udh: e.target.value})}
-                            //shrink
                             value={params.udh}
                         />
                     </Field>

@@ -34,13 +34,8 @@ export const RcsOptions = ({params, setParams}: RcsOptionsProps) => {
             <Field>
                 <Label>{t('label')}</Label>
                 <Input
-                    //inputProps={{'maxLength': 100}}
-                    //label={t('label')}
                     maxLength={100}
                     onChange={e => setParams({...params, label: e.target.value})}
-                    //setState={setParams}
-                   // state={params}
-                   // stateKey='label'
                     value={params.label}
                 />
             </Field>
@@ -48,21 +43,18 @@ export const RcsOptions = ({params, setParams}: RcsOptionsProps) => {
             <Field>
                 <Label>{t('delay')}</Label>
                 <Input
-                    //slotProps={{textField: {fullWidth: true}}}
-                    //disablePast={true}
-                    //format='yyyy-MM-dd hh:ii'
-                    //fullWidth
-                    //minDateTime={new Date}
-                    min={new Date().toISOString()}
-                    //InputLabelProps={{shrink: true}}
-                    //inputVariant='outlined'
-                   // label={t('delay')}
-                    onChange={e => setParams({
-                        ...params,
-                        delay: e.target.value ? format(e.target.value, 'MM/dd/yyyy HH:MM') : undefined,
-                    })}
+                    min={format(new Date, 'yyyy-MM-ddTHH:mm')}
+                    onChange={e => {
+                        const date = new Date(e.target.value)
+                        const formatted = format(date, 'MM/dd/yyyy HH:MM')
+
+                        setParams({
+                            ...params,
+                            delay: e.target.value ? formatted : undefined,
+                        })
+                    }}
                     type='datetime-local'
-                    value={params.delay ? params.delay : ''}
+                    value={params.delay ?  format(params.delay, 'yyyy-MM-dd\'T\'HH:mm').slice(0, 16) : ''}
                 />
             </Field>
 
@@ -70,13 +62,8 @@ export const RcsOptions = ({params, setParams}: RcsOptionsProps) => {
                 expertMode  && <Field>
                     <Label>{t('foreignId')}</Label>
                     <Input
-                        //inputProps={{'maxLength': 64}}
-                        //label={t('foreignId')}
                         maxLength={64}
                         onChange={e => setParams({...params, foreign_id: e.target.value})}
-                        //setState={setParams}
-                        //state={params}
-                        //stateKey='foreign_id'
                         value={params.foreign_id}
                     />
                 </Field>
