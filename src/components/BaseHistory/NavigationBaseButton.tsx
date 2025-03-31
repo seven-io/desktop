@@ -1,6 +1,6 @@
 import {JSXElementConstructor, SVGProps} from 'react'
 import type {NavigationBaseProps, Operator} from '../../types'
-import {Button, ButtonProps} from '../Button'
+import {Button, type ButtonProps} from '../Button'
 
 type NavigationBaseButtonProps = NavigationBaseProps & {
     Icon: JSXElementConstructor<SVGProps<SVGSVGElement>>
@@ -17,10 +17,11 @@ export const NavigationBaseButton = ({
                                      }: NavigationBaseButtonProps) => {
     ButtonProps.style!.position = 'absolute'
 
+   // console.log(list)
 
-    // @ts-ignore TODO!
+    // @ts-ignore
     return <Button
-        className='absolute'
+        //className='absolute'
         disabled={undefined === list['+' === operator ? index + 1 : index - 1]}
         plain
         {...ButtonProps}

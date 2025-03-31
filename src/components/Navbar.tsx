@@ -11,10 +11,6 @@ export function Navbar({ className, ...props }: React.ComponentPropsWithoutRef<'
   return <nav {...props} className={clsx(className, 'flex flex-1 items-center gap-4 py-2.5')} />
 }
 
-export function NavbarDivider({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
-  return <div aria-hidden="true" {...props} className={clsx(className, 'h-6 w-px bg-zinc-950/10 dark:bg-white/10')} />
-}
-
 export function NavbarSection({ className, ...props }: React.ComponentPropsWithoutRef<'div'>) {
   let id = useId()
 
@@ -90,7 +86,3 @@ export const NavbarItem = forwardRef(function NavbarItem(
     </span>
   )
 })
-
-export function NavbarLabel({ className, ...props }: React.ComponentPropsWithoutRef<'span'>) {
-  return <span {...props} className={clsx(className, 'truncate')} />
-}

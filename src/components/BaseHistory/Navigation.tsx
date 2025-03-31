@@ -12,6 +12,7 @@ type NavButtonProps = {
 
 export const Navigation = ({index, list, onNavigation}: NavigationProps) => {
     const handleNavigation = (o: Operator): void => {
+        //console.log('handleNavigation', o)
         let newIndex = '+' === o ? index + 1 : index - 1
 
         if (!list[newIndex]) {

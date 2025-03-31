@@ -39,10 +39,10 @@ export function BaseHistory<T>({
         onNavigation && onNavigation(isCurrent)
     }
 
-    const getRealEntry = (): any[] => {
+    const getRealEntry = (): T[] => {
         console.log('getRealEntry', {entry, path})
         if (!path) {
-            return [entry].flat()
+            return [entry].flat() as T[]
         }
 
         let current: any = entry
@@ -58,7 +58,7 @@ export function BaseHistory<T>({
 
         console.log('current', current)
 
-        return current as any[]
+        return current
     }
 
     return <>
