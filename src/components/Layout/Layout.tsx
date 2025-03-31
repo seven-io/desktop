@@ -50,21 +50,19 @@ export const Layout = () => {
 
         <Snackbars/>
 
-        <main>
-            {
-                'sms' === route
-                    ? <Sms/>
-                    : 'options' === route
-                        ? <Options/>
-                        : 'contacts' === route
-                            ? <Contacts/>
-                            : 'pricing' === route
-                                ? <Pricings/>
-                                : 'voice' === route
-                                    ? <Voice/>
-                                    : 'rcs' === route ? <Rcs/> : <Lookup/>
-            }
-        </main>
+        {
+            'sms' === route
+                ? <Sms/>
+                : 'options' === route
+                    ? <Options/>
+                    : 'contacts' === route
+                        ? <Contacts/>
+                        : 'pricing' === route
+                            ? <Pricings/>
+                            : 'voice' === route
+                                ? <Voice/>
+                                : 'rcs' === route ? <Rcs/> : <Lookup/>
+        }
 
         <BottomNav/>
     </StackedLayout>
