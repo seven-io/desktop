@@ -2,37 +2,34 @@ import {Navbar, NavbarItem, NavbarSection, NavbarSpacer} from '../catalyst/navba
 import {useEffect, useState} from 'react'
 import Logo from '../../assets/img/white-534x105.png'
 import {ExternalButton} from './ExternalButton'
-import FacebookIcon from '@mui/icons-material/Facebook'
-import LinkedInIcon from '@mui/icons-material/LinkedIn'
-import TwitterIcon from '@mui/icons-material/Twitter'
-import RssFeedIcon from '@mui/icons-material/RssFeed'
-import GitHubIcon from '@mui/icons-material/GitHub'
-import HelpIcon from '@mui/icons-material/HelpOutline'
 import {getNumberFormatter} from '../../util/numberFormatter'
 import {useTranslation} from 'react-i18next'
 import localStore from '../../util/LocalStore'
 import type {Language} from '../Options/types'
 import i18n from '../../i18n'
 import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../catalyst/dropdown'
+import {faInfo, faRss} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faFacebook, faGithub, faLinkedin, faXTwitter} from '@fortawesome/free-brands-svg-icons'
 
 const links = [
     <ExternalButton url='https://www.facebook.com/sevencommunications7'>
-        <FacebookIcon className='text-white'/>
+        <FontAwesomeIcon className='text-white' icon={faFacebook} />
     </ExternalButton>,
     <ExternalButton url='https://www.linkedin.com/company/sevenio'>
-        <LinkedInIcon className='text-white'/>
+        <FontAwesomeIcon className='text-white' icon={faLinkedin} />
     </ExternalButton>,
     <ExternalButton url='https://twitter.com/sevenio7'>
-        <TwitterIcon className='text-white'/>
+        <FontAwesomeIcon className='text-white' icon={faXTwitter} />
     </ExternalButton>,
     <ExternalButton url='https://www.seven.io/en/feed/'>
-        <RssFeedIcon className='text-white'/>
+        <FontAwesomeIcon className='text-white' icon={faRss} />
     </ExternalButton>,
     <ExternalButton url='https://github.com/seven-io'>
-        <GitHubIcon className='text-white'/>
+        <FontAwesomeIcon className='text-white' icon={faGithub} />
     </ExternalButton>,
     <ExternalButton url='https://www.seven.io/en/company/contact/'>
-        <HelpIcon className='text-white'/>
+        <FontAwesomeIcon className='text-white' icon={faInfo} />
     </ExternalButton>
 ]
 

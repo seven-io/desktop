@@ -44,23 +44,23 @@ export default {
     },
     plugins: [
         headlessuiPlugin,
-        function({ addBase, theme }) {
-            function extractColorVars(colorObj, colorGroup = '') {
-                return Object.keys(colorObj).reduce((vars, colorKey) => {
-                    const value = colorObj[colorKey];
-
-                    const newVars =
-                        typeof value === 'string'
-                            ? { [`--color${colorGroup}-${colorKey}`]: value }
-                            : extractColorVars(value, `-${colorKey}`);
-
-                    return { ...vars, ...newVars };
-                }, {});
-            }
-
+        function ({addBase, theme}: any) {
             addBase({
                 ':root': extractColorVars(theme('colors')),
-            });
+            })
+
+            function extractColorVars(colorObj: Record<string, string>, colorGroup = ''): any {
+                return Object.keys(colorObj).reduce((vars, colorKey) => {
+                    const value = colorObj[colorKey]
+
+                    // @ts-ignore
+                    const newVars = typeof value === 'string'
+                        ? {[`--color${colorGroup}-${colorKey}`]: value}
+                        : extractColorVars(value, `-${colorKey}`)
+
+                    return {...vars, ...newVars}
+                }, {})
+            }
         },
     ],
 }
