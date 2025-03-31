@@ -13,6 +13,7 @@ import {Button} from '../Button'
 import {Table, TableBody, TableCell, TableHead, TableRow} from '../Table'
 import {EnvelopeIcon, PencilSquareIcon, PhoneIcon} from '@heroicons/react/16/solid'
 import Tooltip from '../Tooltip'
+import {Heading} from '../Heading'
 
 export const Contacts = () => {
     const {t} = useTranslation('contacts')
@@ -58,7 +59,7 @@ export const Contacts = () => {
 
     return <>
         <div className='flex justify-between'>
-            <h1 className='inline-flex'>{t('contacts')}</h1>
+            <Heading className='inline-flex'>{t('contacts')}</Heading>
 
             <Button onClick={getAndStore}>{t('reload')}</Button>
         </div>

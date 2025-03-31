@@ -16,6 +16,7 @@ export const pricing = {
     pricing: 'Preis-Informationen',
     pricingFor: 'Preise für {{countNetworks}} Netzwerk(e) in {{countCountries}} Land/Länder.',
     prefix: 'Präfix',
+    refresh: 'Aktualisieren',
     mcc: 'MCC',
     mncs: 'MNCS',
     name: 'Name',

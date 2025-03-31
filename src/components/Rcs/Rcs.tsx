@@ -18,6 +18,7 @@ import {Textarea} from '../Textarea'
 import {Description, Field, Label} from '../Fieldset'
 import {Button} from '../Button'
 import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
+import {Heading} from '../Heading'
 
 export function Rcs() {
     const dispatch = useAppDispatch()
@@ -89,7 +90,7 @@ export function Rcs() {
     }
 
     return <>
-        <h1>{t('rcs:h1')}</h1>
+        <Heading>{t('rcs:h1')}</Heading>
 
         <form onSubmit={handleSubmit}>
             {expertMode && <Toolbar

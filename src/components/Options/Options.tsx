@@ -7,6 +7,7 @@ import DefaultRecipients from './DefaultRecipients'
 import ExpertMode from './ExpertMode'
 import localStore from '../../util/LocalStore'
 import {IOptions} from './types'
+import {Heading} from '../Heading'
 
 export const Options = () => {
     const {t} = useTranslation()
@@ -19,7 +20,7 @@ export const Options = () => {
     }
 
     return <>
-        <h1>{t('options')}</h1>
+        <Heading>{t('options')}</Heading>
 
         <div>
             <ApiKey

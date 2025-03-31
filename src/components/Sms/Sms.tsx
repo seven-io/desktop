@@ -19,6 +19,7 @@ import {Textarea} from '../Textarea'
 import {Field, Label} from '../Fieldset'
 import {Button} from '../Button'
 import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
+import {Heading} from '../Heading'
 
 export type SmsPartParams = Omit<SmsParams, CommonMessagePropKeys>
 
@@ -92,7 +93,7 @@ export const Sms = () => {
     }
 
     return <>
-        <h1>{t('sms:h1')}</h1>
+        <Heading>{t('sms:h1')}</Heading>
 
         <form onSubmit={handleSubmit}>
             {expertMode && <Toolbar

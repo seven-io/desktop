@@ -17,6 +17,7 @@ import {VoiceParams} from '@seven.io/client'
 import {Textarea} from '../Textarea'
 import {Field, Label} from '../Fieldset'
 import {Button} from '../Button'
+import {Heading} from '../Heading'
 
 export function Voice() {
     const dispatch = useAppDispatch()
@@ -87,7 +88,7 @@ export function Voice() {
     }
 
     return <>
-        <h1>{t('voice:h1')}</h1>
+        <Heading>{t('voice:h1')}</Heading>
 
         <form onSubmit={handleSubmit}>
             {expertMode && <Toolbar

@@ -11,6 +11,7 @@ import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../Dropdown'
 import {faInfo, faRss} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faFacebook, faGithub, faLinkedin, faXTwitter} from '@fortawesome/free-brands-svg-icons'
+import {useDarkMode} from 'usehooks-ts'
 
 const links = [
     <ExternalButton url='https://www.facebook.com/sevencommunications7'>
@@ -37,6 +38,7 @@ export default function TopNavigation() {
     const {t} = useTranslation()
     const [balance, setBalance] = useState(localStore.get('balance'))
     const [language, setLanguage] = useState<Language>(localStore.get('options.language'))
+    const {isDarkMode} = useDarkMode()
 
     useEffect(() => {
         localStore.onDidChange('balance', (balance) => {
@@ -56,7 +58,9 @@ export default function TopNavigation() {
         await i18n.changeLanguage('us' === lang ? 'en' : lang)
     }
 
-    return <Navbar className='px-1' style={{backgroundColor: '#00d488'}}>
+    return <Navbar className='px-1 dark:bg-zinc-900' style={{
+        backgroundColor: isDarkMode ? undefined : '#00d488'
+    }}>
         <img
             alt='seven Logo'
             className='cursor-pointer max-w-32'
@@ -67,8 +71,8 @@ export default function TopNavigation() {
         <NavbarSpacer />
 
         <NavbarSection>
-            {null !== balance && <NavbarItem className='align-super font-bold'
-            ><span className='text-white dark:text-black'>{t('balance')}: {getNumberFormatter().format(balance)}</span></NavbarItem>}
+            {null !== balance && <NavbarItem className='align-super font-bold text-white'
+            >{t('balance')}: {getNumberFormatter().format(balance)}</NavbarItem>}
 
             <Dropdown>
                 <DropdownButton plain className='h-9 flex items-center' onClick={() => handleCloseLanguage()}>
@@ -85,7 +89,7 @@ export default function TopNavigation() {
                        />
                     </DropdownItem>
 
-                    <DropdownItem onClick={() => handleCloseLanguage('de')}>
+                    <DropdownItem className='text-center' onClick={() => handleCloseLanguage('de')}>
                        <span
                            className='fi fi-de'
                            aria-label='Deutsch auswählen'

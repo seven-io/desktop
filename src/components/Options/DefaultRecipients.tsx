@@ -38,14 +38,14 @@ export default () => {
             value={Array.isArray(state.to) ? state.to : []}
         >
             <ComboboxInput
-                className='block'
+                className='block dark:text-white'
                 displayValue={(value: string) => value}
                 onChange={(ev) => setQuery(ev.target.value)}
                 placeholder='+491799999999'
             />
             <ComboboxOptions>
                 {options.map((option) => (
-                    <ComboboxOption key={option} value={option}>
+                    <ComboboxOption className='dark:text-white' key={option} value={option}>
                         {option}
                     </ComboboxOption>
                 ))}

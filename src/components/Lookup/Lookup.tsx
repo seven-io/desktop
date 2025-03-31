@@ -15,6 +15,7 @@ import {Radio, RadioField, RadioGroup} from '../Radio'
 import Tooltip from '../Tooltip'
 import {Input} from '../Input'
 import {Button} from '../Button'
+import {Heading} from '../Heading'
 
 const LOOKUP_TYPES = ['cnam', 'hlr', 'mnp', 'format', 'rcs'] as const;
 type LookupTypeTuple = typeof LOOKUP_TYPES;
@@ -67,7 +68,7 @@ export const Lookup = () => {
 
     return <>
         <div className='grid grid-cols-2 justify-between items-center'>
-            <h1>{t('lookup')}</h1>
+            <Heading>{t('lookup')}</Heading>
 
             <Button
                 color='green'
@@ -115,7 +116,7 @@ export const Lookup = () => {
             </div>
         </form>
 
-        <h1>{t(historyTransKey)}</h1>
+        <Heading>{t(historyTransKey)}</Heading>
 
         <BaseHistory<LookupResponse>
             onNavigation={

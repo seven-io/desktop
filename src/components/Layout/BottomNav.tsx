@@ -18,12 +18,12 @@ export const BottomNav = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const [actions, setActions] = useState<{value: Route, icon: ReactNode}[]>([
-        {value: 'sms', icon: <EnvelopeIcon/>},
-        {value: 'rcs', icon: <IdentificationIcon/>},
-        {value: 'voice', icon: <PhoneIcon/>},
-        {value: 'lookup', icon: <DocumentMagnifyingGlassIcon/>},
-        {value: 'options', icon: <CogIcon/>},
-        {value: 'contacts', icon: <UserIcon/>},
+        {value: 'sms', icon: <EnvelopeIcon className='dark:text-white'/>},
+        {value: 'rcs', icon: <IdentificationIcon className='dark:text-white'/>},
+        {value: 'voice', icon: <PhoneIcon className='dark:text-white'/>},
+        {value: 'lookup', icon: <DocumentMagnifyingGlassIcon className='dark:text-white'/>},
+        {value: 'options', icon: <CogIcon className='dark:text-white'/>},
+        {value: 'contacts', icon: <UserIcon className='dark:text-white'/>},
     ])
 
     const getActionIndexByValue = (value: string): number => {
@@ -42,7 +42,7 @@ export const BottomNav = () => {
             if (!hasPricingRoute) {
                 _actions.push({
                     value: 'pricing',
-                    icon: <CurrencyDollarIcon/>,
+                    icon: <CurrencyDollarIcon className='dark:text-white'/>,
                 })
             }
         } else {
