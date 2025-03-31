@@ -92,12 +92,9 @@ export const Lookup = () => {
                         {
                             LOOKUP_TYPES
                                 .map((type, i) => {
-                                    return <RadioField>
+                                    return <RadioField key={i}>
                                         <Radio value={type} />
-                                        <Tooltip
-                                            key={i}
-                                            title={t(`tooltips.${type}`)}
-                                        >
+                                        <Tooltip title={t(`tooltips.${type}`)}>
                                             <Label>{t(type)}</Label>
                                         </Tooltip>
                                     </RadioField>
