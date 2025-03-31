@@ -4,9 +4,9 @@ import {initClient} from '../../util/initClient'
 import type {IOptions} from './types'
 import {BalanceResource} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
-import {Input, InputGroup, type InputProps} from '../catalyst/input'
-import {ErrorMessage, Field, Label} from '../catalyst/fieldset'
-import {Button} from '../catalyst/button'
+import {Input, InputGroup, type InputProps} from '../Input'
+import {ErrorMessage, Field, Label} from '../Fieldset'
+import {Button} from '../Button'
 import {EyeIcon, EyeSlashIcon} from '@heroicons/react/16/solid'
 
 type ApiKeyProps = Omit<InputProps, 'onChange'> & {

@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from '../../store'
 import {selectRcsRecipient, SET_TO_RCS} from '../../store/features/to'
 import {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
-import {Field, Label} from '../catalyst/fieldset'
+import {Field, Label} from '../Fieldset'
 import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
 export const RcsRecipient = () => {

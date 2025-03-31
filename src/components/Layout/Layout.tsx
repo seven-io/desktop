@@ -15,7 +15,7 @@ import {ADD_SNACKBAR} from '../../store/features/snackbars'
 import localStore from '../../util/LocalStore'
 import {Rcs} from '../Rcs/Rcs'
 import TopNavigation from './TopNavigation'
-import {StackedLayout} from '../catalyst/stacked-layout'
+import {StackedLayout} from '../StackedLayout'
 import MobileSidebar from './MobileSidebar'
 import {ArrowPathIcon} from '@heroicons/react/16/solid'
 

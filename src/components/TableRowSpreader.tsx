@@ -3,7 +3,7 @@ import {useTranslation} from 'react-i18next'
 import {toString} from '../util/toString'
 import {BoolChip} from './BoolChip'
 import {CarrierTable} from './Lookup/CarrierTable'
-import {TableCell, TableHeader, TableRow} from './catalyst/table'
+import {TableCell, TableHeader, TableRow} from './Table'
 
 export type TableRowSpreader = {
     nsKey: string

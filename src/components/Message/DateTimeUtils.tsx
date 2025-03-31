@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next'
-import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../catalyst/dropdown'
+import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../Dropdown'
 
 export type MessageToolbarProps = {
     onClick: (label: string) => void

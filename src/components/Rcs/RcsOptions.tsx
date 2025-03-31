@@ -3,9 +3,9 @@ import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import localStore from '../../util/LocalStore'
 import {RcsPartialProps} from '../../util/sendRcs'
-import {Input} from '../catalyst/input'
-import {Field, Label} from '../catalyst/fieldset'
-import {Switch, SwitchField} from '../catalyst/switch'
+import {Input} from '../Input'
+import {Field, Label} from '../Fieldset'
+import {Switch, SwitchField} from '../Switch'
 
 type RcsOptionsProps = {
     params: RcsPartialProps

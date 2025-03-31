@@ -1,6 +1,6 @@
 import {useTranslation} from 'react-i18next'
-import {Description, Field, Label} from '../catalyst/fieldset'
-import {Textarea, TextareaProps} from '../catalyst/textarea'
+import {Description, Field, Label} from '../Fieldset'
+import {Textarea, TextareaProps} from '../Textarea'
 
 type SignatureProps = Omit<TextareaProps, 'value'> & {
     value: string

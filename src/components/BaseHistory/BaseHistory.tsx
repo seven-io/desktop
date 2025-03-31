@@ -2,7 +2,7 @@ import {useEffect, useState} from 'react'
 import localStore, {type ILocalStore} from '../../util/LocalStore'
 import {usePrevious} from '../../util/usePrevious'
 import {Navigation} from './Navigation'
-import {Table, TableBody} from '../catalyst/table'
+import {Table, TableBody} from '../Table'
 
 export type BaseHistoryProps = {
     onNavigation?: (isCurrent: boolean) => void

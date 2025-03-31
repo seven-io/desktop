@@ -10,11 +10,11 @@ import {SET_BACKDROP} from '../../store/features/backdrop'
 import {ADD_SNACKBAR} from '../../store/features/snackbars'
 import {useAppDispatch} from '../../store'
 import localStore from '../../util/LocalStore'
-import {Field, Fieldset, Label, Legend} from '../catalyst/fieldset'
-import {Radio, RadioField, RadioGroup} from '../catalyst/radio'
+import {Field, Fieldset, Label, Legend} from '../Fieldset'
+import {Radio, RadioField, RadioGroup} from '../Radio'
 import Tooltip from '../Tooltip'
-import {Input} from '../catalyst/input'
-import {Button} from '../catalyst/button'
+import {Input} from '../Input'
+import {Button} from '../Button'
 
 const LOOKUP_TYPES = ['cnam', 'hlr', 'mnp', 'format', 'rcs'] as const;
 type LookupTypeTuple = typeof LOOKUP_TYPES;

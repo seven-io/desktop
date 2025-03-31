@@ -5,7 +5,7 @@ import {getNumberFormatter} from '../../util/numberFormatter'
 import type {SmsDump} from '../../util/sendSms'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 import {BoolChip} from '../BoolChip'
-import {TableCell, TableHeader, TableRow} from '../catalyst/table'
+import {TableCell, TableHeader, TableRow} from '../Table'
 import Tooltip from '../Tooltip'
 
 export const SmsHistory = () => {

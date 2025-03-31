@@ -1,6 +1,6 @@
 import {JSXElementConstructor, SVGProps} from 'react'
 import type {NavigationBaseProps, Operator} from '../../types'
-import {Button, ButtonProps} from '../catalyst/button'
+import {Button, ButtonProps} from '../Button'
 
 type NavigationBaseButtonProps = NavigationBaseProps & {
     Icon: JSXElementConstructor<SVGProps<SVGSVGElement>>

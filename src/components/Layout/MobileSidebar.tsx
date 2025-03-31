@@ -1,4 +1,4 @@
-import {Sidebar, SidebarBody, SidebarHeader, SidebarItem, SidebarSection} from '../catalyst/sidebar'
+import {Sidebar, SidebarBody, SidebarHeader, SidebarItem, SidebarSection} from '../Sidebar'
 import {useEffect, useState} from 'react'
 import Logo from '../../assets/img/white-534x105.png'
 import {ExternalButton} from './ExternalButton'

@@ -1,4 +1,4 @@
-import {Button} from '../catalyst/button'
+import {Button} from '../Button'
 import {PropsWithChildren} from 'react'
 
 type ExternalButtonProps = PropsWithChildren<{

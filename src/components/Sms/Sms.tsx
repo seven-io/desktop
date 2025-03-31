@@ -15,9 +15,9 @@ import {initClient} from '../../util/initClient'
 import {Toolbar} from '../Message/Toolbar'
 import {From} from '../From'
 import {SmsRecipients} from './SmsRecipients'
-import {Textarea} from '../catalyst/textarea'
-import {Field, Label} from '../catalyst/fieldset'
-import {Button} from '../catalyst/button'
+import {Textarea} from '../Textarea'
+import {Field, Label} from '../Fieldset'
+import {Button} from '../Button'
 import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
 
 export type SmsPartParams = Omit<SmsParams, CommonMessagePropKeys>

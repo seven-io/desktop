@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {Description, Field, Label} from './catalyst/fieldset'
-import {Input, type InputProps} from './catalyst/input'
+import {Description, Field, Label} from './Fieldset'
+import {Input, type InputProps} from './Input'
 
 type FromProps = Omit<InputProps, 'onChange'> & {
     onChange: (from: string) => void

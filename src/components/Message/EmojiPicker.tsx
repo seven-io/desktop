@@ -1,6 +1,6 @@
 import Picker, {type PickerProps} from 'emoji-picker-react'
 import {useTranslation} from 'react-i18next'
-import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../catalyst/dropdown'
+import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../Dropdown'
 
 export const EmojiPicker = (props: PickerProps) => {
     const {t} = useTranslation('message')

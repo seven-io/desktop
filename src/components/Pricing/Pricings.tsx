@@ -7,9 +7,9 @@ import {CountryFlag} from '../CountryFlag'
 import {Pricing} from './Pricing'
 import {SET_BACKDROP} from '../../store/features/backdrop'
 import localStore from '../../util/LocalStore'
-import {Button} from '../catalyst/button'
-import {Table, TableBody, TableCell, TableHeader, TableRow} from '../catalyst/table'
-import {Field, Label} from '../catalyst/fieldset'
+import {Button} from '../Button'
+import {Table, TableBody, TableCell, TableHeader, TableRow} from '../Table'
+import {Field, Label} from '../Fieldset'
 import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
 export const Pricings = () => {

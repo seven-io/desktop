@@ -4,7 +4,7 @@ import {useAppDispatch, useAppSelector} from '../../store'
 import {selectRecipients, SET_TO} from '../../store/features/to'
 import type {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
-import {Field, Label} from '../catalyst/fieldset'
+import {Field, Label} from '../Fieldset'
 import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
 export const VoiceRecipients = () => {

@@ -2,7 +2,7 @@ import {useTranslation} from 'react-i18next'
 import {useState} from 'react'
 import {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
-import {Description, Field, Label} from '../catalyst/fieldset'
+import {Description, Field, Label} from '../Fieldset'
 import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
 
 export default () => {

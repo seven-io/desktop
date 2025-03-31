@@ -14,9 +14,9 @@ import {sendVoice} from '../../util/sendVoice'
 import {VoiceRecipients} from './VoiceRecipients'
 import {VoiceSender} from './VoiceSender'
 import {VoiceParams} from '@seven.io/client'
-import {Textarea} from '../catalyst/textarea'
-import {Field, Label} from '../catalyst/fieldset'
-import {Button} from '../catalyst/button'
+import {Textarea} from '../Textarea'
+import {Field, Label} from '../Fieldset'
+import {Button} from '../Button'
 
 export function Voice() {
     const dispatch = useAppDispatch()

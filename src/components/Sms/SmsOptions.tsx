@@ -3,9 +3,9 @@ import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import type {SmsPartParams} from './Sms'
 import localStore from '../../util/LocalStore'
-import {Input} from '../catalyst/input'
-import {Switch, SwitchField} from '../catalyst/switch'
-import {Field, Label} from '../catalyst/fieldset'
+import {Input} from '../Input'
+import {Switch, SwitchField} from '../Switch'
+import {Field, Label} from '../Fieldset'
 
 type SmsOptionsProps = {
     params: SmsPartParams

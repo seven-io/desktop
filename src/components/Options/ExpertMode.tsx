@@ -1,8 +1,8 @@
 import {useTranslation} from 'react-i18next'
 import {useState} from 'react'
 import localStore from '../../util/LocalStore'
-import {Switch, SwitchField} from '../catalyst/switch'
-import {Label} from '../catalyst/fieldset'
+import {Switch, SwitchField} from '../Switch'
+import {Label} from '../Fieldset'
 
 export default () => {
     const {t} = useTranslation()

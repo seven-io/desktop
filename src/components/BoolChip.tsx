@@ -1,5 +1,5 @@
 import {useTranslation} from 'react-i18next'
-import {Badge} from './catalyst/badge'
+import {Badge} from './Badge'
 
 type BoolChipProps = {
     value: boolean

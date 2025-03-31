@@ -14,9 +14,9 @@ import {ADD_SNACKBAR} from '../../store/features/snackbars'
 import {RcsPartialProps, sendRcs} from '../../util/sendRcs'
 import {RcsHistory} from './RcsHistory'
 import {RcsOptions} from './RcsOptions'
-import {Textarea} from '../catalyst/textarea'
-import {Description, Field, Label} from '../catalyst/fieldset'
-import {Button} from '../catalyst/button'
+import {Textarea} from '../Textarea'
+import {Description, Field, Label} from '../Fieldset'
+import {Button} from '../Button'
 import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
 
 export function Rcs() {

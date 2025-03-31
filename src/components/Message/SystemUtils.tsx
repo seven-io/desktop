@@ -2,7 +2,7 @@ import {ipcRenderer} from 'electron'
 import os from 'os'
 import {useTranslation} from 'react-i18next'
 import {toMegaBytes} from '../../util/toMegaBytes'
-import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../catalyst/dropdown'
+import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../Dropdown'
 
 type MessageToolbarProps = {
     onClick: (label: string) => void

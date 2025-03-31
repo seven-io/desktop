@@ -5,7 +5,7 @@ import {selectRecipients, SET_TO} from '../../store/features/to'
 import {Contact} from '@seven.io/client'
 import localStore from '../../util/LocalStore'
 import {Combobox, ComboboxInput, ComboboxOption, ComboboxOptions} from '@headlessui/react'
-import {Field, Label} from '../catalyst/fieldset'
+import {Field, Label} from '../Fieldset'
 
 export const SmsRecipients = () => {
     const dispatch = useAppDispatch()

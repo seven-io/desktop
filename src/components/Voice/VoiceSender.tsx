@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {Input, type InputProps} from '../catalyst/input'
-import {Field, Label} from '../catalyst/fieldset'
+import {Input, type InputProps} from '../Input'
+import {Field, Label} from '../Fieldset'
 
 export const VoiceSender = ({onChange, value}: Omit<InputProps, 'onChange' | 'value'> & {
     onChange: (from: string) => void

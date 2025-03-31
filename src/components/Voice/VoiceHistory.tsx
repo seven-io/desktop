@@ -1,4 +1,4 @@
-import {TableCell, TableHeader, TableRow} from '../catalyst/table'
+import {TableCell, TableHeader, TableRow} from '../Table'
 import type {VoiceParams, VoiceResponse} from '@seven.io/client'
 import {Fragment} from 'react'
 import {useTranslation} from 'react-i18next'

@@ -1,5 +1,6 @@
 import clsx from 'clsx'
-import { Link } from './link'
+import { Link } from './Link'
+import React from 'react'
 
 export function Text({ className, ...props }: React.ComponentPropsWithoutRef<'p'>) {
   return (
