@@ -24,13 +24,13 @@ export default ({countries, onChange, value}: {
     return <Field>
         <Label>{t('choose')}</Label>
 
-        <Combobox<CountryPricing>
+        <Combobox<CountryPricing|null>
             immediate
             onChange={(value) => {
                 onChange(value)
             }}
             onClose={() => setQuery('')}
-            value={value ?? undefined}
+            value={value}
         >
             <ComboboxInput
                 className='w-full dark:text-white'
