@@ -1,37 +1,34 @@
-import type {SmsParams} from '@seven.io/client'
+import {RcsDispatchParams} from '@seven.io/client'
 import {type SyntheticEvent, useEffect, useRef, useState} from 'react'
-import {sendSms, type SendSmsProps} from '../../util/sendSms'
-import {type CommonMessagePropKeys} from '../Message/Message'
-import {SmsHistory} from './SmsHistory'
-import {SmsOptions} from './SmsOptions'
-import {useAppDispatch, useAppSelector} from '../../store'
-import {selectRecipients, SET_TO} from '../../store/features/to'
 import {useTranslation} from 'react-i18next'
-import localStore, {localStoreDefaults} from '../../util/LocalStore'
-import {SET_BACKDROP} from '../../store/features/backdrop'
-import {notify} from '../../util/notify'
-import {ADD_SNACKBAR} from '../../store/features/snackbars'
-import {initClient} from '../../util/initClient'
-import {Toolbar} from '../Message/Toolbar'
-import {From} from '../From'
-import {SmsRecipients} from './SmsRecipients'
-import {Textarea} from '../Textarea'
-import {Field, Label} from '../Fieldset'
-import {Button} from '../Button'
+import {useAppDispatch, useAppSelector} from '../store'
+import {initClient} from '../util/initClient'
+import localStore, {localStoreDefaults} from '../util/LocalStore'
+import {notify} from '../util/notify'
+import {From} from '../components/From'
+import {RcsRecipient} from '../components/Rcs/RcsRecipient'
+import {Toolbar} from '../components/Message/Toolbar'
+import {SET_BACKDROP} from '../store/features/backdrop'
+import {selectRcsRecipient, SET_TO} from '../store/features/to'
+import {ADD_SNACKBAR} from '../store/features/snackbars'
+import {RcsPartialProps, sendRcs} from '../util/sendRcs'
+import {RcsHistory} from '../components/Rcs/RcsHistory'
+import {RcsOptions} from '../components/Rcs/RcsOptions'
+import {Textarea} from '../components/Textarea'
+import {Description, Field, Label} from '../components/Fieldset'
+import {Button} from '../components/Button'
 import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
-import {Heading} from '../Heading'
+import {Heading} from '../components/Heading'
 
-export type SmsPartParams = Omit<SmsParams, CommonMessagePropKeys>
-
-export const Sms = () => {
-    const [params, setParams] = useState<SmsPartParams>({})
+export function Rcs() {
     const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
-    const to = useAppSelector(selectRecipients)
-    const {t} = useTranslation(['message', 'sms'])
+    const to = useAppSelector(selectRcsRecipient)
+    const {t} = useTranslation(['message', 'rcs'])
     const $textarea = useRef(null)
     const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
+    const [params, setParams] = useState<RcsPartialProps>({})
 
     useEffect(() => {
         setDefaults()
@@ -52,12 +49,12 @@ export const Sms = () => {
 
         dispatch(SET_BACKDROP(true))
 
-        const props: SendSmsProps = {text, to, from}
+        const dispatchParams: RcsDispatchParams = {text, to, from}
         const errors = []
 
-        if (!props.to.length) props.to = localStore.get('options.to')
+        if (!dispatchParams.to.length) dispatchParams.to = localStore.get('options.to')
 
-        if (props.from && !props.from.length) props.from = localStore.get('options.from')
+        //if (params.from && !params.from.length) params.from = localStore.get('options.from')
 
         if (errors.length) {
             errors.unshift('Error(s) while validation:')
@@ -69,11 +66,11 @@ export const Sms = () => {
             return
         }
 
-        dispatch(ADD_SNACKBAR(await sendSms({
+        dispatch(ADD_SNACKBAR(await sendRcs({
             client: initClient(),
             options: {
-                ...props,
                 ...params,
+                ...dispatchParams
             },
         })))
 
@@ -93,7 +90,7 @@ export const Sms = () => {
     }
 
     return <>
-        <Heading>{t('sms:h1')}</Heading>
+        <Heading>{t('rcs:h1')}</Heading>
 
         <form onSubmit={handleSubmit}>
             {expertMode && <Toolbar
@@ -104,6 +101,7 @@ export const Sms = () => {
 
             <Field>
                 <Label>{t('label')}</Label>
+                <Description>{t('helperText')}</Description>
                 <Textarea
                     ref={$textarea}
                     onChange={ev => setText(ev.target.value)}
@@ -114,11 +112,11 @@ export const Sms = () => {
                 />
             </Field>
 
-            <SmsRecipients />
+            <RcsRecipient />
 
             <From onChange={setFrom} value={from}/>
 
-            <SmsOptions params={params} setParams={setParams}/>
+            <RcsOptions params={params} setParams={setParams}/>
 
             <div className='grid grid-cols-2 mt-6'>
                 <Button
@@ -126,7 +124,7 @@ export const Sms = () => {
                     onClick={handleClear}
                 >
                     {t('clear')}
-                    <XMarkIcon />
+                    <XMarkIcon/>
                 </Button>
 
                 <Button
@@ -139,6 +137,6 @@ export const Sms = () => {
             </div>
         </form>
 
-        <SmsHistory/>
+        <RcsHistory/>
     </>
 }

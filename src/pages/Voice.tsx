@@ -1,34 +1,32 @@
-import {RcsDispatchParams} from '@seven.io/client'
+import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
 import {type SyntheticEvent, useEffect, useRef, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {useAppDispatch, useAppSelector} from '../../store'
-import {initClient} from '../../util/initClient'
-import localStore, {localStoreDefaults} from '../../util/LocalStore'
-import {notify} from '../../util/notify'
-import {From} from '../From'
-import {RcsRecipient} from './RcsRecipient'
-import {Toolbar} from '../Message/Toolbar'
-import {SET_BACKDROP} from '../../store/features/backdrop'
-import {selectRcsRecipient, SET_TO} from '../../store/features/to'
-import {ADD_SNACKBAR} from '../../store/features/snackbars'
-import {RcsPartialProps, sendRcs} from '../../util/sendRcs'
-import {RcsHistory} from './RcsHistory'
-import {RcsOptions} from './RcsOptions'
-import {Textarea} from '../Textarea'
-import {Description, Field, Label} from '../Fieldset'
-import {Button} from '../Button'
-import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
-import {Heading} from '../Heading'
+import {useAppDispatch, useAppSelector} from '../store'
+import {initClient} from '../util/initClient'
+import localStore, {localStoreDefaults} from '../util/LocalStore'
+import {notify} from '../util/notify'
+import {Toolbar} from '../components/Message/Toolbar'
+import {SET_BACKDROP} from '../store/features/backdrop'
+import {selectRecipients, SET_TO} from '../store/features/to'
+import {ADD_SNACKBAR} from '../store/features/snackbars'
+import {VoiceHistory} from '../components/Voice/VoiceHistory'
+import {sendVoice} from '../util/sendVoice'
+import {VoiceRecipients} from '../components/Voice/VoiceRecipients'
+import {VoiceSender} from '../components/Voice/VoiceSender'
+import {VoiceParams} from '@seven.io/client'
+import {Textarea} from '../components/Textarea'
+import {Field, Label} from '../components/Fieldset'
+import {Button} from '../components/Button'
+import {Heading} from '../components/Heading'
 
-export function Rcs() {
+export function Voice() {
     const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
-    const to = useAppSelector(selectRcsRecipient)
-    const {t} = useTranslation(['message', 'rcs'])
+    const to = useAppSelector(selectRecipients)
+    const {t} = useTranslation(['message', 'voice'])
     const $textarea = useRef(null)
     const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
-    const [params, setParams] = useState<RcsPartialProps>({})
 
     useEffect(() => {
         setDefaults()
@@ -40,7 +38,6 @@ export function Rcs() {
 
     const handleClear = () => {
         setText('')
-
         setDefaults()
     }
 
@@ -49,12 +46,12 @@ export function Rcs() {
 
         dispatch(SET_BACKDROP(true))
 
-        const dispatchParams: RcsDispatchParams = {text, to, from}
+        const props: VoiceParams = {text, to, from}
         const errors = []
 
-        if (!dispatchParams.to.length) dispatchParams.to = localStore.get('options.to')
+        if (!props.to.length) props.to = localStore.get('options.to')
 
-        //if (params.from && !params.from.length) params.from = localStore.get('options.from')
+        if (props.from && !props.from.length) props.from = localStore.get('options.from')
 
         if (errors.length) {
             errors.unshift('Error(s) while validation:')
@@ -66,11 +63,12 @@ export function Rcs() {
             return
         }
 
-        dispatch(ADD_SNACKBAR(await sendRcs({
+        dispatch(ADD_SNACKBAR(await sendVoice({
             client: initClient(),
             options: {
-                ...params,
-                ...dispatchParams
+                from: props.from,
+                text: props.text,
+                to: props.to
             },
         })))
 
@@ -90,18 +88,17 @@ export function Rcs() {
     }
 
     return <>
-        <Heading>{t('rcs:h1')}</Heading>
+        <Heading>{t('voice:h1')}</Heading>
 
         <form onSubmit={handleSubmit}>
             {expertMode && <Toolbar
-                emoji
+                emoji={false}
                 onAction={setText}
                 textarea={$textarea.current!}
             />}
 
             <Field>
                 <Label>{t('label')}</Label>
-                <Description>{t('helperText')}</Description>
                 <Textarea
                     ref={$textarea}
                     onChange={ev => setText(ev.target.value)}
@@ -112,11 +109,9 @@ export function Rcs() {
                 />
             </Field>
 
-            <RcsRecipient />
+            <VoiceRecipients />
 
-            <From onChange={setFrom} value={from}/>
-
-            <RcsOptions params={params} setParams={setParams}/>
+            <VoiceSender onChange={setFrom} value={from}/>
 
             <div className='grid grid-cols-2 mt-6'>
                 <Button
@@ -129,14 +124,15 @@ export function Rcs() {
 
                 <Button
                     disabled={!text.length}
+                    outline
                     type='submit'
                 >
                     {t('send')}
-                    <PaperAirplaneIcon />
+                    <PaperAirplaneIcon/>
                 </Button>
             </div>
         </form>
 
-        <RcsHistory/>
+        <VoiceHistory/>
     </>
 }

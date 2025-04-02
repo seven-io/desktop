@@ -1,30 +1,35 @@
-import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
+import type {SmsParams} from '@seven.io/client'
 import {type SyntheticEvent, useEffect, useRef, useState} from 'react'
+import {sendSms, type SendSmsProps} from '../util/sendSms'
+import {type CommonMessagePropKeys} from '../components/Message/Message'
+import {SmsHistory} from '../components/Sms/SmsHistory'
+import {SmsOptions} from '../components/Sms/SmsOptions'
+import {useAppDispatch, useAppSelector} from '../store'
+import {selectRecipients, SET_TO} from '../store/features/to'
 import {useTranslation} from 'react-i18next'
-import {useAppDispatch, useAppSelector} from '../../store'
-import {initClient} from '../../util/initClient'
-import localStore, {localStoreDefaults} from '../../util/LocalStore'
-import {notify} from '../../util/notify'
-import {Toolbar} from '../Message/Toolbar'
-import {SET_BACKDROP} from '../../store/features/backdrop'
-import {selectRecipients, SET_TO} from '../../store/features/to'
-import {ADD_SNACKBAR} from '../../store/features/snackbars'
-import {VoiceHistory} from './VoiceHistory'
-import {sendVoice} from '../../util/sendVoice'
-import {VoiceRecipients} from './VoiceRecipients'
-import {VoiceSender} from './VoiceSender'
-import {VoiceParams} from '@seven.io/client'
-import {Textarea} from '../Textarea'
-import {Field, Label} from '../Fieldset'
-import {Button} from '../Button'
-import {Heading} from '../Heading'
+import localStore, {localStoreDefaults} from '../util/LocalStore'
+import {SET_BACKDROP} from '../store/features/backdrop'
+import {notify} from '../util/notify'
+import {ADD_SNACKBAR} from '../store/features/snackbars'
+import {initClient} from '../util/initClient'
+import {Toolbar} from '../components/Message/Toolbar'
+import {From} from '../components/From'
+import {SmsRecipients} from '../components/Sms/SmsRecipients'
+import {Textarea} from '../components/Textarea'
+import {Field, Label} from '../components/Fieldset'
+import {Button} from '../components/Button'
+import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
+import {Heading} from '../components/Heading'
 
-export function Voice() {
+export type SmsPartParams = Omit<SmsParams, CommonMessagePropKeys>
+
+export const Sms = () => {
+    const [params, setParams] = useState<SmsPartParams>({})
     const dispatch = useAppDispatch()
     const [text, setText] = useState('')
     const [from, setFrom] = useState('')
     const to = useAppSelector(selectRecipients)
-    const {t} = useTranslation(['message', 'voice'])
+    const {t} = useTranslation(['message', 'sms'])
     const $textarea = useRef(null)
     const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
 
@@ -38,6 +43,7 @@ export function Voice() {
 
     const handleClear = () => {
         setText('')
+
         setDefaults()
     }
 
@@ -46,7 +52,7 @@ export function Voice() {
 
         dispatch(SET_BACKDROP(true))
 
-        const props: VoiceParams = {text, to, from}
+        const props: SendSmsProps = {text, to, from}
         const errors = []
 
         if (!props.to.length) props.to = localStore.get('options.to')
@@ -63,12 +69,11 @@ export function Voice() {
             return
         }
 
-        dispatch(ADD_SNACKBAR(await sendVoice({
+        dispatch(ADD_SNACKBAR(await sendSms({
             client: initClient(),
             options: {
-                from: props.from,
-                text: props.text,
-                to: props.to
+                ...props,
+                ...params,
             },
         })))
 
@@ -88,11 +93,11 @@ export function Voice() {
     }
 
     return <>
-        <Heading>{t('voice:h1')}</Heading>
+        <Heading>{t('sms:h1')}</Heading>
 
         <form onSubmit={handleSubmit}>
             {expertMode && <Toolbar
-                emoji={false}
+                emoji
                 onAction={setText}
                 textarea={$textarea.current!}
             />}
@@ -109,9 +114,11 @@ export function Voice() {
                 />
             </Field>
 
-            <VoiceRecipients />
+            <SmsRecipients />
 
-            <VoiceSender onChange={setFrom} value={from}/>
+            <From onChange={setFrom} value={from}/>
+
+            <SmsOptions params={params} setParams={setParams}/>
 
             <div className='grid grid-cols-2 mt-6'>
                 <Button
@@ -119,20 +126,19 @@ export function Voice() {
                     onClick={handleClear}
                 >
                     {t('clear')}
-                    <XMarkIcon/>
+                    <XMarkIcon />
                 </Button>
 
                 <Button
                     disabled={!text.length}
-                    outline
                     type='submit'
                 >
                     {t('send')}
-                    <PaperAirplaneIcon/>
+                    <PaperAirplaneIcon />
                 </Button>
             </div>
         </form>
 
-        <VoiceHistory/>
+        <SmsHistory/>
     </>
 }

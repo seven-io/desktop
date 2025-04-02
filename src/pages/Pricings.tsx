@@ -2,14 +2,14 @@ import {CountryPricing, PricingResource, PricingResponse} from '@seven.io/client
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useDispatch} from 'react-redux'
-import {initClient} from '../../util/initClient'
-import {Pricing} from './Pricing'
-import {SET_BACKDROP} from '../../store/features/backdrop'
-import localStore from '../../util/LocalStore'
-import {Button} from '../Button'
-import {Table, TableBody, TableCell, TableHeader, TableRow} from '../Table'
-import {Heading} from '../Heading'
-import CountryPicker from './CountryPicker'
+import {initClient} from '../util/initClient'
+import {Pricing} from '../components/Pricing/Pricing'
+import {SET_BACKDROP} from '../store/features/backdrop'
+import localStore from '../util/LocalStore'
+import {Button} from '../components/Button'
+import {Table, TableBody, TableCell, TableHeader, TableRow} from '../components/Table'
+import {Heading} from '../components/Heading'
+import CountryPicker from '../components/Pricing/CountryPicker'
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing')

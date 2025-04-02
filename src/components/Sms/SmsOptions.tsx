@@ -1,7 +1,7 @@
 import {format} from 'date-fns'
 import {useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import type {SmsPartParams} from './Sms'
+import type {SmsPartParams} from '../../pages/Sms'
 import localStore from '../../util/LocalStore'
 import {Input} from '../Input'
 import {Switch, SwitchField} from '../Switch'

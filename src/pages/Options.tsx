@@ -1,13 +1,13 @@
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {From} from '../From'
-import {ApiKey} from './ApiKey'
-import {Signature} from './Signature'
-import DefaultRecipients from './DefaultRecipients'
-import ExpertMode from './ExpertMode'
-import localStore from '../../util/LocalStore'
-import {IOptions} from './types'
-import {Heading} from '../Heading'
+import {From} from '../components/From'
+import {ApiKey} from '../components/Options/ApiKey'
+import {Signature} from '../components/Options/Signature'
+import DefaultRecipients from '../components/Options/DefaultRecipients'
+import ExpertMode from '../components/Options/ExpertMode'
+import localStore from '../util/LocalStore'
+import {IOptions} from '../components/Options/types'
+import {Heading} from '../components/Heading'
 
 export const Options = () => {
     const {t} = useTranslation()
