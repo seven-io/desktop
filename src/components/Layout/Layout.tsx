@@ -18,6 +18,7 @@ import TopNavigation from './TopNavigation'
 import {StackedLayout} from '../StackedLayout'
 import MobileSidebar from './MobileSidebar'
 import {ArrowPathIcon} from '@heroicons/react/16/solid'
+import {Numbers} from '../../pages/Numbers'
 
 export const Layout = () => {
     const {t} = useTranslation()
@@ -61,7 +62,11 @@ export const Layout = () => {
                             ? <Pricings/>
                             : 'voice' === route
                                 ? <Voice/>
-                                : 'rcs' === route ? <Rcs/> : <Lookup/>
+                                : 'rcs' === route
+                                    ? <Rcs/>
+                                    : 'numbers' === route
+                                        ? <Numbers/>
+                                        : <Lookup/>
         }
 
         <BottomNav/>

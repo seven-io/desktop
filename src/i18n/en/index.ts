@@ -6,8 +6,10 @@ import {pricing} from './pricing'
 import {lookup} from './lookup'
 import {voice} from './voice'
 import {rcs} from './rcs'
+import {numbers} from './numbers'
 
 export default {
+    numbers,
     contacts,
     history,
     lookup,
@@ -43,5 +45,6 @@ export default {
         support: 'Support',
         toggleApiKeyVisibility: 'Toggle API key visibility',
         voice: 'Voice',
+        numbers: 'Numbers'
     },
 }

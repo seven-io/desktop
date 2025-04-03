@@ -1,29 +1,35 @@
+import * as React from 'react'
 import {ReactNode, useEffect, useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {useAppDispatch, useAppSelector} from '../../store'
+import {useAppDispatch} from '../../store'
 import {Route, SET_NAV} from '../../store/features/nav'
 import localStore from '../../util/LocalStore'
 import {
     CogIcon,
-    CurrencyDollarIcon,
+    DevicePhoneMobileIcon,
+    DocumentCurrencyEuroIcon,
     DocumentMagnifyingGlassIcon,
     EnvelopeIcon,
     IdentificationIcon,
     PhoneIcon,
-    UserIcon
+    UserIcon,
 } from '@heroicons/react/16/solid'
 
+const ActionIcon = ({Icon}: {
+    Icon: React.ForwardRefExoticComponent<React.PropsWithoutRef<React.SVGProps<SVGSVGElement>>>
+}) => <Icon className='dark:text-white w-8'/>
+
 export const BottomNav = () => {
-    const navId = useAppSelector(s => s.nav) // TODO??
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
     const [actions, setActions] = useState<{value: Route, icon: ReactNode}[]>([
-        {value: 'sms', icon: <EnvelopeIcon className='dark:text-white'/>},
-        {value: 'rcs', icon: <IdentificationIcon className='dark:text-white'/>},
-        {value: 'voice', icon: <PhoneIcon className='dark:text-white'/>},
-        {value: 'lookup', icon: <DocumentMagnifyingGlassIcon className='dark:text-white'/>},
-        {value: 'options', icon: <CogIcon className='dark:text-white'/>},
-        {value: 'contacts', icon: <UserIcon className='dark:text-white'/>},
+        {value: 'sms', icon: <ActionIcon Icon={EnvelopeIcon} />},
+        {value: 'rcs', icon: <ActionIcon Icon={IdentificationIcon} />},
+        {value: 'voice', icon: <ActionIcon Icon={PhoneIcon} />},
+        {value: 'lookup', icon: <ActionIcon Icon={DocumentMagnifyingGlassIcon} />},
+        {value: 'options', icon: <ActionIcon Icon={CogIcon} />},
+        {value: 'contacts', icon: <ActionIcon Icon={UserIcon} />},
+        {value: 'numbers', icon: <ActionIcon Icon={DevicePhoneMobileIcon} />},
     ])
 
     const getActionIndexByValue = (value: string): number => {
@@ -41,8 +47,8 @@ export const BottomNav = () => {
         if (expertMode) {
             if (!hasPricingRoute) {
                 _actions.push({
+                    icon: <ActionIcon Icon={DocumentCurrencyEuroIcon} />,
                     value: 'pricing',
-                    icon: <CurrencyDollarIcon className='dark:text-white'/>,
                 })
             }
         } else {
@@ -60,8 +66,8 @@ export const BottomNav = () => {
     console.log(`grid h-full max-w-lg grid-cols-${actions.length} mx-auto`)
     return <>
         <div
-            className='fixed z-50 w-full h-16 max-w-lg -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600'>
-            <div className={`grid h-full max-w-lg grid-cols-7 mx-auto`}>
+            className='fixed z-50 w-full h-20 max-w-xlxxx max-w-max -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600'>
+            <div className='grid h-full max-w-max grid-flow-col auto-cols-max mx-auto'>
                 {actions.map((a, i) => <button key={i} onClick={() => dispatch(SET_NAV(a.value))}
                                                className='inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group'>
                     {a.icon}
@@ -70,26 +76,5 @@ export const BottomNav = () => {
                 </button>)}
             </div>
         </div>
-
-        {/*
-        <BottomNavigation
-        onChange={(_e: any, newNavId: Route) => dispatch(SET_NAV(newNavId))}
-        showLabels
-        value={navId}
-        sx={{
-            bottom: 0,
-            justifyContent: 'space-evenly',
-            position: 'fixed',
-            width: '100%',
-        }}
-    >
-        {actions.map((a, i) => <BottomNavigationAction
-            icon={a.icon}
-            key={i}
-            label={t(a.value)}
-            value={a.value}
-        />)}
-    </BottomNavigation>
-        */}
     </>
 }
