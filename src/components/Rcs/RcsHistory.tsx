@@ -1,4 +1,3 @@
-import {TableCell, TableHeader, TableRow} from '../Table'
 import type {RcsMessage} from '@seven.io/client'
 import {Fragment} from 'react'
 import {useTranslation} from 'react-i18next'
@@ -7,6 +6,9 @@ import {BaseHistory} from '../BaseHistory/BaseHistory'
 import {BoolChip} from '../BoolChip'
 import type {RcsDump} from '../../util/sendRcs'
 import Tooltip from '../Tooltip'
+import {TableRow} from '../Table/TableRow'
+import {TableHeader} from '../Table/TableHeader'
+import {TableCell} from '../Table/TableCell'
 
 export const RcsHistory = () => {
     const {t} = useTranslation('history')

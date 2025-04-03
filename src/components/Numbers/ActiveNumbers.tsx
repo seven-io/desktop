@@ -1,8 +1,13 @@
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '../Table'
+import {Table} from '../Table/Table'
 import {useEffect, useState} from 'react'
 import {type ActiveNumber, NumbersResource} from '@seven.io/client'
 import {initClient} from '../../util/initClient'
 import {useTranslation} from 'react-i18next'
+import {TableRow} from '../Table/TableRow'
+import {TableHeader} from '../Table/TableHeader'
+import {TableCell} from '../Table/TableCell'
+import {TableBody} from '../Table/TableBody'
+import {TableHead} from '../Table/TableHead'
 
 const currency = '€'
 

@@ -1,9 +1,13 @@
 import type {CountryNetwork} from '@seven.io/client'
 import {useTranslation} from 'react-i18next'
 import {getNumberFormatter} from '../../util/numberFormatter'
-import {Table, TableBody, TableCell, TableHeader, TableRow} from '../Table'
+import {Table} from '../Table/Table'
 import {Divider} from '../Divider'
 import {Badge} from '../Badge'
+import {TableRow} from '../Table/TableRow'
+import {TableHeader} from '../Table/TableHeader'
+import {TableCell} from '../Table/TableCell'
+import {TableBody} from '../Table/TableBody'
 
 type NetworkProps = {
     index: number

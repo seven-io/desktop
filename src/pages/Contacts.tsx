@@ -10,10 +10,14 @@ import {SET_NAV} from '../store/features/nav'
 import {type Contact, ContactsResource} from '@seven.io/client'
 import localStore from '../util/LocalStore'
 import {Button} from '../components/Button'
-import {Table, TableBody, TableCell, TableHead, TableRow} from '../components/Table'
+import {Table} from '../components/Table/Table'
 import {EnvelopeIcon, PencilSquareIcon, PhoneIcon} from '@heroicons/react/16/solid'
 import Tooltip from '../components/Tooltip'
 import {Heading} from '../components/Heading'
+import {TableRow} from '../components/Table/TableRow'
+import {TableCell} from '../components/Table/TableCell'
+import {TableBody} from '../components/Table/TableBody'
+import {TableHead} from '../components/Table/TableHead'
 
 export const Contacts = () => {
     const {t} = useTranslation('contacts')

@@ -1,4 +1,4 @@
-import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '../Table'
+import {Table} from '../Table/Table'
 import {useEffect, useState} from 'react'
 import {AvailableNumber, NumbersResource, OrderNumberParams} from '@seven.io/client'
 import {initClient} from '../../util/initClient'
@@ -7,6 +7,11 @@ import {Button} from '../Button'
 import {Fieldset, Label, Legend} from '../Fieldset'
 import {Radio, RadioField, RadioGroup} from '../Radio'
 import {PaymentInterval} from '@seven.io/client/dist/resources/numbers/types'
+import {TableRow} from '../Table/TableRow'
+import {TableHeader} from '../Table/TableHeader'
+import {TableCell} from '../Table/TableCell'
+import {TableBody} from '../Table/TableBody'
+import {TableHead} from '../Table/TableHead'
 
 const currency = '€'
 const paymentIntervals = ['monthly', 'annually'] as const

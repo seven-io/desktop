@@ -5,8 +5,10 @@ import {getNumberFormatter} from '../../util/numberFormatter'
 import type {SmsDump} from '../../util/sendSms'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
 import {BoolChip} from '../BoolChip'
-import {TableCell, TableHeader, TableRow} from '../Table'
 import Tooltip from '../Tooltip'
+import {TableRow} from '../Table/TableRow'
+import {TableHeader} from '../Table/TableHeader'
+import {TableCell} from '../Table/TableCell'
 
 export const SmsHistory = () => {
     const {t} = useTranslation('history')

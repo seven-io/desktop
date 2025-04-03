@@ -1,6 +1,7 @@
 import type {Carrier} from '@seven.io/client'
 import {TableRowSpreader} from '../TableRowSpreader'
-import {Table, TableBody} from '../Table'
+import {Table} from '../Table/Table'
+import {TableBody} from '../Table/TableBody'
 
 type CarrierTableProps = {
     carrier: Carrier

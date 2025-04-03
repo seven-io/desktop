@@ -1,8 +1,10 @@
-import {TableCell, TableHeader, TableRow} from '../Table'
 import type {VoiceParams, VoiceResponse} from '@seven.io/client'
 import {Fragment} from 'react'
 import {useTranslation} from 'react-i18next'
 import {BaseHistory} from '../BaseHistory/BaseHistory'
+import {TableRow} from '../Table/TableRow'
+import {TableHeader} from '../Table/TableHeader'
+import {TableCell} from '../Table/TableCell'
 
 export type VoiceDump = {
     notification: string,

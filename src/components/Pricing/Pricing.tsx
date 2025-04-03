@@ -2,7 +2,11 @@ import type {CountryPricing} from '@seven.io/client'
 import {useTranslation} from 'react-i18next'
 import type {KeyValue} from '../../types'
 import {CountryNetworks} from './CountryNetworks'
-import {Table, TableBody, TableCell, TableHeader, TableRow} from '../Table'
+import {Table} from '../Table/Table'
+import {TableRow} from '../Table/TableRow'
+import {TableHeader} from '../Table/TableHeader'
+import {TableCell} from '../Table/TableCell'
+import {TableBody} from '../Table/TableBody'
 
 type PricingProps = {
     pricing: CountryPricing

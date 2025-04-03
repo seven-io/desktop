@@ -7,9 +7,13 @@ import {Pricing} from '../components/Pricing/Pricing'
 import {SET_BACKDROP} from '../store/features/backdrop'
 import localStore from '../util/LocalStore'
 import {Button} from '../components/Button'
-import {Table, TableBody, TableCell, TableHeader, TableRow} from '../components/Table'
+import {Table} from '../components/Table/Table'
 import {Heading} from '../components/Heading'
 import CountryPicker from '../components/Pricing/CountryPicker'
+import {TableRow} from '../components/Table/TableRow'
+import {TableHeader} from '../components/Table/TableHeader'
+import {TableCell} from '../components/Table/TableCell'
+import {TableBody} from '../components/Table/TableBody'
 
 export const Pricings = () => {
     const {t} = useTranslation('pricing')
