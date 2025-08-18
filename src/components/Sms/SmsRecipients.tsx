@@ -41,7 +41,7 @@ export const SmsRecipients = () => {
             value={value}
         >
             <ComboboxInput
-                className='dark:text-white'
+                className='dark:text-white w-full'
                 displayValue={(value: string) => value}
                 onChange={(ev) => setQuery(ev.target.value)}
                 placeholder='+491799999999'
