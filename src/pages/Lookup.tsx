@@ -36,30 +36,38 @@ export const Lookup = () => {
         }
         const resource = new LookupResource(initClient())
         let res
-        switch (type) {
-            case 'cnam':
-                res = await resource.cnam(lookupParams)
-                break;
-            case 'hlr':
-                res = await resource.hlr(lookupParams)
-                break;
-            case 'mnp':
-                res = await resource.mnp(lookupParams)
-                break;
-            case 'format':
-                res = await resource.format(lookupParams)
-                break;
-            case 'rcs':
-                res = await resource.rcs(lookupParams)
-                break;
+        try {
+            switch (type) {
+                case 'cnam':
+                    res = await resource.cnam(lookupParams)
+                    break;
+                case 'hlr':
+                    res = await resource.hlr(lookupParams)
+                    break;
+                case 'mnp':
+                    res = await resource.mnp(lookupParams)
+                    break;
+                case 'format':
+                    res = await resource.format(lookupParams)
+                    break;
+                case 'rcs':
+                    res = await resource.rcs(lookupParams)
+                    break;
 
+            }
         }
+         catch (e) {
+             res = null
+             dispatch(ADD_SNACKBAR((e as Error).message))
+         }
         dispatch(SET_BACKDROP(false))
         setHistoryTransKey('response')
 
-        localStore.set('lookups', [...localStore.get('lookups'), res])
+        if (res) {
+            localStore.set('lookups', [...localStore.get('lookups'), res])
 
-        dispatch(ADD_SNACKBAR(getPairs(res).map(([k, v]) => `${t(k)}: ${toString(v)}`).join(' ● ')))
+            dispatch(ADD_SNACKBAR(getPairs(res).map(([k, v]) => `${t(k)}: ${toString(v)}`).join(' ● ')))
+        }
     }
 
     const getPairs = (res: LookupResponse) => {
