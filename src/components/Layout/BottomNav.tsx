@@ -36,8 +36,7 @@ export const BottomNav = () => {
         return actions.findIndex(a => value === a.value)
     }
 
-    const [expertMode, setExpertMode] =
-        useState<boolean>(localStore.get('options.expertMode'))
+    const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
 
     useEffect(() => {
         const pricingIndex = getActionIndexByValue('pricing')
@@ -63,16 +62,17 @@ export const BottomNav = () => {
             expertMode !== options?.expertMode && setExpertMode(options!.expertMode)
         })
     }, [])
-    console.log(`grid h-full max-w-lg grid-cols-${actions.length} mx-auto`)
+    //console.log(`grid h-full max-w-lg grid-cols-${actions.length} mx-auto`)
+
     return <>
         <div
-            className='fixed z-50 w-full h-20 max-w-xlxxx max-w-max -translate-x-1/2 bg-white border border-gray-200 rounded-full bottom-4 left-1/2 dark:bg-gray-700 dark:border-gray-600'>
-            <div className='grid h-full max-w-max grid-flow-col auto-cols-max mx-auto'>
+            className="fixed inset-x-0 bottom-0 left-0 z-50 w-full h-20 mx-auto overflow-hidden border border-gray-200 rounded-full dark:bg-gray-700 dark:border-gray-600 bg-white border-t sm:bottom-5 sm:shadow-lg sm:shadow-base-500/30 hover:shadow-md duration-300 sm:border sm:max-w-xl sm:rounded-xl border-base-50"
+        >
+            <div className="h-full font-medium grid grid-flow-col grid-cols-[repeat(auto-fill,minmax(60px,2fr))] mx-auto max-w-min gap-1.5">
                 {actions.map((a, i) => <button key={i} onClick={() => dispatch(SET_NAV(a.value))}
                                                className='inline-flex flex-col items-center justify-center px-5 rounded-s-full hover:bg-gray-50 dark:hover:bg-gray-800 group'>
                     {a.icon}
-                    <span
-                        className='text-sm text-gray-500 dark:text-gray-400 group-hover:text-blue-600 dark:group-hover:text-blue-500'>{t(a.value)}</span>
+                    <span className='text-sm text-gray-500'>{t(a.value)}</span>
                 </button>)}
             </div>
         </div>
