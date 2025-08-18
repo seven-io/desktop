@@ -26,7 +26,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
         <SwitchField>
             <Label>{t('flash')}</Label>
             <Switch
-                checked={params.flash}
+                checked={Boolean(params.flash)}
                 onChange={(flash) => setParams({...params, flash})}
             />
         </SwitchField>
@@ -34,7 +34,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
         <SwitchField>
             <Label>{t('performanceTracking')}</Label>
             <Switch
-                checked={params.performance_tracking}
+                checked={Boolean(params.performance_tracking)}
                 onChange={(performance_tracking) => setParams({...params, performance_tracking})}
             />
         </SwitchField>
@@ -45,7 +45,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                 <Input
                     onChange={(e) => setParams({ ...params, label: e.target.value })}
                     maxLength={100}
-                    value={params.label}
+                    value={params.label ?? ''}
                 />
             </Field>
 
@@ -74,7 +74,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                         <Input
                             maxLength={64}
                             onChange={e => setParams({...params, foreign_id: e.target.value})}
-                            value={params.foreign_id}
+                            value={params.foreign_id ?? ''}
                         />
                     </Field>
 
@@ -84,7 +84,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                             min={0}
                             onChange={e => setParams({...params, ttl: Number.parseInt(e.target.value)})}
                             type="number"
-                            value={params.ttl}
+                            value={params.ttl ?? ''}
                         />
                     </Field>
 
@@ -92,7 +92,7 @@ export const SmsOptions = ({params, setParams}: SmsOptionsProps) => {
                         <Label>{t('udh')}</Label>
                         <Input
                             onChange={e => setParams({...params, udh: e.target.value})}
-                            value={params.udh}
+                            value={params.udh ?? ''}
                         />
                     </Field>
                 </>

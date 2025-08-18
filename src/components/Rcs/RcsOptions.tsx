@@ -36,7 +36,7 @@ export const RcsOptions = ({params, setParams}: RcsOptionsProps) => {
                 <Input
                     maxLength={100}
                     onChange={e => setParams({...params, label: e.target.value})}
-                    value={params.label}
+                    value={params.label ?? ''}
                 />
             </Field>
 
@@ -64,7 +64,7 @@ export const RcsOptions = ({params, setParams}: RcsOptionsProps) => {
                     <Input
                         maxLength={64}
                         onChange={e => setParams({...params, foreign_id: e.target.value})}
-                        value={params.foreign_id}
+                        value={params.foreign_id ?? ''}
                     />
                 </Field>
             }
