@@ -22,7 +22,7 @@ export const Pricing = ({pricing}: PricingProps) => {
     ]
 
     return <>
-        <h2>{t('countryInformation')}</h2>
+        <h2 className='dark:text-white'>{t('countryInformation')}</h2>
 
         <Table className='mb-4' aria-label={t('ariaLabels.network')}>
             <TableBody>
@@ -35,7 +35,7 @@ export const Pricing = ({pricing}: PricingProps) => {
             </TableBody>
         </Table>
 
-        <h3>{t('networks')}</h3>
+        <h3 className='dark:text-white'>{t('networks')}</h3>
 
         <CountryNetworks networks={pricing.networks}/>
     </>
