@@ -5,7 +5,6 @@ import {useAppDispatch, useAppSelector} from '../store'
 import {initClient} from '../util/initClient'
 import localStore, {localStoreDefaults} from '../util/LocalStore'
 import {notify} from '../util/notify'
-import {From} from '../components/From'
 import {RcsRecipient} from '../components/Rcs/RcsRecipient'
 import {Toolbar} from '../components/Message/Toolbar'
 import {SET_BACKDROP} from '../store/features/backdrop'
@@ -19,6 +18,7 @@ import {Description, Field, Label} from '../components/Fieldset'
 import {Button} from '../components/Button'
 import {PaperAirplaneIcon, XMarkIcon} from '@heroicons/react/16/solid'
 import {Heading} from '../components/Heading'
+import {RcsFrom} from "../components/Rcs/RcsFrom";
 
 export function Rcs() {
     const dispatch = useAppDispatch()
@@ -114,7 +114,7 @@ export function Rcs() {
 
             <RcsRecipient />
 
-            <From onChange={setFrom} value={from}/>
+            <RcsFrom onChange={setFrom} value={from}/>
 
             <RcsOptions params={params} setParams={setParams}/>
 

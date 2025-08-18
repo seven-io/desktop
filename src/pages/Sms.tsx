@@ -13,7 +13,7 @@ import {notify} from '../util/notify'
 import {ADD_SNACKBAR} from '../store/features/snackbars'
 import {initClient} from '../util/initClient'
 import {Toolbar} from '../components/Message/Toolbar'
-import {From} from '../components/From'
+import {SmsFrom} from '../components/Sms/SmsFrom'
 import {SmsRecipients} from '../components/Sms/SmsRecipients'
 import {Textarea} from '../components/Textarea'
 import {Field, Label} from '../components/Fieldset'
@@ -116,7 +116,7 @@ export const Sms = () => {
 
             <SmsRecipients />
 
-            <From onChange={setFrom} value={from}/>
+            <SmsFrom onChange={setFrom} value={from}/>
 
             <SmsOptions params={params} setParams={setParams}/>
 

@@ -1,0 +1,26 @@
+import {useEffect, useState} from 'react'
+import {useTranslation} from 'react-i18next'
+import {Field, Label} from '../Fieldset'
+import {Input, type InputProps} from '../Input'
+
+type FromProps = Omit<InputProps, 'onChange'> & {
+    onChange: (from: string) => void
+    value: string
+}
+
+export const SmsFrom = ({onChange, value, ...props}: FromProps) => {
+    const [from, setFrom] = useState('')
+    const {t} = useTranslation()
+
+    useEffect(() => setFrom(value), [value])
+
+    return <Field>
+        <Label>{t('senderIdentifier')}</Label>
+        <Input
+            name='from'
+            onChange={e => onChange(e.target.value)}
+            value={from}
+            {...props}
+        />
+    </Field>
+}

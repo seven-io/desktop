@@ -1,6 +1,5 @@
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
-import {From} from '../components/From'
 import {ApiKey} from '../components/Options/ApiKey'
 import {Signature} from '../components/Options/Signature'
 import DefaultRecipients from '../components/Options/DefaultRecipients'
@@ -8,6 +7,7 @@ import ExpertMode from '../components/Options/ExpertMode'
 import localStore from '../util/LocalStore'
 import {IOptions} from '../components/Options/types'
 import {Heading} from '../components/Heading'
+import {DefaultFrom} from "../components/Options/DefaultFrom";
 
 export const Options = () => {
     const {t} = useTranslation()
@@ -32,8 +32,7 @@ export const Options = () => {
                 value={apiKey}
             />
 
-            <From
-                helperText={t('savedAutomatically')}
+            <DefaultFrom
                 onChange={value => handleChange({name: 'from', value})}
                 value={from}
             />
