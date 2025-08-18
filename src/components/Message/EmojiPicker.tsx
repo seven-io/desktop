@@ -1,20 +1,16 @@
 import Picker, {type PickerProps} from 'emoji-picker-react'
 import {useTranslation} from 'react-i18next'
-import {Dropdown, DropdownButton, DropdownItem, DropdownMenu} from '../Dropdown'
+import {Popover, PopoverButton, PopoverPanel} from '@headlessui/react'
+import {Button} from "../Button";
 
 export const EmojiPicker = (props: PickerProps) => {
     const {t} = useTranslation('message')
 
-    return <Dropdown
-        //buttonText={t('toolbar.emoji')}
-        //identifier='emoji'
-    >
-        <DropdownButton>{t('toolbar.emoji')}</DropdownButton>
 
-        <DropdownMenu>
-            <DropdownItem>
-                <Picker {...props} />
-            </DropdownItem>
-        </DropdownMenu>
-    </Dropdown>
+    return    <Popover className="relative">
+        <PopoverButton as={Button}>{t('toolbar.emoji')}</PopoverButton>
+        <PopoverPanel anchor="bottom" className="flex flex-col">
+            <Picker {...props} />
+        </PopoverPanel>
+    </Popover>
 }

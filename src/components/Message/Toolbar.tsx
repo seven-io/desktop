@@ -13,8 +13,7 @@ export const Toolbar = ({emoji, onAction, textarea}: ToolbarProps) => {
     const {t} = useTranslation('message')
 
     const setRangeText = (msg: string) => {
-        textarea.setRangeText(
-            msg, textarea.selectionStart, textarea.selectionEnd, 'end')
+        textarea.setRangeText(msg, textarea.selectionStart, textarea.selectionEnd, 'end')
 
         onAction(textarea!.value)
     }
@@ -22,7 +21,6 @@ export const Toolbar = ({emoji, onAction, textarea}: ToolbarProps) => {
     return <div
         aria-label={t('toolbar.label')}
         className='flex space-x-1'
-        //variant='text'
     >
         {emoji && <EmojiPicker
             onEmojiClick={(e, _d) => setRangeText(e.emoji)}
