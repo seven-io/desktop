@@ -24,8 +24,10 @@ export default () => {
             })
 
     return <Field>
-        <Label>{t('recipients')}</Label>
-        <Description>{t('savedAutomatically')}</Description>
+        <div className='flex justify-between'>
+            <Label>{t('recipients')}</Label>
+            <Description>{t('savedAutomatically')}</Description>
+        </div>
 
         <Combobox
             immediate

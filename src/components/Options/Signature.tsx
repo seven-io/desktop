@@ -12,8 +12,10 @@ export const Signature = ({value, ...props}: SignatureProps) => {
     const {t} = useTranslation()
 
     return <Field>
-        <Label>{t('signatureExplanation')}</Label>
-        <Description>{t('savedAutomatically')}</Description>
+        <div className='flex justify-between'>
+            <Label>{t('signatureExplanation')}</Label>
+            <Description>{t('savedAutomatically')}</Description>
+        </div>
 
         <Textarea
             name='signature'

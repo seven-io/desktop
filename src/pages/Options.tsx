@@ -20,7 +20,7 @@ export const Options = () => {
     }
 
     return <>
-        <Heading>{t('options')}</Heading>
+        <Heading className='mb-5'>{t('options')}</Heading>
 
         <div>
             <ApiKey
@@ -32,16 +32,24 @@ export const Options = () => {
                 value={apiKey}
             />
 
-            <DefaultFrom
-                onChange={value => handleChange({name: 'from', value})}
-                value={from}
-            />
+            <div className='mt-3'>
+                <DefaultFrom
+                    onChange={value => handleChange({name: 'from', value})}
+                    value={from}
+                />
+            </div>
 
-            <DefaultRecipients/>
+            <div className='mt-3'>
+                <DefaultRecipients/>
+            </div>
 
-            <Signature onChange={e => handleChange({name: 'signature', value: e.target.value})} value={signature}/>
+            <div className='mt-3'>
+                <Signature onChange={e => handleChange({name: 'signature', value: e.target.value})} value={signature}/>
+            </div>
 
-            <ExpertMode/>
+            <div className='mt-3'>
+                <ExpertMode/>
+            </div>
         </div>
     </>
 

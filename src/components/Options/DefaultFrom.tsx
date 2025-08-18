@@ -8,20 +8,22 @@ type FromProps = Omit<InputProps, 'onChange'> & {
     value: string
 }
 
-export const DefaultFrom = ({onChange, value, ...props}: FromProps) => {
+export const DefaultFrom = ({onChange, value}: FromProps) => {
     const [from, setFrom] = useState('')
     const {t} = useTranslation()
 
     useEffect(() => setFrom(value), [value])
 
     return <Field>
-        <Label>{t('senderIdentifier')}</Label>
-        <Description>{t('savedAutomatically')}</Description>
+        <div className='flex justify-between'>
+            <Label>{t('senderIdentifier')}</Label>
+            <Description>{t('savedAutomatically')}</Description>
+        </div>
+
         <Input
             name='from'
             onChange={e => onChange(e.target.value)}
             value={from}
-            {...props}
         />
     </Field>
 }
