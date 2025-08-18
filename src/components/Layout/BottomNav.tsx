@@ -1,9 +1,8 @@
 import * as React from 'react'
-import {ReactNode, useEffect, useState} from 'react'
+import {ReactNode} from 'react'
 import {useTranslation} from 'react-i18next'
 import {useAppDispatch} from '../../store'
 import {Route, SET_NAV} from '../../store/features/nav'
-import localStore from '../../util/LocalStore'
 import {
     CogIcon,
     DevicePhoneMobileIcon,
@@ -22,7 +21,7 @@ const ActionIcon = ({Icon}: {
 export const BottomNav = () => {
     const {t} = useTranslation()
     const dispatch = useAppDispatch()
-    const [actions, setActions] = useState<{value: Route, icon: ReactNode}[]>([
+    const actions: {value: Route, icon: ReactNode}[] = [
         {value: 'sms', icon: <ActionIcon Icon={EnvelopeIcon} />},
         {value: 'rcs', icon: <ActionIcon Icon={IdentificationIcon} />},
         {value: 'voice', icon: <ActionIcon Icon={PhoneIcon} />},
@@ -30,39 +29,8 @@ export const BottomNav = () => {
         {value: 'options', icon: <ActionIcon Icon={CogIcon} />},
         {value: 'contacts', icon: <ActionIcon Icon={UserIcon} />},
         {value: 'numbers', icon: <ActionIcon Icon={DevicePhoneMobileIcon} />},
-    ])
-
-    const getActionIndexByValue = (value: string): number => {
-        return actions.findIndex(a => value === a.value)
-    }
-
-    const [expertMode, setExpertMode] = useState<boolean>(localStore.get('options.expertMode'))
-
-    useEffect(() => {
-        const pricingIndex = getActionIndexByValue('pricing')
-        const hasPricingRoute = -1 !== pricingIndex
-        const _actions = [...actions]
-
-        if (expertMode) {
-            if (!hasPricingRoute) {
-                _actions.push({
-                    icon: <ActionIcon Icon={DocumentCurrencyEuroIcon} />,
-                    value: 'pricing',
-                })
-            }
-        } else {
-            hasPricingRoute && _actions.splice(pricingIndex!, 1)
-        }
-
-        setActions(_actions)
-    }, [expertMode])
-
-    useEffect(() => {
-        localStore.onDidChange('options', (options) => {
-            expertMode !== options?.expertMode && setExpertMode(options!.expertMode)
-        })
-    }, [])
-    //console.log(`grid h-full max-w-lg grid-cols-${actions.length} mx-auto`)
+        {icon: <ActionIcon Icon={DocumentCurrencyEuroIcon} />, value: 'pricing'}
+    ]
 
     return <>
         <div
