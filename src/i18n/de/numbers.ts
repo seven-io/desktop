@@ -28,6 +28,7 @@ export const numbers = {
         }
     },
     order: {
+        ordered: 'Die Rufnummer wurde bestellt.',
         title: 'Bestellen',
         paymentInterval: {
             title: 'Zahlungsintervall',

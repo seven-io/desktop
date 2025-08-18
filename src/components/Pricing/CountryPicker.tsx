@@ -5,11 +5,11 @@ import {CountryFlag} from '../CountryFlag'
 import {useState} from 'react'
 import {useTranslation} from 'react-i18next'
 
-export default ({countries, onChange, value}: {
+export function CountryPicker({countries, onChange, value}: {
     countries: PricingResponse['countries']
     onChange: (country: CountryPricing | null) => void
     value: CountryPricing | null
-}) => {
+}) {
     const {t} = useTranslation('pricing')
     const [query, setQuery] = useState('')
     const filteredCountries =
@@ -37,6 +37,7 @@ export default ({countries, onChange, value}: {
                 displayValue={(country?: CountryPricing) => country?.countryName ?? ''}
                 onChange={(ev) => setQuery(ev.target.value)}
             />
+
             <ComboboxOptions anchor='bottom' className='border empty:invisible'>
                 {filteredCountries.map((option, idx) => (
                     <ComboboxOption
@@ -52,18 +53,3 @@ export default ({countries, onChange, value}: {
         </Combobox>
     </Field>
 }
-
-{/*      {pricing && <Autocomplete<CountryPricing>
-            getOptionLabel={o => `${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
-            onChange={(_ev, cP: CountryPricing | null) => setCountry(cP)}
-            options={pricing.countries}
-            renderOption={(p, o) => <Box component='li' {...p} key={o.countryCode}>
-                <CountryFlag pricing={o}/>&nbsp;
-                {` ${o.countryCode} ${o.countryName} ${o.countryPrefix}`}
-            </Box>}
-            renderInput={params => <TextField
-                {...params}
-                label={t('choose')}
-                variant='outlined'
-            />}
-        />}*/}

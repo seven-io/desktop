@@ -28,12 +28,13 @@ export const numbers = {
         }
     },
     order: {
-        title: 'Order',
+        ordered: 'Your number has been ordered.',
         paymentInterval: {
             title: 'Payment Interval',
             annually: 'annually',
             monthly: 'monthly',
-        }
+        },
+        title: 'Order',
     },
     available: {
         country: 'Country',

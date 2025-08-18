@@ -9,7 +9,7 @@ import localStore from '../util/LocalStore'
 import {Button} from '../components/Button'
 import {Table} from '../components/Table/Table'
 import {Heading} from '../components/Heading'
-import CountryPicker from '../components/Pricing/CountryPicker'
+import {CountryPicker} from '../components/Pricing/CountryPicker'
 import {TableRow} from '../components/Table/TableRow'
 import {TableHeader} from '../components/Table/TableHeader'
 import {TableCell} from '../components/Table/TableCell'
@@ -60,6 +60,6 @@ export const Pricings = () => {
 
         {pricing && <CountryPicker onChange={setCountry} countries={pricing.countries} value={country} />}
 
-        {country && <Pricing pricing={country}/>}
+        {country && <div className='mt-3'><Pricing pricing={country}/></div>}
     </>
 }

@@ -12,11 +12,14 @@ import {TableHeader} from '../Table/TableHeader'
 import {TableCell} from '../Table/TableCell'
 import {TableBody} from '../Table/TableBody'
 import {TableHead} from '../Table/TableHead'
+import {ADD_SNACKBAR} from "../../store/features/snackbars";
+import {useAppDispatch} from "../../store";
 
 const currency = '€'
 const paymentIntervals = ['monthly', 'annually'] as const
 
 export default function AvailableNumbers() {
+    const dispatch = useAppDispatch()
     const {t} = useTranslation('numbers')
     const [working, setWorking] = useState(false)
     const [entries, setEntries] = useState<AvailableNumber[]>([])
@@ -55,6 +58,7 @@ export default function AvailableNumbers() {
                 }
             </RadioGroup>
         </Fieldset>
+
         <Table>
             <caption>{t('available.title')}</caption>
             <TableHead>
@@ -93,9 +97,10 @@ export default function AvailableNumbers() {
 
                                 try {
                                     const res = await resource.order(orderParams)
+                                    dispatch(ADD_SNACKBAR(res.error ? res.error : t('order.ordered')))
                                 }
                                  catch (e) {
-
+                                     dispatch(ADD_SNACKBAR((e as Error).message))
                                  }
                                  finally {
                                     setWorking(false)
