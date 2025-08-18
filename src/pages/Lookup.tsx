@@ -79,7 +79,7 @@ export const Lookup = () => {
             <Heading>{t('lookup')}</Heading>
 
             <Button
-                color='green'
+                color='blue'
                 disabled={0 === number.length}
                 form='lookup'
                 type='submit'

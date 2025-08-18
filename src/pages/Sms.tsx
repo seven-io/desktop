@@ -130,6 +130,7 @@ export const Sms = () => {
                 </Button>
 
                 <Button
+                    color='blue'
                     disabled={!text.length}
                     type='submit'
                 >

@@ -123,8 +123,8 @@ export function Voice() {
                 </Button>
 
                 <Button
+                    color='blue'
                     disabled={!text.length}
-                    outline
                     type='submit'
                 >
                     {t('send')}

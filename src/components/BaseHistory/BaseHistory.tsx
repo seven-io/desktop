@@ -41,14 +41,14 @@ export function BaseHistory<T>({
     }
 
     const getRealEntry = (): T[] => {
-        console.log('getRealEntry', {entry, path})
+        //console.log('getRealEntry', {entry, path})
         if (!path) {
             return [entry].flat() as T[]
         }
 
         let current: any = entry
         const keys = path.split('.') as (keyof T)[]
-        console.log('keys', keys)
+        //console.log('keys', keys)
         for (const key of keys) {
             current = current[key]
         }
@@ -57,7 +57,7 @@ export function BaseHistory<T>({
             return []
         }
 
-        console.log('current', current)
+        //console.log('current', current)
 
         return current
     }
