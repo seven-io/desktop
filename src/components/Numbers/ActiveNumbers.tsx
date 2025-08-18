@@ -48,8 +48,8 @@ export default function ActiveNumbers() {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {entries.map(entry => {
-                    return <TableRow>
+                {entries.map((entry, index) => {
+                    return <TableRow key={index}>
                         <TableCell>{entry.friendly_name}</TableCell>
                         <TableCell>{entry.country}</TableCell>
                         <TableCell>{entry.number}</TableCell>

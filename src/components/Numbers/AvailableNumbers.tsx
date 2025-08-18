@@ -74,8 +74,8 @@ export default function AvailableNumbers() {
                 </TableRow>
             </TableHead>
             <TableBody>
-                {entries.map(entry => {
-                    return <TableRow>
+                {entries.map((entry, index) => {
+                    return <TableRow key={index}>
                         <TableCell>{entry.country}</TableCell>
                         <TableCell>{entry.number_parsed}</TableCell>
                         <TableCell>{entry.fees.annually.basic_charge} {currency}</TableCell>
