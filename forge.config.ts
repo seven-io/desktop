@@ -36,7 +36,7 @@ export default {
         new MakerSquirrel({
             description,
             iconUrl: icons.ico,
-            name: process.env.npm_package_name,
+            name: 'seven-desktop', //process.env.npm_package_name,
             setupIcon: icons.ico,
         }),
         new MakerDeb({
