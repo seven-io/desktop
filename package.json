@@ -72,7 +72,7 @@
   "name": "@seven.io/desktop",
   "productName": "seven-desktop",
   "scripts": {
-    "make": "NODE_ENV=production cross-env NODE_ENV=production electron-forge make",
+    "make": "cross-env NODE_ENV=production electron-forge make",
     "package": "cross-env NODE_ENV=production electron-forge package",
     "publish": "cross-env NODE_ENV=production electron-forge publish",
     "start": "cross-env NODE_ENV=development electron-forge start"
