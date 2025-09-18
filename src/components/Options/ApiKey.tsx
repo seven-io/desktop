@@ -8,6 +8,7 @@ import {Input, InputGroup, type InputProps} from '../Input'
 import {ErrorMessage, Field, Label} from '../Fieldset'
 import {Button} from '../Button'
 import {EyeIcon, EyeSlashIcon} from '@heroicons/react/16/solid'
+import {captureException} from '@sentry/react'
 
 type ApiKeyProps = Omit<InputProps, 'onChange'> & {
     onChange: (apiKey: string) => void
@@ -32,6 +33,7 @@ export const ApiKey = ({value, onChange, ...props}: ApiKeyProps) => {
             setError('')
             onChange(apiKey)
         } catch (e) {
+            captureException(e, {data: {apiKey}})
             console.error(e)
             setError((e as Error).message)
         }
